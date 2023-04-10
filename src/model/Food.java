@@ -3,9 +3,7 @@ package model;
 import java.util.List;
 
 public class Food extends Product{
-
     private List<String> ingredients;
-
 
     public Food(String name, boolean isVegan, double weight, double price, Integer calories, List<String> ingredients) {
         super(name, isVegan, weight, price, calories);
@@ -22,9 +20,8 @@ public class Food extends Product{
 
     @Override
     public String toString() {
-        return "Food{" +
+        return //"Dish: \n" +
                 super.toString() +
-                "ingredients=" + ingredients +
-                '}';
+                "\nIngredients: " + ingredients + "\n";
     }
 }

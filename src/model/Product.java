@@ -1,6 +1,6 @@
 package model;
 
-public class Product {
+public abstract class Product {
     private String name;
     private boolean isVegan;
     private double weight;
@@ -57,12 +57,10 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product{" +
-                "name='" + name + '\'' +
-                ", isVegan=" + isVegan +
-                ", weight=" + weight +
-                ", price=" + price +
-                ", calories=" + calories +
-                '}';
+        return "Name: " + name +
+                "\nIs vegan: " + isVegan +
+                "\nWeight: " + weight +
+                "\nPrice: " + price + "$" +
+                "\nCalories: " + calories;
     }
 }

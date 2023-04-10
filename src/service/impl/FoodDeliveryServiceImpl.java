@@ -2,19 +2,34 @@ package service.impl;
 
 import exceptions.InvalidEmailException;
 import model.*;
-import service.OrderService;
+import service.FoodDeliveryService;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
+import static java.util.Collections.sort;
 import static validation.ClientValidation.validateEmail;
 
-public class OrderServiceImpl implements OrderService {
-    private Map<String, Client> clients = new TreeMap<>();
-    private List<Restaurant> restaurants = new ArrayList<>();
-    private List<Order> orders = new ArrayList<>();
+public class FoodDeliveryServiceImpl implements FoodDeliveryService {
+    private Map<String, Client> clients;
+
+    private List<DeliveryDriver> deliveryDrivers;
+    private List<Restaurant> restaurants;
+    private List<Order> orders;
+
+    public FoodDeliveryServiceImpl() {
+        clients = new TreeMap<>();
+        deliveryDrivers = new ArrayList<>();
+        restaurants = new ArrayList<>();
+        orders = new ArrayList<>();
+    }
+
+    public Map<String, Client> getClients() {
+        return clients;
+    }
+
+    public List<Restaurant> getRestaurants() {
+        return restaurants;
+    }
 
     public void addOrder(Order order){
         orders.add(order);
@@ -25,7 +40,11 @@ public class OrderServiceImpl implements OrderService {
         if(orders.isEmpty())
             System.out.println("There are no orders!");
         else{
+            int i = 0;
             for(Order order: orders){
+                i++;
+                System.out.print(Integer.toString(i));
+                System.out.print(". ");
                 System.out.println(order);
             }
         }
@@ -43,18 +62,49 @@ public class OrderServiceImpl implements OrderService {
         return price;
     }
     public void addClient(Client client){
-        if(!validateEmail(client.getEmail()))
-            throw new InvalidEmailException("Invalid format for email!");
-        clients.put(client.getEmail(), client);
-        System.out.println("Client added with success!");
+        boolean valid_client = true;
+        try{
+            if(!validateEmail(client.getEmail()))
+                throw new InvalidEmailException("Invalid format for email!");
+        }
+        catch(InvalidEmailException emailException){
+            valid_client = false;
+            System.out.println(emailException.getMessage());
+        }
+        if(valid_client){
+            clients.put(client.getEmail(), client);
+            System.out.println("Client added with success!");
+        }
     }
 
     public void showClients(){
         if(clients.isEmpty())
             System.out.println("There are no clients!\n");
         else{
+            int i = 0;
             for(Map.Entry<String, Client> client: clients.entrySet()){
+                i ++;
+                System.out.print(Integer.toString(i) + ". ");
                 System.out.println(client.getValue());
+            }
+        }
+    }
+
+    public void addDeliveryDriver(DeliveryDriver deliveryDriver){
+        deliveryDrivers.add(deliveryDriver);
+        sort(deliveryDrivers);
+        System.out.println("Delivery driver added with success!");
+    }
+
+    public void showDeliveryDrivers(){
+        if(deliveryDrivers.isEmpty())
+            System.out.println("There are no delivery drivers!\n");
+        else{
+            int i = 0;
+            for(DeliveryDriver deliveryDriver: deliveryDrivers){
+                i++;
+                System.out.print(Integer.toString(i) + ". ");
+                System.out.println(deliveryDriver);
             }
         }
     }
@@ -68,7 +118,10 @@ public class OrderServiceImpl implements OrderService {
         if(restaurants.isEmpty())
             System.out.println("There are no restaurants!\n");
         else{
+            int i = 0;
             for(Restaurant restaurant: restaurants){
+                i++;
+                System.out.print(Integer.toString(i) + ". ");
                 System.out.println(restaurant);
             }
         }
@@ -161,5 +214,26 @@ public class OrderServiceImpl implements OrderService {
             System.out.println("Dish removed from your order with success!");
         else
             System.out.println("This dish isn't in your order!");
+    }
+
+    public Client findClient(String email){
+        boolean found = false;
+        Client clientWanted = new Client();
+        for(Map.Entry<String, Client> client: clients.entrySet()){
+            if(client.getKey() == email){
+                clientWanted = client.getValue();
+                found = true;
+            }
+        }
+        return clientWanted;
+    }
+
+    public List<DeliveryDriver> getAvailableDeliveryDrivers(){
+        List<DeliveryDriver> availableDeliveryDrivers = new ArrayList<>();
+        for(DeliveryDriver deliveryDriver: this.deliveryDrivers){
+            if(deliveryDriver.getDeliveryDriverStatus() == DeliveryDriverStatus.AVAILABLE)
+                availableDeliveryDrivers.add(deliveryDriver);
+        }
+        return availableDeliveryDrivers;
     }
 }

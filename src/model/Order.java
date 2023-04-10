@@ -16,6 +16,23 @@ public class Order {
     private List<Food> orderedFoods;
     private List<Drink> orderedDrinks;
     private LocalDateTime orderDate;
+    private OrderStatus orderStatus;
+
+    public Order(Client client, Address clientAddress, Restaurant restaurant, DeliveryDriver deliveryDriver, List<Food> orderedFoods, List<Drink> orderedDrinks, OrderStatus orderStatus) {
+        this.client = client;
+        this.clientAddress = clientAddress;
+        this.restaurant = restaurant;
+        this.deliveryDriver = deliveryDriver;
+        this.orderedFoods = orderedFoods;
+        this.orderedDrinks = orderedDrinks;
+        /*this.orderDate = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+        Calendar calendar = Calendar.getInstance();
+        this.orderDate = this.orderDate.format(calendar.getTime());*/
+        this.orderStatus = orderStatus;
+        this.orderDate = LocalDateTime.now();
+
+        noOrder++;
+    }
 
     public Order(Client client, Address clientAddress, Restaurant restaurant, DeliveryDriver deliveryDriver, List<Food> orderedFoods, List<Drink> orderedDrinks) {
         this.client = client;
@@ -27,11 +44,11 @@ public class Order {
         /*this.orderDate = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
         Calendar calendar = Calendar.getInstance();
         this.orderDate = this.orderDate.format(calendar.getTime());*/
-
+        this.orderStatus = OrderStatus.IN_PROCESS;
         this.orderDate = LocalDateTime.now();
-
         noOrder++;
     }
+
 
     public int getNoOrders() {
         return noOrder;
@@ -93,18 +110,43 @@ public class Order {
         this.orderDate = orderDate;
     }
 
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
     @Override
     public String toString() {
         DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         String formattedDate = orderDate.format(myFormatObj);
-        return "Order{" +
-                ", client=" + client +
-                ", clientAddress=" + clientAddress +
-                ", restaurant=" + restaurant +
-                ", deliveryDriver=" + deliveryDriver +
-                ", orderedFoods=" + orderedFoods +
-                ", orderedDrinks=" + orderedDrinks +
-                ", orderDate=" + formattedDate +
-                '}';
+        String output ="";
+        output += "Order: " +
+                "\nStatus: " + orderStatus +
+                "\nClient: \n" + client +
+                "\nClient's address: " + clientAddress +
+                "\nRestaurant: " + restaurant.getName() + "\nRestaurant's address: " + restaurant.getAddress() +
+                "\nOrdered Foods: \n";
+        int i = 0;
+        for(Food food: orderedFoods){
+            i ++;
+            output += Integer.toString(i);
+            output += ". ";
+            output += food;
+            output += '\n';
+        }
+        output += "\nOrdered drinks: \n";
+        i = 0;
+        for(Drink drink: orderedDrinks){
+            i ++;
+            output += Integer.toString(i);
+            output += ". ";
+            output += drink;
+            output += '\n';
+        }
+        output += "Order date: " + formattedDate;
+        return output;
     }
 }

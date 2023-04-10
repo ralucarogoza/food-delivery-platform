@@ -2,12 +2,15 @@ package model;
 
 public class Client extends Person{
     private String email;
-    private String password;
+    //private String password;
 
-    public Client(String firstName, String lastName, String phoneNumber, String email, String password) {
+    public Client(String firstName, String lastName, String phoneNumber, String email) {
         super(firstName, lastName, phoneNumber);
         this.email = email;
-        this.password = password;
+    }
+
+    public Client() {
+        super();
     }
 
     public String getEmail() {
@@ -18,20 +21,9 @@ public class Client extends Person{
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     @Override
     public String toString() {
-        return  "Client{" +
-                super.toString() +
-                "email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+        return super.toString() +
+                "\nEmail: " + email + "\n";
     }
 }

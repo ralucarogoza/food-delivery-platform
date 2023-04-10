@@ -4,7 +4,6 @@ public class Drink extends Product{
     private String flavour;
     private boolean isAlcoholic;
 
-
     public Drink(String name, boolean isVegan, double weight, double price, Integer calories, String flavour, boolean isAlcoholic) {
         super(name, isVegan, weight, price, calories);
         this.flavour = flavour;
@@ -29,10 +28,9 @@ public class Drink extends Product{
 
     @Override
     public String toString() {
-        return "Drink{" +
+        return //"Drink: \n" +
                 super.toString() +
-                "flavour='" + flavour + '\'' +
-                ", isAlcoholic=" + isAlcoholic +
-                '}';
+                "\nFlavour: " + flavour +
+                "\nIs alcoholic: " + isAlcoholic + "\n";
     }
 }

@@ -51,12 +51,29 @@ public class Restaurant {
 
     @Override
     public String toString() {
-        return "Restaurant{" +
-                "name='" + name + '\'' +
-                ", address=" + address +
-                ", foods=" + foods +
-                ", drinks=" + drinks +
-                '}';
+        String output = "";
+        output += "\nRestaurant:" +
+                "\nName: " + name +
+                "\nAddress: " + address +
+                "\nDishes: \n";
+        int i = 0;
+        for(Food food: foods){
+            i++;
+            output += Integer.toString(i);
+            output += ". ";
+            output += food;
+            output += '\n';
+        }
+        i = 0;
+        output += "\nDrinks: \n";
+        for(Drink drink: drinks){
+            i++;
+            output += Integer.toString(i);
+            output += ". ";
+            output += drink;
+            output += '\n';
+        }
+        return output;
     }
 
     @Override

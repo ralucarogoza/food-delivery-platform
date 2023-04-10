@@ -1,6 +1,6 @@
 package model;
 
-public class Person {
+public abstract class Person{
     private String firstName;
     private String lastName;
     private String phoneNumber;
@@ -9,6 +9,10 @@ public class Person {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
+    }
+
+    public Person() {
+
     }
 
     public String getFirstName() {
@@ -37,10 +41,8 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Person{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                '}';
+        return "First name: " + firstName +
+                "\nLast name: " + lastName +
+                "\nPhone number: " + phoneNumber;
     }
 }
