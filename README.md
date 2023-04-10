@@ -1,13 +1,32 @@
 # Food Delivery Platform
 
-**Classes**
+## Classes <br/>
+* **Person** - abstract class <br/>
+* **Client** - inherits Person <br/>
+* **DeliveryDriver** - inherits Person<br/>
+* **Product** - abstract class </br>
+* **Drink** - inherits Product <br/>
+* **Food** - inherits Product <br/>
+* **Address** <br/>
+* **Restaurant** <br/>
+* **Order** <br/>
 <br/>
-Person <br/>
-Client <br/>
-DeliveryDriver <br/>
-Product </br>
-Drink <br/>
-Food <br/>
-Address <br/>
-Restaurant <br/>
-Order <br/>
+
+## Actions <br/>
+* **showClients**
+* **showDeliveryDrivers**
+* **showRestaurants**
+* **showOrders**
+* **showDrinksFromRestaurant**
+* **showDishesFromRestaurant**
+* **addClient**
+* **addDeliveryDriver**
+* **addRestaurant**
+* **addOrder**
+* **removeDrinkFromOrder**
+* **removeDishFromOrder**
+* **findClient**
+* **getAvailableDeliveryDrivers**
+* **priceOfOrder**
+
+

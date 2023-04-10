@@ -77,7 +77,19 @@ public class Main {
             System.out.println(deliveryDriver);
         }
 
-        System.out.println(service.priceOfOrder(order1));
+        service.removeDishFromOrder(order3, "Pizza Prosciutto");
+        service.removeDrinkFromOrder(order3, "Lemonade");
+        System.out.println(order3);
+
+        System.out.println("Price of order 1: ");
+        System.out.print(service.priceOfOrder(order1) + "$\n\n");
+
+
+
+
+
+        
+        // Interactive Menu for some features
 
         System.out.println("1. Add new client");
         System.out.println("2. See all clients");

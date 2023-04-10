@@ -11,7 +11,6 @@ import static validation.ClientValidation.validateEmail;
 
 public class FoodDeliveryServiceImpl implements FoodDeliveryService {
     private Map<String, Client> clients;
-
     private List<DeliveryDriver> deliveryDrivers;
     private List<Restaurant> restaurants;
     private List<Order> orders;
@@ -61,6 +60,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         }
         return price;
     }
+
     public void addClient(Client client){
         boolean valid_client = true;
         try{
@@ -141,12 +141,13 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
             }
         }
     }
+
     public void addDishToRestaurant(Dish dish, Restaurant restaurant){
         restaurant.getFoods().add(dish);
         System.out.println("Dish added with success to restaurant menu!");
     }
 
-    public void showFoodsFromRestaurant(Restaurant restaurant){
+    public void showDishesFromRestaurant(Restaurant restaurant){
         if(restaurant.getFoods().isEmpty())
             System.out.println("Food menu is empty!\n");
         else{
@@ -155,8 +156,6 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
             }
         }
     }
-
-
 
     public void addDrinkToOrder(Drink drink, Order order){
         order.getOrderedDrinks().add(drink);
@@ -201,6 +200,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         else
             System.out.println("This drink isn't in your order!");
     }
+
     public void removeDishFromOrder(Order order, String dishName){
         boolean found = false;
         for(Dish dish : order.getOrderedFoods()){
