@@ -1,8 +1,5 @@
 package model;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -13,17 +10,17 @@ public class Order {
     private Address clientAddress;
     private Restaurant restaurant;
     private DeliveryDriver deliveryDriver;
-    private List<Food> orderedFoods;
+    private List<Dish> orderedDishes;
     private List<Drink> orderedDrinks;
     private LocalDateTime orderDate;
     private OrderStatus orderStatus;
 
-    public Order(Client client, Address clientAddress, Restaurant restaurant, DeliveryDriver deliveryDriver, List<Food> orderedFoods, List<Drink> orderedDrinks, OrderStatus orderStatus) {
+    public Order(Client client, Address clientAddress, Restaurant restaurant, DeliveryDriver deliveryDriver, List<Dish> orderedDishes, List<Drink> orderedDrinks, OrderStatus orderStatus) {
         this.client = client;
         this.clientAddress = clientAddress;
         this.restaurant = restaurant;
         this.deliveryDriver = deliveryDriver;
-        this.orderedFoods = orderedFoods;
+        this.orderedDishes = orderedDishes;
         this.orderedDrinks = orderedDrinks;
         /*this.orderDate = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
         Calendar calendar = Calendar.getInstance();
@@ -34,12 +31,12 @@ public class Order {
         noOrder++;
     }
 
-    public Order(Client client, Address clientAddress, Restaurant restaurant, DeliveryDriver deliveryDriver, List<Food> orderedFoods, List<Drink> orderedDrinks) {
+    public Order(Client client, Address clientAddress, Restaurant restaurant, DeliveryDriver deliveryDriver, List<Dish> orderedDishes, List<Drink> orderedDrinks) {
         this.client = client;
         this.clientAddress = clientAddress;
         this.restaurant = restaurant;
         this.deliveryDriver = deliveryDriver;
-        this.orderedFoods = orderedFoods;
+        this.orderedDishes = orderedDishes;
         this.orderedDrinks = orderedDrinks;
         /*this.orderDate = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
         Calendar calendar = Calendar.getInstance();
@@ -86,12 +83,12 @@ public class Order {
         this.deliveryDriver = deliveryDriver;
     }
 
-    public List<Food> getOrderedFoods() {
-        return orderedFoods;
+    public List<Dish> getOrderedFoods() {
+        return orderedDishes;
     }
 
-    public void setOrderedFoods(List<Food> orderedFoods) {
-        this.orderedFoods = orderedFoods;
+    public void setOrderedFoods(List<Dish> orderedDishes) {
+        this.orderedDishes = orderedDishes;
     }
 
     public List<Drink> getOrderedDrinks() {
@@ -130,11 +127,11 @@ public class Order {
                 "\nRestaurant: " + restaurant.getName() + "\nRestaurant's address: " + restaurant.getAddress() +
                 "\nOrdered Foods: \n";
         int i = 0;
-        for(Food food: orderedFoods){
+        for(Dish dish : orderedDishes){
             i ++;
             output += Integer.toString(i);
             output += ". ";
-            output += food;
+            output += dish;
             output += '\n';
         }
         output += "\nOrdered drinks: \n";

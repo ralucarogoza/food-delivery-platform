@@ -2,10 +2,10 @@ package model;
 
 import java.util.List;
 
-public class Food extends Product{
+public class Dish extends Product{
     private List<String> ingredients;
 
-    public Food(String name, boolean isVegan, double weight, double price, Integer calories, List<String> ingredients) {
+    public Dish(String name, boolean isVegan, double weight, double price, Integer calories, List<String> ingredients) {
         super(name, isVegan, weight, price, calories);
         this.ingredients = ingredients;
     }

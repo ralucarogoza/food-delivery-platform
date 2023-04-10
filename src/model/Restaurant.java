@@ -1,19 +1,17 @@
 package model;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 public class Restaurant {
     private String name;
     private Address address;
-    private List<Food> foods;
+    private List<Dish> dishes;
     private List<Drink> drinks;
 
-    public Restaurant(String name, Address address, List<Food> foods, List<Drink> drinks) {
+    public Restaurant(String name, Address address, List<Dish> dishes, List<Drink> drinks) {
         this.name = name;
         this.address = address;
-        this.foods = foods;
+        this.dishes = dishes;
         this.drinks = drinks;
     }
 
@@ -33,12 +31,12 @@ public class Restaurant {
         this.address = address;
     }
 
-    public List<Food> getFoods() {
-        return foods;
+    public List<Dish> getFoods() {
+        return dishes;
     }
 
-    public void setFoods(List<Food> foods) {
-        this.foods = foods;
+    public void setFoods(List<Dish> dishes) {
+        this.dishes = dishes;
     }
 
     public List<Drink> getDrinks() {
@@ -57,11 +55,11 @@ public class Restaurant {
                 "\nAddress: " + address +
                 "\nDishes: \n";
         int i = 0;
-        for(Food food: foods){
+        for(Dish dish : dishes){
             i++;
             output += Integer.toString(i);
             output += ". ";
-            output += food;
+            output += dish;
             output += '\n';
         }
         i = 0;

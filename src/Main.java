@@ -14,9 +14,9 @@ public class Main {
         DeliveryDriver deliveryDriver2 = new DeliveryDriver("Andrei", "Popa", "0358659375", DeliveryMethod.ELECTRIC_SCOOTER, DeliveryDriverStatus.AVAILABLE);
         DeliveryDriver deliveryDriver3 = new DeliveryDriver("Eduard", "Ionescu", "0732749585", DeliveryMethod.CAR, DeliveryDriverStatus.BUSY);
 
-        Food food1 = new Food("Pizza Prosciutto", false, 450, 30, 780, new ArrayList<>(){{add("prosciutto"); add("cheese"); add("mushrooms");}});
-        Food food2 = new Food("Chicken Burger", false, 320, 40, 550, new ArrayList<>(){{add("chicken"); add("cheese"); add("tomatoes"); add("cucumbers");}});
-        Food food3 = new Food("Pasta with vegetables", true, 330, 45, 420, new ArrayList<>(){{add("tomatoes"); add("peppers"); add("zucchini");}});
+        Dish dish1 = new Dish("Pizza Prosciutto", false, 450, 30, 780, new ArrayList<>(){{add("prosciutto"); add("cheese"); add("mushrooms");}});
+        Dish dish2 = new Dish("Chicken Burger", false, 320, 40, 550, new ArrayList<>(){{add("chicken"); add("cheese"); add("tomatoes"); add("cucumbers");}});
+        Dish dish3 = new Dish("Pasta with vegetables", true, 330, 45, 420, new ArrayList<>(){{add("tomatoes"); add("peppers"); add("zucchini");}});
 
 
         Drink drink1 = new Drink("Lemonade", true, 350, 18, 180, "strawberries", false);
@@ -32,14 +32,14 @@ public class Main {
         Address address6 = new Address("Bucharest", "Obor", 12);
 
 
-        Restaurant restaurant1 = new Restaurant("McDonald's", address1, new ArrayList<>(){{add(food1); add(food2);}}, new ArrayList<>(){{add(drink2); add(drink3);}});
-        Restaurant restaurant2 = new Restaurant("Michelle", address2, new ArrayList<>(){{add(food3);}}, new ArrayList<>(){{add(drink1); add(drink3);}});
-        Restaurant restaurant3 = new Restaurant("Movo", address3, new ArrayList<>(){{add(food1); add(food3);}}, new ArrayList<>(){{add(drink1); add(drink2);}});
+        Restaurant restaurant1 = new Restaurant("McDonald's", address1, new ArrayList<>(){{add(dish1); add(dish2);}}, new ArrayList<>(){{add(drink2); add(drink3);}});
+        Restaurant restaurant2 = new Restaurant("Michelle", address2, new ArrayList<>(){{add(dish3);}}, new ArrayList<>(){{add(drink1); add(drink3);}});
+        Restaurant restaurant3 = new Restaurant("Movo", address3, new ArrayList<>(){{add(dish1); add(dish3);}}, new ArrayList<>(){{add(drink1); add(drink2);}});
 
 
-        Order order1 = new Order(client1, address4, restaurant1, deliveryDriver1, new ArrayList<>(){{add(food1);}}, new ArrayList<>(){{add(drink2); add(drink3);}});
-        Order order2 = new Order(client2, address5, restaurant2, deliveryDriver2, new ArrayList<>(){{add(food3);}}, new ArrayList<>(){{add(drink1);}});
-        Order order3 = new Order(client3, address6, restaurant3, deliveryDriver3, new ArrayList<>(){{add(food1); add(food3);}}, new ArrayList<>(){{add(drink1); add(drink2);}});
+        Order order1 = new Order(client1, address4, restaurant1, deliveryDriver1, new ArrayList<>(){{add(dish1);}}, new ArrayList<>(){{add(drink2); add(drink3);}});
+        Order order2 = new Order(client2, address5, restaurant2, deliveryDriver2, new ArrayList<>(){{add(dish3);}}, new ArrayList<>(){{add(drink1);}});
+        Order order3 = new Order(client3, address6, restaurant3, deliveryDriver3, new ArrayList<>(){{add(dish1); add(dish3);}}, new ArrayList<>(){{add(drink1); add(drink2);}});
 
 
         service.addClient(client1);
@@ -58,7 +58,7 @@ public class Main {
         service.addOrder(order2);
         service.addOrder(order2);
 
-        service.addDishToRestaurant(new Food("Fillet bites", false, 220, 20, 500, new ArrayList<>(){{add("chicken"); add("paprika");}}), restaurant2);
+        service.addDishToRestaurant(new Dish("Fillet bites", false, 220, 20, 500, new ArrayList<>(){{add("chicken"); add("paprika");}}), restaurant2);
         service.addDrinkToRestaurant(new Drink("Prigat", true, 330, 5, 100, "peaches", false), restaurant3);
 
 

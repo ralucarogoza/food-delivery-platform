@@ -14,9 +14,9 @@ public interface FoodDeliveryService {
     void showRestaurants();
     void addDrinkToRestaurant(Drink drink, Restaurant restaurant);
     void showDrinksFromRestaurant(Restaurant restaurant);
-    void addDishToRestaurant(Food food, Restaurant restaurant);
+    void addDishToRestaurant(Dish dish, Restaurant restaurant);
     void showFoodsFromRestaurant(Restaurant restaurant);
-    void addDishToOrder(Food food, Order order);
+    void addDishToOrder(Dish dish, Order order);
     void showFoodsFromOrder(Order order);
     void addDrinkToOrder(Drink drink, Order order);
     void showDrinksFromOrder(Order order);

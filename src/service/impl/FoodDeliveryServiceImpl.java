@@ -53,8 +53,8 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
     @Override
     public double priceOfOrder(Order order) {
         double price = 0;
-        for(Food food: order.getOrderedFoods()){
-            price += food.getPrice();
+        for(Dish dish : order.getOrderedFoods()){
+            price += dish.getPrice();
         }
         for(Drink drink: order.getOrderedDrinks()){
             price += drink.getPrice();
@@ -141,8 +141,8 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
             }
         }
     }
-    public void addDishToRestaurant(Food food, Restaurant restaurant){
-        restaurant.getFoods().add(food);
+    public void addDishToRestaurant(Dish dish, Restaurant restaurant){
+        restaurant.getFoods().add(dish);
         System.out.println("Dish added with success to restaurant menu!");
     }
 
@@ -150,8 +150,8 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         if(restaurant.getFoods().isEmpty())
             System.out.println("Food menu is empty!\n");
         else{
-            for(Food food: restaurant.getFoods()){
-                System.out.println(food);
+            for(Dish dish : restaurant.getFoods()){
+                System.out.println(dish);
             }
         }
     }
@@ -162,8 +162,8 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         order.getOrderedDrinks().add(drink);
         System.out.println("Drink added with success to your order!");
     }
-    public void addDishToOrder(Food food, Order order){
-        order.getOrderedFoods().add(food);
+    public void addDishToOrder(Dish dish, Order order){
+        order.getOrderedFoods().add(dish);
         System.out.println("Dish added with success to your order!");
     }
 
@@ -181,8 +181,8 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         if(order.getOrderedFoods().isEmpty())
             System.out.println("There are no dishes in your order!\n");
         else{
-            for(Food food: order.getOrderedFoods()){
-                System.out.println(food);
+            for(Dish dish : order.getOrderedFoods()){
+                System.out.println(dish);
             }
         }
     }
@@ -203,9 +203,9 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
     }
     public void removeDishFromOrder(Order order, String dishName){
         boolean found = false;
-        for(Food food: order.getOrderedFoods()){
-            if(food.getName() == dishName){
-                order.getOrderedFoods().remove(food);
+        for(Dish dish : order.getOrderedFoods()){
+            if(dish.getName() == dishName){
+                order.getOrderedFoods().remove(dish);
                 found = true;
                 break;
             }
