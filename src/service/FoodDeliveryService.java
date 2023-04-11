@@ -1,20 +1,26 @@
 package service;
 import model.*;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public interface FoodDeliveryService {
     void addOrder(Order order);
     void showOrders();
+    List<Order> getOrders();
     void removeOrder(int indexOrder);
     void updateStatusForOrder(int indexOrder, OrderStatus orderStatus);
     double priceOfOrder(Order order);
     void addClient(Client client);
     void showClients();
+    Map<String, Client> getClients();
     void addDeliveryDriver(DeliveryDriver deliveryDriver);
     void showDeliveryDrivers();
+    List<DeliveryDriver> getDeliveryDrivers();
     void fireDeliveryDriver(int indexDeliveryDriver);
     void addRestaurant(Restaurant restaurant);
     void showRestaurants();
+    List<Restaurant> getRestaurants();
     void addDrinkToRestaurant(Drink drink, Restaurant restaurant);
     void showDrinksFromRestaurant(Restaurant restaurant);
     void addDishToRestaurant(Dish dish, Restaurant restaurant);

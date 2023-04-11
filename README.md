@@ -10,15 +10,17 @@
 * **Address** <br/>
 * **Restaurant** <br/>
 * **Order** <br/>
+* **FoodDeliveryService**
 <br/>
 
 ## Actions <br/>
-* **showClients**
-* **showDeliveryDrivers**
-* **showRestaurants**
-* **showOrders**
+* **getClients**
+* **getDeliveryDrivers**
+* **getRestaurants**
+* **getOrders**
 * **showDrinksFromRestaurant**
 * **showDishesFromRestaurant**
+* **showClients**
 * **addClient**
 * **addDeliveryDriver**
 * **addRestaurant**

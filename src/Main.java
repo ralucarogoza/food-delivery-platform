@@ -62,17 +62,18 @@ public class Main {
         service.addDrinkToRestaurant(new Drink("Prigat", true, 330, 5, 100, "peaches", false), restaurant3);
 
         service.showClients();
-        service.showDeliveryDrivers();
-        service.showRestaurants();
-        service.showOrders();
         service.showFoodsFromOrder(order1);
         service.showDrinksFromOrder(order1);
 
         Client client4 = service.findClient("ralucar@yahoo.com");
-        System.out.println(client4);
+        if(client4 != null)
+            System.out.println(client4);
+        else
+            System.out.println("This client doesn't exist!");
 
-        List<DeliveryDriver> deliveryDrivers = service.getAvailableDeliveryDrivers();
-        for(DeliveryDriver deliveryDriver: deliveryDrivers){
+
+        List<DeliveryDriver> availableDeliveryDrivers = service.getAvailableDeliveryDrivers();
+        for(DeliveryDriver deliveryDriver: availableDeliveryDrivers){
             System.out.println(deliveryDriver);
         }
 
@@ -84,12 +85,46 @@ public class Main {
         System.out.print(service.priceOfOrder(order1) + "$\n\n");
 
         service.fireDeliveryDriver(1);
-        service.showDeliveryDrivers();
 
         service.removeOrder(1);
 
         service.updateStatusForOrder(1, OrderStatus.COMPLETED);
-        service.showOrders();
+
+
+        List<DeliveryDriver> deliveryDrivers = service.getDeliveryDrivers();
+        if(deliveryDrivers != null){
+            int i = 0;
+            for(DeliveryDriver deliveryDriver: deliveryDrivers){
+                i++;
+                System.out.print(Integer.toString(i));
+                System.out.print(". ");
+                System.out.println(deliveryDriver);
+            }
+        }
+
+
+        List<Order> orders = service.getOrders();
+        if(orders != null){
+            int i = 0;
+            for(Order order: orders){
+                i++;
+                System.out.print(Integer.toString(i));
+                System.out.print(". ");
+                System.out.println(order);
+            }
+        }
+
+        List<Restaurant> restaurants = service.getRestaurants();
+        if(restaurants != null){
+            int i = 0;
+            for(Restaurant restaurant: restaurants){
+                i++;
+                System.out.print(Integer.toString(i) + ". ");
+                System.out.println(restaurant);
+            }
+        }
+
+
 
 
 

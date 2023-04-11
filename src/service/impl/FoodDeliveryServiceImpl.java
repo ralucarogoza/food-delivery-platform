@@ -1,6 +1,6 @@
 package service.impl;
 
-import exceptions.InvalidEmailException;
+import exceptions.*;
 import model.*;
 import service.FoodDeliveryService;
 
@@ -8,6 +8,7 @@ import java.util.*;
 
 import static java.util.Collections.sort;
 import static validation.ClientValidation.validateEmail;
+import static validation.PersonValidation.validatePhoneNumber;
 
 public class FoodDeliveryServiceImpl implements FoodDeliveryService {
     private Map<String, Client> clients;
@@ -15,22 +16,11 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
     private List<Restaurant> restaurants;
     private List<Order> orders;
 
-    public FoodDeliveryServiceImpl() {
-        clients = new TreeMap<>();
-        deliveryDrivers = new ArrayList<>();
-        restaurants = new ArrayList<>();
-        orders = new ArrayList<>();
-    }
-
-    public Map<String, Client> getClients() {
-        return clients;
-    }
-
-    public List<Restaurant> getRestaurants() {
-        return restaurants;
-    }
 
     public void addOrder(Order order){
+        if(orders == null){
+            orders = new ArrayList<>();
+        }
         orders.add(order);
         System.out.println("Order added with success!");
     }
@@ -47,6 +37,17 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
                 System.out.println(order);
             }
         }
+    }
+
+    public List<Order> getOrders(){
+        try{
+            if(orders == null)
+                throw new NoOrderFoundException("There are no orders!");
+        }
+        catch(NoOrderFoundException orderFoundException){
+            System.out.println(orderFoundException.getMessage());
+        }
+        return orders;
     }
 
     public void removeOrder(int indexOrder){
@@ -92,7 +93,17 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
             valid_client = false;
             System.out.println(emailException.getMessage());
         }
+        try{
+            if(!validatePhoneNumber(client.getPhoneNumber()))
+                throw new InvalidPhoneNumberException("Invalid format for phone number!");
+        }
+        catch (InvalidPhoneNumberException phoneNumberException){
+            valid_client = false;
+            System.out.println(phoneNumberException.getMessage());
+        }
         if(valid_client){
+            if(clients == null)
+                clients = new TreeMap<>();
             clients.put(client.getEmail(), client);
             System.out.println("Client added with success!");
         }
@@ -111,10 +122,35 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         }
     }
 
+
+    public Map<String, Client> getClients(){
+        try {
+            if (clients == null)
+                throw new NoClientFoundException("There are no clients!");
+        }
+        catch(NoClientFoundException clientFoundException){
+            System.out.println(clientFoundException.getMessage());
+        }
+        return clients;
+    }
+
     public void addDeliveryDriver(DeliveryDriver deliveryDriver){
-        deliveryDrivers.add(deliveryDriver);
-        sort(deliveryDrivers);
-        System.out.println("Delivery driver added with success!");
+        boolean validDeliveryDriver = true;
+        try{
+            if(!validatePhoneNumber(deliveryDriver.getPhoneNumber()))
+                throw new InvalidPhoneNumberException("Invalid format for phone number!");
+        }
+        catch (InvalidPhoneNumberException phoneNumberException){
+            validDeliveryDriver = false;
+            System.out.println(phoneNumberException.getMessage());
+        }
+        if(validDeliveryDriver){
+            if(deliveryDrivers == null)
+                deliveryDrivers = new ArrayList<>();
+            deliveryDrivers.add(deliveryDriver);
+            sort(deliveryDrivers);
+            System.out.println("Delivery driver added with success!");
+        }
     }
 
     public void showDeliveryDrivers(){
@@ -130,6 +166,17 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         }
     }
 
+    public List<DeliveryDriver> getDeliveryDrivers(){
+        try {
+            if (deliveryDrivers == null)
+                throw new NoClientFoundException("There are no delivery drivers!");
+        }
+        catch(NoDeliveryDriverFoundException deliveryDriverFoundException){
+            System.out.println(deliveryDriverFoundException.getMessage());
+        }
+        return deliveryDrivers;
+    }
+
     public void fireDeliveryDriver(int indexDeliveryDriver){
         if(indexDeliveryDriver - 1 < deliveryDrivers.size()){
             deliveryDrivers.remove(indexDeliveryDriver - 1);
@@ -140,6 +187,8 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
     }
 
     public void addRestaurant(Restaurant restaurant){
+        if(restaurants == null)
+            restaurants = new ArrayList<>();
         restaurants.add(restaurant);
         System.out.println("Restaurant added with success!");
     }
@@ -155,6 +204,17 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
                 System.out.println(restaurant);
             }
         }
+    }
+
+    public List<Restaurant> getRestaurants(){
+        try {
+            if(restaurants == null)
+                throw new NoRestaurantFoundException("There are no restaurants!");
+        }
+        catch(NoRestaurantFoundException restaurantFoundException){
+            System.out.println(restaurantFoundException.getMessage());
+        }
+        return restaurants;
     }
 
     public void addDrinkToRestaurant(Drink drink, Restaurant restaurant){
@@ -247,12 +307,10 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
     }
 
     public Client findClient(String email){
-        boolean found = false;
-        Client clientWanted = new Client();
+        Client clientWanted = null;
         for(Map.Entry<String, Client> client: clients.entrySet()){
             if(client.getKey() == email){
                 clientWanted = client.getValue();
-                found = true;
             }
         }
         return clientWanted;
