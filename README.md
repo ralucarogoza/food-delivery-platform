@@ -6,7 +6,7 @@
 * **DeliveryDriver** - inherits Person<br/>
 * **Product** - abstract class </br>
 * **Drink** - inherits Product <br/>
-* **Food** - inherits Product <br/>
+* **Dish** - inherits Product <br/>
 * **Address** <br/>
 * **Restaurant** <br/>
 * **Order** <br/>
