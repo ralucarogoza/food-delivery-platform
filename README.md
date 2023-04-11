@@ -25,8 +25,11 @@
 * **addOrder**
 * **removeDrinkFromOrder**
 * **removeDishFromOrder**
+* **removeOrder**
+* **fireDeliveryDriver**
 * **findClient**
 * **getAvailableDeliveryDrivers**
+* **updateStatusForOrder**
 * **priceOfOrder**
 
 

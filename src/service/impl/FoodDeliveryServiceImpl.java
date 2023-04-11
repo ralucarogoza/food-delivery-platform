@@ -49,6 +49,27 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         }
     }
 
+    public void removeOrder(int indexOrder){
+        if(indexOrder - 1 < orders.size()){
+            orders.remove(indexOrder - 1);
+            System.out.println("Order " + indexOrder + " removed with success!");
+        }
+        else{
+            System.out.println("Doesn't exist an order with this index!");
+        }
+    }
+
+    public void updateStatusForOrder(int indexOrder, OrderStatus orderStatus){
+        if(indexOrder - 1 > orders.size()){
+            System.out.println("Doesn't exist an order with this index!");
+        }
+        else{
+            OrderStatus oldStatus = orders.get(indexOrder - 1).getOrderStatus();
+            orders.get(indexOrder - 1).setOrderStatus(orderStatus);
+            System.out.println("Order status for order number " + indexOrder + " was modified from " + oldStatus + " to " + orderStatus);
+        }
+    }
+
     @Override
     public double priceOfOrder(Order order) {
         double price = 0;
@@ -107,6 +128,15 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
                 System.out.println(deliveryDriver);
             }
         }
+    }
+
+    public void fireDeliveryDriver(int indexDeliveryDriver){
+        if(indexDeliveryDriver - 1 < deliveryDrivers.size()){
+            deliveryDrivers.remove(indexDeliveryDriver - 1);
+            System.out.println("Delivery driver with index" + indexDeliveryDriver + " was fired with success!");
+        }
+        else
+            System.out.println("Doesn't exist a delivery driver with this index!");
     }
 
     public void addRestaurant(Restaurant restaurant){

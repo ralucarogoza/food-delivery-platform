@@ -61,7 +61,6 @@ public class Main {
         service.addDishToRestaurant(new Dish("Fillet bites", false, 220, 20, 500, new ArrayList<>(){{add("chicken"); add("paprika");}}), restaurant2);
         service.addDrinkToRestaurant(new Drink("Prigat", true, 330, 5, 100, "peaches", false), restaurant3);
 
-
         service.showClients();
         service.showDeliveryDrivers();
         service.showRestaurants();
@@ -84,11 +83,17 @@ public class Main {
         System.out.println("Price of order 1: ");
         System.out.print(service.priceOfOrder(order1) + "$\n\n");
 
+        service.fireDeliveryDriver(1);
+        service.showDeliveryDrivers();
+
+        service.removeOrder(1);
+
+        service.updateStatusForOrder(1, OrderStatus.COMPLETED);
+        service.showOrders();
 
 
 
 
-        
         // Interactive Menu for some features
 
         System.out.println("1. Add new client");

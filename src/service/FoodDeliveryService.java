@@ -5,11 +5,14 @@ import java.util.List;
 public interface FoodDeliveryService {
     void addOrder(Order order);
     void showOrders();
+    void removeOrder(int indexOrder);
+    void updateStatusForOrder(int indexOrder, OrderStatus orderStatus);
     double priceOfOrder(Order order);
     void addClient(Client client);
     void showClients();
     void addDeliveryDriver(DeliveryDriver deliveryDriver);
     void showDeliveryDrivers();
+    void fireDeliveryDriver(int indexDeliveryDriver);
     void addRestaurant(Restaurant restaurant);
     void showRestaurants();
     void addDrinkToRestaurant(Drink drink, Restaurant restaurant);
