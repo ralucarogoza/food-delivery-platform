@@ -248,12 +248,33 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
     }
 
     public void addDrinkToOrder(Drink drink, Order order){
-        order.getOrderedDrinks().add(drink);
-        System.out.println("Drink added with success to your order!");
+        List <Drink> drinksFromRestaurant = order.getRestaurant().getDrinks();
+        try {
+            if(!drinksFromRestaurant.contains(drink))
+                throw new DrinkIsNotInTheMenuException("This drink is not in the restaurant's menu.");
+            else{
+                order.getOrderedDrinks().add(drink);
+                System.out.println("Drink added with success to your order!");
+            }
+        }
+        catch(DrinkIsNotInTheMenuException drinkIsNotInTheMenuException){
+            System.out.println(drinkIsNotInTheMenuException.getMessage());
+        }
     }
+
     public void addDishToOrder(Dish dish, Order order){
-        order.getOrderedFoods().add(dish);
-        System.out.println("Dish added with success to your order!");
+        List <Dish> dishesFromRestaurant = order.getRestaurant().getFoods();
+        try {
+            if(!dishesFromRestaurant.contains(dish))
+                throw new DishIsNotInTheMenuException("This dish is not in the restaurant's menu.");
+            else{
+                order.getOrderedFoods().add(dish);
+                System.out.println("Dish added with success to your order!");
+            }
+        }
+        catch(DishIsNotInTheMenuException dishIsNotInTheMenuException){
+            System.out.println(dishIsNotInTheMenuException.getMessage());
+        }
     }
 
     public void showDrinksFromOrder(Order order){
