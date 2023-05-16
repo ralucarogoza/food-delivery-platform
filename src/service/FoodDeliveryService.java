@@ -1,5 +1,7 @@
 package service;
 import model.*;
+
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -33,4 +35,17 @@ public interface FoodDeliveryService {
     void removeDishFromOrder(Order order, String dishName);
     Client findClient(String email);
     List<DeliveryDriver> getAvailableDeliveryDrivers();
+
+    List<Address> getAddresses();
+    List<Dish> getDishes();
+    List<Drink> getDrinks();
+    void addClientsFromCSVFile(String path) throws IOException;
+
+    void addDeliveryDriversFromCSVFile(String path) throws IOException;
+
+    void addAddressesFromCSVFile(String path) throws IOException;
+
+    void addDishesFromCSVFile(String path) throws IOException;
+
+    void addDrinksFromCSVFile(String path) throws IOException;
 }

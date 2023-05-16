@@ -3,16 +3,24 @@ package model;
 import java.util.List;
 
 public class Restaurant {
+    private static int noRestaurants;
+    private int id;
     private String name;
     private Address address;
     private List<Dish> dishes;
     private List<Drink> drinks;
 
     public Restaurant(String name, Address address, List<Dish> dishes, List<Drink> drinks) {
+        this.id = noRestaurants;
         this.name = name;
         this.address = address;
         this.dishes = dishes;
         this.drinks = drinks;
+        noRestaurants++;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {

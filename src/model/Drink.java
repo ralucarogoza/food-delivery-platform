@@ -1,13 +1,21 @@
 package model;
 
 public class Drink extends Product{
+    private static int noDrinks = 0;
+    private int id;
     private String flavour;
     private boolean isAlcoholic;
 
-    public Drink(String name, boolean isVegan, double weight, double price, Integer calories, String flavour, boolean isAlcoholic) {
-        super(name, isVegan, weight, price, calories);
+    public Drink(String name, boolean isVegan, double weight, double price, String flavour, boolean isAlcoholic) {
+        super(name, isVegan, weight, price);
+        this.id = noDrinks;
         this.flavour = flavour;
         this.isAlcoholic = isAlcoholic;
+        noDrinks++;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getFlavour() {

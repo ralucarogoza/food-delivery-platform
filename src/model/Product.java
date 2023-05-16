@@ -5,14 +5,12 @@ public abstract class Product {
     private boolean isVegan;
     private double weight;
     private double price;
-    private Integer calories;
 
-    public Product(String name, boolean isVegan, double weight, double price, Integer calories) {
+    public Product(String name, boolean isVegan, double weight, double price) {
         this.name = name;
         this.isVegan = isVegan;
         this.weight = weight;
         this.price = price;
-        this.calories = calories;
     }
 
     public String getName() {
@@ -46,21 +44,11 @@ public abstract class Product {
     public void setPrice(double price) {
         this.price = price;
     }
-
-    public Integer getCalories() {
-        return calories;
-    }
-
-    public void setCalories(Integer calories) {
-        this.calories = calories;
-    }
-
     @Override
     public String toString() {
         return "Name: " + name +
                 "\nIs vegan: " + isVegan +
                 "\nWeight: " + weight +
-                "\nPrice: " + price + "$" +
-                "\nCalories: " + calories;
+                "\nPrice: " + price + "$";
     }
 }

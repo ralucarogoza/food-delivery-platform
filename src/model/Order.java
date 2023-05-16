@@ -5,7 +5,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Order {
-    private static int noOrder = 0;
+    private static int noOrders = 0;
+    private int id;
     private Client client;
     private Address clientAddress;
     private Restaurant restaurant;
@@ -16,6 +17,7 @@ public class Order {
     private OrderStatus orderStatus;
 
     public Order(Client client, Address clientAddress, Restaurant restaurant, DeliveryDriver deliveryDriver, List<Dish> orderedDishes, List<Drink> orderedDrinks, OrderStatus orderStatus) {
+        this.id = noOrders;
         this.client = client;
         this.clientAddress = clientAddress;
         this.restaurant = restaurant;
@@ -27,8 +29,7 @@ public class Order {
         this.orderDate = this.orderDate.format(calendar.getTime());*/
         this.orderStatus = orderStatus;
         this.orderDate = LocalDateTime.now();
-
-        noOrder++;
+        noOrders++;
     }
 
     public Order(Client client, Address clientAddress, Restaurant restaurant, DeliveryDriver deliveryDriver, List<Dish> orderedDishes, List<Drink> orderedDrinks) {
@@ -43,12 +44,15 @@ public class Order {
         this.orderDate = this.orderDate.format(calendar.getTime());*/
         this.orderStatus = OrderStatus.IN_PROCESS;
         this.orderDate = LocalDateTime.now();
-        noOrder++;
+        noOrders++;
     }
 
+    public int getId() {
+        return id;
+    }
 
     public int getNoOrders() {
-        return noOrder;
+        return noOrders;
     }
 
     public Client getClient() {
@@ -121,6 +125,7 @@ public class Order {
         String formattedDate = orderDate.format(myFormatObj);
         String output ="";
         output += "Order: " +
+                "\nId: " + id +
                 "\nStatus: " + orderStatus +
                 "\nClient: \n" + client +
                 "\nClient's address: " + clientAddress +

@@ -1,16 +1,24 @@
 package model;
 
 public class Client extends Person{
+    private static int noClients = 0;
+    private int id;
     private String email;
     //private String password;
 
     public Client(String firstName, String lastName, String phoneNumber, String email) {
         super(firstName, lastName, phoneNumber);
+        this.id = noClients;
         this.email = email;
+        noClients++;
     }
 
     public Client() {
         super();
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getEmail() {
@@ -23,7 +31,7 @@ public class Client extends Person{
 
     @Override
     public String toString() {
-        return super.toString() +
+        return "\nId: " + this.id + "\n" +  super.toString() +
                 "\nEmail: " + email + "\n";
     }
 }

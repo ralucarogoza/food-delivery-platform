@@ -3,7 +3,9 @@ package service.impl;
 import exceptions.*;
 import model.*;
 import service.FoodDeliveryService;
+import utils.*;
 
+import java.io.IOException;
 import java.util.*;
 
 import static java.util.Collections.sort;
@@ -15,6 +17,9 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
     private List<DeliveryDriver> deliveryDrivers;
     private List<Restaurant> restaurants;
     private List<Order> orders;
+    private List<Address> addresses;
+    private List<Drink> drinks;
+    private List<Dish> dishes;
 
 
     public void addOrder(Order order){
@@ -344,5 +349,113 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
                 availableDeliveryDrivers.add(deliveryDriver);
         }
         return availableDeliveryDrivers;
+    }
+
+
+
+
+
+    public void addAddress(Address address){
+        if(addresses == null){
+            addresses = new ArrayList<>();
+        }
+        addresses.add(address);
+        System.out.println("Address added with success!");
+    }
+
+    public void addDish(Dish dish){
+        if(dishes == null){
+            dishes = new ArrayList<>();
+        }
+        dishes.add(dish);
+        System.out.println("Dish added with success!");
+    }
+
+
+    public void addDrink(Drink drink){
+        if(drinks == null){
+            drinks = new ArrayList<>();
+        }
+        drinks.add(drink);
+        System.out.println("Drink added with success!");
+    }
+
+
+    public List<Address> getAddresses(){
+        try{
+            if(addresses == null)
+                throw new Exception("There are no addresses!");
+        }
+        catch(Exception exception){
+            System.out.println(exception.getMessage());
+        }
+        return addresses;
+    }
+
+    public List<Dish> getDishes(){
+        try{
+            if(dishes == null)
+                throw new Exception("There are no dishes!");
+        }
+        catch(Exception exception){
+            System.out.println(exception.getMessage());
+        }
+        return dishes;
+    }
+
+    public List<Drink> getDrinks(){
+        try{
+            if(drinks == null)
+                throw new Exception("There are no drinks!");
+        }
+        catch(Exception exception){
+            System.out.println(exception.getMessage());
+        }
+        return drinks;
+    }
+
+    @Override
+    public void addClientsFromCSVFile(String path) throws IOException {
+        ClientReaderWriter clientReaderWriter = ClientReaderWriter.getInstance();
+        List<Client> clientsFromCSVFile = new ArrayList<>(clientReaderWriter.read(path));
+        for(Client client: clientsFromCSVFile){
+            addClient(client);
+        }
+    }
+
+    @Override
+    public void addDeliveryDriversFromCSVFile(String path) throws IOException {
+        DeliveryDriverReaderWriter deliveryDriverReaderWriter = DeliveryDriverReaderWriter.getInstance();
+        List<DeliveryDriver> deliveryDriversFromCSVFile = new ArrayList<>(deliveryDriverReaderWriter.read(path));
+        for(DeliveryDriver deliveryDriver: deliveryDriversFromCSVFile){
+            addDeliveryDriver(deliveryDriver);
+        }
+    }
+
+    @Override
+    public void addAddressesFromCSVFile(String path) throws IOException {
+        AddressReaderWriter addressReaderWriter = AddressReaderWriter.getInstance();
+        List<Address> addressesFromCSVFile = new ArrayList<>(addressReaderWriter.read(path));
+        for(Address address: addressesFromCSVFile){
+            addAddress(address);
+        }
+    }
+
+    @Override
+    public void addDishesFromCSVFile(String path) throws IOException {
+        DishReaderWriter dishReaderWriter = DishReaderWriter.getInstance();
+        List<Dish> dishesFromCSVFile = new ArrayList<>(dishReaderWriter.read(path));
+        for(Dish dish: dishesFromCSVFile){
+            addDish(dish);
+        }
+    }
+
+    @Override
+    public void addDrinksFromCSVFile(String path) throws IOException {
+        DrinkReaderWriter drinkReaderWriter = DrinkReaderWriter.getInstance();
+        List<Drink> drinksFromCSVFile = new ArrayList<>(drinkReaderWriter.read(path));
+        for(Drink drink: drinksFromCSVFile){
+            addDrink(drink);
+        }
     }
 }

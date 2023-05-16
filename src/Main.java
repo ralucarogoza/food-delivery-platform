@@ -1,12 +1,45 @@
 import model.*;
 import service.impl.FoodDeliveryServiceImpl;
+import utils.ClientReaderWriter;
+
+import java.io.IOException;
 import java.util.*;
 
-public class Main {
-    public static void main(String[] args) {
-        FoodDeliveryServiceImpl service = new FoodDeliveryServiceImpl();
 
-        Client client1 = new Client("Raluca", "Rogoza", "0234567890", "ralucar@yahoo.com");
+public class Main {
+    public static void main(String[] args) throws IOException {
+        /*ClientReaderWriter clientReaderWriter = ClientReaderWriter.getInstance();
+        List<Client> c = new ArrayList<>(clientReaderWriter.read("client-data.csv"));
+        System.out.println(c);
+
+        clientReaderWriter.write("client-data2.csv", new Client("Raluca", "Rogoza", "0234567890", "ralucar@yahoo.com"));
+        clientReaderWriter.write("client-data2.csv", new Client("Carina", "Nicola", "0254657698", "carinan@yahoo.com"));
+*/
+
+
+
+        FoodDeliveryServiceImpl service = new FoodDeliveryServiceImpl();
+        service.addClientsFromCSVFile("src/utils/CSVfiles/clients.csv");
+        System.out.println(service.getClients());
+
+
+        service.addDeliveryDriversFromCSVFile("src/utils/CSVfiles/deliverydrivers.csv");
+        System.out.println(service.getDeliveryDrivers());
+
+
+        service.addAddressesFromCSVFile("src/utils/CSVfiles/addresses.csv");
+        System.out.println(service.getAddresses());
+
+
+        service.addDrinksFromCSVFile("src/utils/CSVfiles/drinks.csv");
+        System.out.println(service.getDrinks());
+
+
+        service.addDishesFromCSVFile("src/utils/CSVfiles/dishes.csv");
+        System.out.println(service.getDishes());
+
+
+        /*Client client1 = new Client("Raluca", "Rogoza", "0234567890", "ralucar@yahoo.com");
         Client client2 = new Client("Carina", "Nicola", "0254657698", "carinan@yahoo.com");
         Client client3 = new Client("Ioana", "Maria", "023412547627", "ioanam@yahoo.com");
 
@@ -14,14 +47,14 @@ public class Main {
         DeliveryDriver deliveryDriver2 = new DeliveryDriver("Andrei", "Popa", "0358659375", DeliveryMethod.ELECTRIC_SCOOTER, DeliveryDriverStatus.AVAILABLE);
         DeliveryDriver deliveryDriver3 = new DeliveryDriver("Eduard", "Ionescu", "0732749585", DeliveryMethod.CAR, DeliveryDriverStatus.BUSY);
 
-        Dish dish1 = new Dish("Pizza Prosciutto", false, 450, 30, 780, new ArrayList<>(){{add("prosciutto"); add("cheese"); add("mushrooms");}});
-        Dish dish2 = new Dish("Chicken Burger", false, 320, 40, 550, new ArrayList<>(){{add("chicken"); add("cheese"); add("tomatoes"); add("cucumbers");}});
-        Dish dish3 = new Dish("Pasta with vegetables", true, 330, 45, 420, new ArrayList<>(){{add("tomatoes"); add("peppers"); add("zucchini");}});
+        Dish dish1 = new Dish("Pizza Prosciutto", false, 450, 30, 780, 1000);
+        Dish dish2 = new Dish("Chicken Burger", false, 320, 40, 550, 720);
+        Dish dish3 = new Dish("Pasta with vegetables", true, 330, 45, 420, 590);
 
 
-        Drink drink1 = new Drink("Lemonade", true, 350, 18, 180, "strawberries", false);
-        Drink drink2 = new Drink("Caffee latte", false, 320, 14, 110, "vanilla", false);
-        Drink drink3 = new Drink("Cider", true, 500, 10, 200, "pear", true);
+        Drink drink1 = new Drink("Lemonade", true, 350, 18, "strawberries", false);
+        Drink drink2 = new Drink("Caffee latte", false, 320, 14, "vanilla", false);
+        Drink drink3 = new Drink("Cider", true, 500, 10, "pear", true);
 
 
         Address address1 = new Address("Bucharest", "Bd. Mihail Kogalniceanu", 14);
@@ -122,14 +155,14 @@ public class Main {
                 System.out.print(Integer.toString(i) + ". ");
                 System.out.println(restaurant);
             }
-        }
+        }*/
 
 
 
 
 
 
-        // Interactive Menu for some features
+        /*// Interactive Menu for some features
 
         System.out.println("1. Add new client");
         System.out.println("2. See all clients");
@@ -180,6 +213,6 @@ public class Main {
                     service.showOrders();
                     break;
             }
-        }while(option != 0);
+        }while(option != 0);*/
     }
 }
