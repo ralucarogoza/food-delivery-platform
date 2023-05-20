@@ -7,15 +7,15 @@ public class Restaurant {
     private int id;
     private String name;
     private Address address;
-    private List<Dish> dishes;
-    private List<Drink> drinks;
+    //private List<Dish> dishes;
+    //private List<Drink> drinks;
 
-    public Restaurant(String name, Address address, List<Dish> dishes, List<Drink> drinks) {
+    public Restaurant(String name, Address address) {
         this.id = noRestaurants;
         this.name = name;
         this.address = address;
-        this.dishes = dishes;
-        this.drinks = drinks;
+        //this.dishes = dishes;
+        //this.drinks = drinks;
         noRestaurants++;
     }
 
@@ -39,7 +39,7 @@ public class Restaurant {
         this.address = address;
     }
 
-    public List<Dish> getFoods() {
+    /*public List<Dish> getFoods() {
         return dishes;
     }
 
@@ -53,7 +53,7 @@ public class Restaurant {
 
     public void setDrinks(List<Drink> drinks) {
         this.drinks = drinks;
-    }
+    }*/
 
     @Override
     public String toString() {
@@ -62,7 +62,7 @@ public class Restaurant {
                 "\nName: " + name +
                 "\nAddress: " + address +
                 "\nDishes: \n";
-        int i = 0;
+        /*int i = 0;
         for(Dish dish : dishes){
             i++;
             output += Integer.toString(i);
@@ -78,7 +78,7 @@ public class Restaurant {
             output += ". ";
             output += drink;
             output += '\n';
-        }
+        }*/
         return output;
     }
 
@@ -90,9 +90,10 @@ public class Restaurant {
             return false;
         Restaurant restaurant = (Restaurant) object;
         return this.getName().equals(restaurant.getName()) &&
-                this.getAddress().equals(restaurant.getAddress()) &&
+                this.getAddress().equals(restaurant.getAddress());
+                /*&&
                 this.getFoods().equals(restaurant.getFoods()) &&
-                this.getDrinks().equals(restaurant.getDrinks());
+                this.getDrinks().equals(restaurant.getDrinks());*/
     }
 
 }

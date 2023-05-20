@@ -1,0 +1,25 @@
+addClient: Client 0 was added at 2023-05-20 15:23:22
+addClient: Client 1 was added at 2023-05-20 15:23:22
+addClient: Client 2 was added at 2023-05-20 15:23:22
+addClient: Client 3 was added at 2023-05-20 15:23:22
+addClient: Client 2 was added at 2023-05-20 15:23:22
+addClient: Client 3 was added at 2023-05-20 15:23:22
+addRestaurant: Restaurant 0: McDonald's was added at 2023-05-20 15:23:22
+addRestaurant: Restaurant 1: Michelle was added at 2023-05-20 15:23:22
+addRestaurant: Restaurant 2: Movo was added at 2023-05-20 15:23:22
+addDeliveryDriver: DeliveryDriver 0 was added at 2023-05-20 15:23:22
+addDeliveryDriver: DeliveryDriver 1 was added at 2023-05-20 15:23:22
+addDeliveryDriver: DeliveryDriver 2 was added at 2023-05-20 15:23:22
+addOrder: Order 0 was added at 2023-05-20 15:23:22
+addOrder: Order 1 was added at 2023-05-20 15:23:22
+addOrder: Order 2 was added at 2023-05-20 15:23:22
+addDish: Dish 0 was added at 2023-05-20 15:23:22
+addDish: Dish 1 was added at 2023-05-20 15:23:22
+addDish: Dish 2 was added at 2023-05-20 15:23:22
+addDrink: Drink 0 was added at 2023-05-20 15:23:22
+addDrink: Drink 1 was added at 2023-05-20 15:23:22
+addDrink: Drink 2 was added at 2023-05-20 15:23:22
+addDrinkToRestaurant: Drink 0 was added in the menu of restaurant 0 at 2023-05-20 15:23:22
+addDishToRestaurant: Dish 1 was added in the menu of restaurant 2 at 2023-05-20 15:23:22
+removeOrder: Order 1 was removed at 2023-05-20 15:23:22
+removeClient: Client 2 was removed at 2023-05-20 15:23:22

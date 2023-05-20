@@ -23,7 +23,7 @@ public class Main {
         System.out.println(service.getClients());
 
 
-        service.addDeliveryDriversFromCSVFile("src/utils/CSVfiles/deliverydrivers.csv");
+        /*service.addDeliveryDriversFromCSVFile("src/utils/CSVfiles/deliverydrivers.csv");
         System.out.println(service.getDeliveryDrivers());
 
 
@@ -36,20 +36,27 @@ public class Main {
 
 
         service.addDishesFromCSVFile("src/utils/CSVfiles/dishes.csv");
-        System.out.println(service.getDishes());
+        System.out.println(service.getDishes());*/
 
 
-        /*Client client1 = new Client("Raluca", "Rogoza", "0234567890", "ralucar@yahoo.com");
+        Client client1 = new Client("Raluca", "Rogoza", "0234567890", "ralucar@yahoo.com");
         Client client2 = new Client("Carina", "Nicola", "0254657698", "carinan@yahoo.com");
         Client client3 = new Client("Ioana", "Maria", "023412547627", "ioanam@yahoo.com");
+
+        service.addClient(client1);
+        service.addClient(client2);
+        service.addClient(client3);
+
+
+        System.out.println(service.getClients());
 
         DeliveryDriver deliveryDriver1 = new DeliveryDriver("Bogdan", "Mihai", "0789437295", DeliveryMethod.BICYCLE, DeliveryDriverStatus.AVAILABLE);
         DeliveryDriver deliveryDriver2 = new DeliveryDriver("Andrei", "Popa", "0358659375", DeliveryMethod.ELECTRIC_SCOOTER, DeliveryDriverStatus.AVAILABLE);
         DeliveryDriver deliveryDriver3 = new DeliveryDriver("Eduard", "Ionescu", "0732749585", DeliveryMethod.CAR, DeliveryDriverStatus.BUSY);
 
-        Dish dish1 = new Dish("Pizza Prosciutto", false, 450, 30, 780, 1000);
-        Dish dish2 = new Dish("Chicken Burger", false, 320, 40, 550, 720);
-        Dish dish3 = new Dish("Pasta with vegetables", true, 330, 45, 420, 590);
+        Dish dish1 = new Dish("Pizza Prosciutto", false, 450, 30, 780);
+        Dish dish2 = new Dish("Chicken Burger", false, 320, 40, 550);
+        Dish dish3 = new Dish("Pasta with vegetables", true, 330, 45, 420);
 
 
         Drink drink1 = new Drink("Lemonade", true, 350, 18, "strawberries", false);
@@ -65,14 +72,14 @@ public class Main {
         Address address6 = new Address("Bucharest", "Obor", 12);
 
 
-        Restaurant restaurant1 = new Restaurant("McDonald's", address1, new ArrayList<>(){{add(dish1); add(dish2);}}, new ArrayList<>(){{add(drink2); add(drink3);}});
-        Restaurant restaurant2 = new Restaurant("Michelle", address2, new ArrayList<>(){{add(dish3);}}, new ArrayList<>(){{add(drink1); add(drink3);}});
-        Restaurant restaurant3 = new Restaurant("Movo", address3, new ArrayList<>(){{add(dish1); add(dish3);}}, new ArrayList<>(){{add(drink1); add(drink2);}});
+        Restaurant restaurant1 = new Restaurant("McDonald's", address1);
+        Restaurant restaurant2 = new Restaurant("Michelle", address2);
+        Restaurant restaurant3 = new Restaurant("Movo", address3);
 
 
-        Order order1 = new Order(client1, address4, restaurant1, deliveryDriver1, new ArrayList<>(){{add(dish1);}}, new ArrayList<>(){{add(drink2); add(drink3);}});
-        Order order2 = new Order(client2, address5, restaurant2, deliveryDriver2, new ArrayList<>(){{add(dish3);}}, new ArrayList<>(){{add(drink1);}});
-        Order order3 = new Order(client3, address6, restaurant3, deliveryDriver3, new ArrayList<>(){{add(dish1); add(dish3);}}, new ArrayList<>(){{add(drink1); add(drink2);}});
+        Order order1 = new Order(client1, address4, restaurant1, deliveryDriver1, dish1, drink2);
+        Order order2 = new Order(client2, address5, restaurant2, deliveryDriver2, dish3, drink1);
+        Order order3 = new Order(client3, address6, restaurant3, deliveryDriver3, dish1, drink3);
 
 
         service.addClient(client1);
@@ -89,9 +96,31 @@ public class Main {
 
         service.addOrder(order1);
         service.addOrder(order2);
-        service.addOrder(order2);
+        service.addOrder(order3);
 
-        service.addDishToRestaurant(new Dish("Fillet bites", false, 220, 20, 500, new ArrayList<>(){{add("chicken"); add("paprika");}}), restaurant2);
+        service.addDish(dish1);
+        service.addDish(dish2);
+        service.addDish(dish3);
+
+        service.addDrink(drink1);
+        service.addDrink(drink2);
+        service.addDrink(drink3);
+
+
+        System.out.println(service.getDrinks());
+
+        service.addDrinkToRestaurant(drink1, restaurant1);
+        service.addDishToRestaurant(dish2, restaurant3);
+
+        service.showDrinksFromRestaurant(restaurant1);
+
+        service.showOrders();
+
+        service.removeOrder(order2);
+        service.removeAddress(address2);
+        service.removeClient(client1);
+
+        /*service.addDishToRestaurant(new Dish("Fillet bites", false, 220, 20, 500, new ArrayList<>(){{add("chicken"); add("paprika");}}), restaurant2);
         service.addDrinkToRestaurant(new Drink("Prigat", true, 330, 5, 100, "peaches", false), restaurant3);
 
         service.showClients();
