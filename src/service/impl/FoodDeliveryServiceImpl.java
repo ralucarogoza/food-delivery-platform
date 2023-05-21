@@ -1,5 +1,6 @@
 package service.impl;
 
+import config.DatabaseConfiguration;
 import exceptions.*;
 import model.*;
 import repositories.*;
@@ -8,6 +9,8 @@ import service.FoodDeliveryService;
 import utils.*;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.*;
 
 import static java.util.Collections.sort;
@@ -15,17 +18,28 @@ import static validation.ClientValidation.validateEmail;
 import static validation.PersonValidation.validatePhoneNumber;
 
 public class FoodDeliveryServiceImpl implements FoodDeliveryService {
-    private ClientRepository clientRepository = new ClientRepository();
-    private DeliveryDriverRepository deliveryDriverRepository = new DeliveryDriverRepository();
+    private ClientRepository clientRepository;
+    private DeliveryDriverRepository deliveryDriverRepository;
     private RestaurantRepository restaurantRepository = new RestaurantRepository();
-    private AddressRepository addressRepository = new AddressRepository();
-    private DrinkRepository drinkRepository = new DrinkRepository();
-    private DishRepository dishRepository = new DishRepository();
+    private AddressRepository addressRepository;
+    private DrinkRepository drinkRepository;
+    private DishRepository dishRepository;
 
     private DrinkToRestaurantRepository drinkToRestaurantRepository = new DrinkToRestaurantRepository();
     private DishToRestaurantRepository dishToRestaurantRepository = new DishToRestaurantRepository();
     private List<Order> orders;
 
+    public void setClientRepository(ClientRepository clientRepository) {
+        this.clientRepository = clientRepository;
+    }
+
+    public void setAddressRepository(AddressRepository addressRepository) {
+        this.addressRepository = addressRepository;
+    }
+
+    public void setDeliveryDriverRepository(DeliveryDriverRepository deliveryDriverRepository) {
+        this.deliveryDriverRepository = deliveryDriverRepository;
+    }
 
     public void addOrder(Order order){
         if(orders == null){
@@ -92,7 +106,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         return price;
     }
 
-    public void addClient(Client client){
+    public void addClient(Client client) throws SQLException {
         boolean valid_client = true;
         try{
             if(!validateEmail(client.getEmail()))
@@ -112,7 +126,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         }
         if(valid_client){
             if(clientRepository.getClients() == null)
-                clientRepository = new ClientRepository();
+                clientRepository = new ClientRepository(clientRepository.getDatabaseConfiguration());
             //clientRe.put(client.getEmail(), client);
             clientRepository.addClient(client);
             AuditService.getInstance().write("addClient: Client " + client.getId() + " was added at ");
@@ -144,12 +158,26 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         }
         return clientRepository.getClients();
     }
+    @Override
+    public Map<String, Client> getAllClients() throws SQLException {
+        try {
+            if (clientRepository.getAllClients() == null)
+                throw new NoClientFoundException("There are no clients!");
+        }
+        catch(NoClientFoundException clientFoundException){
+            System.out.println(clientFoundException.getMessage());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return clientRepository.getAllClients();
+    }
 
-    public void removeClient(Client client){
+
+    public void removeClient(Client client) throws SQLException {
         String emailClient = client.getEmail();
         if(clientRepository.getClients().containsKey(emailClient)){
             //clients.remove(emailClient);
-            clientRepository.removeClient(client);
+            clientRepository.deleteClient(client);
             AuditService.getInstance().write("removeClient: Client " + client.getId() + " was removed at ");
             System.out.println("Client " + client.getId() + " removed with success!");
         }
@@ -157,6 +185,35 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
             System.out.println("Doesn't exist this client!");
         }
     }
+
+    public void updateClient(Client oldClient, Client newClient) throws SQLException {
+        boolean valid_client = true;
+        try{
+            if(!validateEmail(newClient.getEmail()))
+                throw new InvalidEmailException("Invalid format for email!");
+        }
+        catch(InvalidEmailException emailException){
+            valid_client = false;
+            System.out.println(emailException.getMessage());
+        }
+        try{
+            if(!validatePhoneNumber(newClient.getPhoneNumber()))
+                throw new InvalidPhoneNumberException("Invalid format for phone number!");
+        }
+        catch (InvalidPhoneNumberException phoneNumberException){
+            valid_client = false;
+            System.out.println(phoneNumberException.getMessage());
+        }
+        if(valid_client){
+            if(clientRepository.getClients() == null)
+                clientRepository = new ClientRepository(clientRepository.getDatabaseConfiguration());
+            //clientRe.put(client.getEmail(), client);
+            clientRepository.updateClient(oldClient, newClient);
+            AuditService.getInstance().write("updateClient: ");
+            System.out.println("Client updated with success!");
+        }
+    }
+
 
     public void addDeliveryDriver(DeliveryDriver deliveryDriver){
         boolean validDeliveryDriver = true;
@@ -170,7 +227,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         }
         if(validDeliveryDriver){
             if(deliveryDriverRepository == null)
-                deliveryDriverRepository = new DeliveryDriverRepository();
+                deliveryDriverRepository = new DeliveryDriverRepository(deliveryDriverRepository.getDatabaseConfiguration());
             deliveryDriverRepository.addDeliveryDriver(deliveryDriver);
             sort(deliveryDriverRepository.getDeliveryDrivers());
             AuditService.getInstance().write("addDeliveryDriver: DeliveryDriver " + deliveryDriver.getId() + " was added at ");
@@ -210,6 +267,12 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         }
         else
             System.out.println("Doesn't exist this delivery driver!");
+    }
+
+    public void updateDeliveryDriver(DeliveryDriver oldDeliveryDriver, DeliveryDriver newDeliveryDriver){
+        deliveryDriverRepository.updateDeliveryDriver(oldDeliveryDriver, newDeliveryDriver);
+        AuditService.getInstance().write("updateDeliveryDriver: ");
+        System.out.println("DeliveryDriver updated with success!");
     }
 
     public void addRestaurant(Restaurant restaurant){
@@ -457,7 +520,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
 
     public void addAddress(Address address){
         if(addressRepository == null){
-            addressRepository = new AddressRepository();
+            addressRepository = new AddressRepository(addressRepository.getDatabaseConfiguration());
         }
         addressRepository.addAddress(address);
         AuditService.getInstance().write("addAddress: Address " + address.getId() + " was added at ");
@@ -466,7 +529,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
 
     public void addDish(Dish dish){
         if(dishRepository == null){
-            dishRepository = new DishRepository();
+            dishRepository = new DishRepository(dishRepository.getDatabaseConfiguration());
         }
         dishRepository.addDish(dish);
         AuditService.getInstance().write("addDish: Dish " + dish.getId() + " was added at ");
@@ -476,7 +539,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
 
     public void addDrink(Drink drink){
         if(drinkRepository == null){
-            drinkRepository = new DrinkRepository();
+            drinkRepository = new DrinkRepository(dishRepository.getDatabaseConfiguration());
         }
         drinkRepository.addDrink(drink);
         AuditService.getInstance().write("addDrink: Drink " + drink.getId() + " was added at ");
@@ -541,9 +604,11 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
     }
 
 
-    public void removeAddress(Address address){
+    public void deleteAddress(Address address){
+        System.out.println(address);
+        System.out.println(getAddresses());
         if(addressRepository.getAddresses().contains(address)){
-            addressRepository.removeAddress(address);
+            addressRepository.deleteAddress(address);
             AuditService.getInstance().write("removeAddress: Address " + address.getId() + " was removed at ");
             System.out.println("Address " + address.getId() + " removed with success!");
         }
@@ -552,8 +617,26 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         }
     }
 
+    public void updateAddress(Address oldAddress, Address newAddress){
+        addressRepository.updateAddress(oldAddress, newAddress);
+        AuditService.getInstance().write("updateAddress: ");
+        System.out.println("Address updated with success!");
+    }
+
+    public void updateDish(Dish oldDish, Dish newDish){
+        dishRepository.updateDish(oldDish, newDish);
+        AuditService.getInstance().write("updateDish: ");
+        System.out.println("Dish updated with success!");
+    }
+
+    public void updateDrink(Drink oldDrink, Drink newDrink){
+        drinkRepository.updateDrink(oldDrink, newDrink);
+        AuditService.getInstance().write("updateDrink: ");
+        System.out.println("Drink updated with success!");
+    }
+
     @Override
-    public void addClientsFromCSVFile(String path) throws IOException {
+    public void addClientsFromCSVFile(String path) throws IOException, SQLException {
         ClientReaderWriter clientReaderWriter = ClientReaderWriter.getInstance();
         List<Client> clientsFromCSVFile = new ArrayList<>(clientReaderWriter.read(path));
         for(Client client: clientsFromCSVFile){

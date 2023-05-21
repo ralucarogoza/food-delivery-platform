@@ -2,6 +2,7 @@ package service;
 import model.*;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -13,14 +14,17 @@ public interface FoodDeliveryService {
     void removeOrder(Order order);
     void updateStatusForOrder(int indexOrder, OrderStatus orderStatus);
     double priceOfOrder(Order order);
-    void addClient(Client client);
+    void addClient(Client client) throws SQLException;
     void showClients();
-    void removeClient(Client client);
+    void removeClient(Client client) throws SQLException;
+    void updateClient(Client oldClient, Client newClient) throws SQLException;
     Map<String, Client> getClients();
+    Map<String, Client> getAllClients() throws SQLException;
     void addDeliveryDriver(DeliveryDriver deliveryDriver);
     void showDeliveryDrivers();
     List<DeliveryDriver> getDeliveryDrivers();
     void fireDeliveryDriver(DeliveryDriver deliveryDriver);
+    void updateDeliveryDriver(DeliveryDriver oldDeliveryDriver, DeliveryDriver newDeliveryDriver);
     void addRestaurant(Restaurant restaurant);
     void showRestaurants();
     List<Restaurant> getRestaurants();
@@ -44,8 +48,11 @@ public interface FoodDeliveryService {
 
     void removeDish(Dish dish);
     void removeDrink(Drink drink);
-    void removeAddress(Address address);
-    void addClientsFromCSVFile(String path) throws IOException;
+    void deleteAddress(Address address);
+    void updateAddress(Address oldAddress, Address newAddress);
+    void updateDish(Dish oldDish, Dish newDish);
+    void updateDrink(Drink oldDrink, Drink newDrink);
+    void addClientsFromCSVFile(String path) throws IOException, SQLException;
 
     void addDeliveryDriversFromCSVFile(String path) throws IOException;
 

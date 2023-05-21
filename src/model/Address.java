@@ -7,12 +7,17 @@ public class Address {
     private String street;
     private int number;
 
-    public Address(String city, String street, int number) {
+    public Address(String city, String street, int number, boolean newAddress) {
         this.id = noAddresses;
         this.city = city;
         this.street = street;
         this.number = number;
-        noAddresses++;
+        if(newAddress)
+            noAddresses++;
+    }
+
+    public static int getNoAddresses() {
+        return noAddresses;
     }
 
     public int getId() {

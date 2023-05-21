@@ -1,13 +1,66 @@
+import config.DatabaseConfiguration;
 import model.*;
+import repositories.AddressRepository;
+import repositories.ClientRepository;
 import service.impl.FoodDeliveryServiceImpl;
 import utils.ClientReaderWriter;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.*;
 
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, SQLException {
+        DatabaseConfiguration databaseConfiguration = new DatabaseConfiguration();
+        ClientRepository clientRepository = new ClientRepository(databaseConfiguration);
+        AddressRepository addressRepository = new AddressRepository(databaseConfiguration);
+        FoodDeliveryServiceImpl service = new FoodDeliveryServiceImpl();
+        service.setClientRepository(clientRepository);
+        service.setAddressRepository(addressRepository);
+        System.out.println(service.getAllClients());
+
+/*        Client client1 = new Client("Raluca", "Rogoza", "0234567890", "ralucar@yahoo.com");
+        Client client2 = new Client("Carina", "Nicola", "0254657698", "carinan@yahoo.com");
+        Client client3 = new Client("Ioana", "Maria", "0234125476", "ioanam@yahoo.com");
+        service.addClient(client1);
+        service.addClient(client2);
+        //service.addClient(client3);
+        System.out.println(client1.getId());
+        System.out.println(client2.getId());
+        System.out.println(client3.getId());
+        //System.out.println(client1.getId());
+        service.removeClient(client1);
+        System.out.println(service.getAllClients());
+        System.out.println(service.getClients());
+
+        service.updateClient(client1, client3);
+        System.out.println(service.getAllClients());*/
+
+        Address address1 = new Address("Bucharest", "Bd. Mihail Kogalniceanu", 14, true);
+        Address address2 = new Address("Bucharest", "Nicolae Balcescu", 5, true);
+        Address address3 = new Address("Bucharest", "Bd. Carol", 2, true);
+        Address address4 = new Address("Bucharest", "Dimitrie Cantemir", 33, true);
+        Address address5 = new Address("Bucharest", "Mihai Bravu", 4, true);
+        Address address6 = new Address("Bucharest", "Obor", 12, true);
+
+        service.addAddress(address1);
+        service.addAddress(address2);
+        service.addAddress(address3);
+
+
+        /*service.deleteAddress(address1);
+        service.deleteAddress(address2);*/
+
+        System.out.println(address1.getId());
+        System.out.println(address4.getId());
+        service.updateAddress(address1, address4);
+        System.out.println(service.getAddresses());
+
+
+
+
+
         /*ClientReaderWriter clientReaderWriter = ClientReaderWriter.getInstance();
         List<Client> c = new ArrayList<>(clientReaderWriter.read("client-data.csv"));
         System.out.println(c);
@@ -17,10 +70,10 @@ public class Main {
 */
 
 
-
+/*
         FoodDeliveryServiceImpl service = new FoodDeliveryServiceImpl();
         service.addClientsFromCSVFile("src/utils/CSVfiles/clients.csv");
-        System.out.println(service.getClients());
+        System.out.println(service.getClients());*/
 
 
         /*service.addDeliveryDriversFromCSVFile("src/utils/CSVfiles/deliverydrivers.csv");
@@ -39,7 +92,7 @@ public class Main {
         System.out.println(service.getDishes());*/
 
 
-        Client client1 = new Client("Raluca", "Rogoza", "0234567890", "ralucar@yahoo.com");
+        /*Client client1 = new Client("Raluca", "Rogoza", "0234567890", "ralucar@yahoo.com");
         Client client2 = new Client("Carina", "Nicola", "0254657698", "carinan@yahoo.com");
         Client client3 = new Client("Ioana", "Maria", "023412547627", "ioanam@yahoo.com");
 
@@ -118,7 +171,7 @@ public class Main {
 
         service.removeOrder(order2);
         service.removeAddress(address2);
-        service.removeClient(client1);
+        service.removeClient(client1);*/
 
         /*service.addDishToRestaurant(new Dish("Fillet bites", false, 220, 20, 500, new ArrayList<>(){{add("chicken"); add("paprika");}}), restaurant2);
         service.addDrinkToRestaurant(new Drink("Prigat", true, 330, 5, 100, "peaches", false), restaurant3);

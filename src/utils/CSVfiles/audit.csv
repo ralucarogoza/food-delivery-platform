@@ -23,3 +23,98 @@ addDrinkToRestaurant: Drink 0 was added in the menu of restaurant 0 at 2023-05-2
 addDishToRestaurant: Dish 1 was added in the menu of restaurant 2 at 2023-05-20 15:23:22
 removeOrder: Order 1 was removed at 2023-05-20 15:23:22
 removeClient: Client 2 was removed at 2023-05-20 15:23:22
+addClient: Client 0 was added at 2023-05-21 10:40:36
+addClient: Client 1 was added at 2023-05-21 10:40:36
+addClient: Client 2 was added at 2023-05-21 10:40:37
+addClient: Client 3 was added at 2023-05-21 10:40:37
+addClient: Client 2 was added at 2023-05-21 10:40:37
+addClient: Client 3 was added at 2023-05-21 10:40:37
+addRestaurant: Restaurant 0: McDonald's was added at 2023-05-21 10:40:37
+addRestaurant: Restaurant 1: Michelle was added at 2023-05-21 10:40:37
+addRestaurant: Restaurant 2: Movo was added at 2023-05-21 10:40:37
+addDeliveryDriver: DeliveryDriver 0 was added at 2023-05-21 10:40:37
+addDeliveryDriver: DeliveryDriver 1 was added at 2023-05-21 10:40:37
+addDeliveryDriver: DeliveryDriver 2 was added at 2023-05-21 10:40:37
+addOrder: Order 0 was added at 2023-05-21 10:40:37
+addOrder: Order 1 was added at 2023-05-21 10:40:37
+addOrder: Order 2 was added at 2023-05-21 10:40:37
+addDish: Dish 0 was added at 2023-05-21 10:40:37
+addDish: Dish 1 was added at 2023-05-21 10:40:37
+addDish: Dish 2 was added at 2023-05-21 10:40:37
+addDrink: Drink 0 was added at 2023-05-21 10:40:37
+addDrink: Drink 1 was added at 2023-05-21 10:40:37
+addDrink: Drink 2 was added at 2023-05-21 10:40:37
+addDrinkToRestaurant: Drink 0 was added in the menu of restaurant 0 at 2023-05-21 10:40:37
+addDishToRestaurant: Dish 1 was added in the menu of restaurant 2 at 2023-05-21 10:40:37
+removeOrder: Order 1 was removed at 2023-05-21 10:40:37
+removeClient: Client 2 was removed at 2023-05-21 10:40:37
+addClient: Client 2 was added at 2023-05-21 12:30:09
+removeClient: Client 2 was removed at 2023-05-21 12:30:09
+addClient: Client 2 was added at 2023-05-21 12:36:17
+addClient: Client 0 was added at 2023-05-21 12:39:38
+removeClient: Client 0 was removed at 2023-05-21 12:39:38
+addClient: Client 2 was added at 2023-05-21 12:40:02
+addClient: Client 3 was added at 2023-05-21 12:40:02
+removeClient: Client 2 was removed at 2023-05-21 12:40:02
+addClient: Client 0 was added at 2023-05-21 12:41:52
+addClient: Client 1 was added at 2023-05-21 12:41:52
+removeClient: Client 0 was removed at 2023-05-21 12:41:52
+addClient: Client 0 was added at 2023-05-21 12:43:27
+addClient: Client 1 was added at 2023-05-21 12:43:27
+removeClient: Client 0 was removed at 2023-05-21 12:43:27
+addClient: Client 0 was added at 2023-05-21 12:49:11
+addClient: Client 1 was added at 2023-05-21 12:49:11
+removeClient: Client 0 was removed at 2023-05-21 12:49:11
+addClient: Client 2 was added at 2023-05-21 13:02:34
+addClient: Client 3 was added at 2023-05-21 13:02:34
+addClient: Client 4 was added at 2023-05-21 13:02:34
+removeClient: Client 2 was removed at 2023-05-21 13:02:34
+addClient: Client 6 was added at 2023-05-21 13:03:16
+addClient: Client 7 was added at 2023-05-21 13:03:16
+addClient: Client 8 was added at 2023-05-21 13:03:16
+removeClient: Client 6 was removed at 2023-05-21 13:03:16
+updateClient: 2023-05-21 13:03:16
+addClient: Client 0 was added at 2023-05-21 13:05:24
+addClient: Client 1 was added at 2023-05-21 13:05:24
+updateClient: 2023-05-21 13:05:24
+addClient: Client 0 was added at 2023-05-21 13:06:10
+addClient: Client 1 was added at 2023-05-21 13:06:10
+removeClient: Client 0 was removed at 2023-05-21 13:06:10
+updateClient: 2023-05-21 13:06:10
+addAddress: Address 0 was added at 2023-05-21 15:12:54
+addAddress: Address 1 was added at 2023-05-21 15:12:54
+addAddress: Address 2 was added at 2023-05-21 15:12:54
+addAddress: Address 0 was added at 2023-05-21 15:13:46
+addAddress: Address 1 was added at 2023-05-21 15:13:46
+addAddress: Address 2 was added at 2023-05-21 15:13:46
+updateAddress: 2023-05-21 15:25:10
+updateAddress: 2023-05-21 15:26:34
+updateAddress: 2023-05-21 15:26:47
+updateAddress: 2023-05-21 15:28:32
+updateAddress: 2023-05-21 15:30:24
+updateAddress: 2023-05-21 15:33:49
+updateAddress: 2023-05-21 15:36:27
+updateAddress: 2023-05-21 15:41:18
+updateAddress: 2023-05-21 15:42:02
+updateAddress: 2023-05-21 15:43:31
+updateAddress: 2023-05-21 15:44:28
+addAddress: Address 0 was added at 2023-05-21 15:48:55
+addAddress: Address 1 was added at 2023-05-21 15:48:55
+addAddress: Address 2 was added at 2023-05-21 15:48:55
+updateAddress: 2023-05-21 15:48:55
+addAddress: Address 0 was added at 2023-05-21 15:53:25
+addAddress: Address 1 was added at 2023-05-21 15:53:25
+addAddress: Address 2 was added at 2023-05-21 15:53:25
+updateAddress: 2023-05-21 15:53:25
+addAddress: Address 0 was added at 2023-05-21 15:54:55
+addAddress: Address 1 was added at 2023-05-21 15:54:55
+addAddress: Address 2 was added at 2023-05-21 15:54:55
+updateAddress: 2023-05-21 15:54:55
+addClient: Client 2 was added at 2023-05-21 16:00:33
+addClient: Client 3 was added at 2023-05-21 16:00:33
+removeClient: Client 2 was removed at 2023-05-21 16:00:33
+updateClient: 2023-05-21 16:00:33
+addAddress: Address 0 was added at 2023-05-21 17:13:01
+addAddress: Address 1 was added at 2023-05-21 17:13:01
+addAddress: Address 2 was added at 2023-05-21 17:13:01
+updateAddress: 2023-05-21 17:13:01
