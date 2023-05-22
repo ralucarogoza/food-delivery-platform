@@ -260,7 +260,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
     }
 
     @Override
-    public void removeClient(Client client){
+    public void deleteClient(Client client){
         boolean found = false;
         try{
             for(Client c: getClients().values()) {
@@ -494,9 +494,6 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
 
 
 
-
-
-
     // DISH
     @Override
     public void addDish(Dish dish){
@@ -640,8 +637,6 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
     }
 
 
-
-
     @Override
     public void addDrinkToRestaurant(DrinkFromRestaurant drinkFromRestaurant){
         if(drinkFromRestaurantRepository == null)
@@ -652,9 +647,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
     }
 
 
-
-
-
+    @Override
     public List<DrinkFromRestaurant> getDrinksFromRestaurant(){
         try {
             if(drinkFromRestaurantRepository.getDrinksFromRestaurants() == null)
@@ -667,6 +660,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
     }
 
 
+    @Override
     public void addDishToRestaurant(DishFromRestaurant dishFromRestaurant){
         if(dishFromRestaurantRepository == null){
             dishFromRestaurantRepository = new DishFromRestaurantRepository(dishFromRestaurantRepository.getDatabaseConfiguration());
@@ -676,7 +670,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         System.out.println("Dish added with success to restaurant menu!");
     }
 
-
+    @Override
     public List<DishFromRestaurant> getDishesFromRestaurant(){
         try {
             if(dishFromRestaurantRepository.getDishesFromRestaurants() == null)
@@ -687,103 +681,6 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         }
         return dishFromRestaurantRepository.getDishesFromRestaurants();
     }
-
-    /*public void addDrinkToOrder(Drink drink, Order order){
-        Integer idRestaurant = order.getRestaurant().getId();
-        for(DrinkFromRestaurant drinkFromRestaurant: drinkToRestaurantRepository.getDrinksFromRestaurants()){
-            if(idRestaurant == drinkFromRestaurant.getIdRestaurant() && drink.getId() == drinkFromRestaurant.getIdDrink()){
-
-            }
-        }
-
-        List <Drink> drinksFromRestaurant = order.getRestaurant().getDrinks();
-        try {
-            if(!drinksFromRestaurant.contains(drink))
-                throw new DrinkIsNotInTheMenuException("This drink is not in the restaurant's menu.");
-            else{
-                order.getOrderedDrinks().add(drink);
-                System.out.println("Drink added with success to your order!");
-            }
-        }
-        catch(DrinkIsNotInTheMenuException drinkIsNotInTheMenuException){
-            System.out.println(drinkIsNotInTheMenuException.getMessage());
-        }
-    }
-
-    public void addDishToOrder(Dish dish, Order order){
-        List <Dish> dishesFromRestaurant = order.getRestaurant().getFoods();
-        try {
-            if(!dishesFromRestaurant.contains(dish))
-                throw new DishIsNotInTheMenuException("This dish is not in the restaurant's menu.");
-            else{
-                order.getOrderedFoods().add(dish);
-                System.out.println("Dish added with success to your order!");
-            }
-        }
-        catch(DishIsNotInTheMenuException dishIsNotInTheMenuException){
-            System.out.println(dishIsNotInTheMenuException.getMessage());
-        }
-    }
-
-    public void showDrinksFromOrder(Order order){
-        if(order.getOrderedDrinks().isEmpty())
-            System.out.println("There are no drinks in your order!\n");
-        else{
-            for(Drink drink: order.getOrderedDrinks()){
-                System.out.println(drink);
-            }
-        }
-    }
-
-    public void showFoodsFromOrder(Order order){
-        if(order.getOrderedFoods().isEmpty())
-            System.out.println("There are no dishes in your order!\n");
-        else{
-            for(Dish dish : order.getOrderedFoods()){
-                System.out.println(dish);
-            }
-        }
-    }
-
-    public void removeDrinkFromOrder(Order order, String drinkName){
-        boolean found = false;
-        for(Drink drink: order.getOrderedDrinks()){
-            if(drink.getName() == drinkName){
-                order.getOrderedDrinks().remove(drink);
-                found = true;
-                break;
-            }
-        }
-        if(found)
-            System.out.println("Drink removed from your order with success!");
-        else
-            System.out.println("This drink isn't in your order!");
-    }
-
-    public void removeDishFromOrder(Order order, String dishName){
-        boolean found = false;
-        for(Dish dish : order.getOrderedFoods()){
-            if(dish.getName() == dishName){
-                order.getOrderedFoods().remove(dish);
-                found = true;
-                break;
-            }
-        }
-        if(found)
-            System.out.println("Dish removed from your order with success!");
-        else
-            System.out.println("This dish isn't in your order!");
-    }*/
-
-
-
-
-
-
-
-
-
-
 
 
 
