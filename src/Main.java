@@ -18,6 +18,10 @@ public class Main {
         DishRepository dishRepository = new DishRepository(databaseConfiguration);
         DrinkRepository drinkRepository = new DrinkRepository(databaseConfiguration);
         RestaurantRepository restaurantRepository = new RestaurantRepository(databaseConfiguration);
+        DrinkFromRestaurantRepository drinkFromRestaurantRepository = new DrinkFromRestaurantRepository(databaseConfiguration);
+        DishFromRestaurantRepository dishFromRestaurantRepository = new DishFromRestaurantRepository(databaseConfiguration);
+        OrderRepository orderRepository = new OrderRepository(databaseConfiguration);
+
 
         FoodDeliveryServiceImpl service = new FoodDeliveryServiceImpl();
         service.setClientRepository(clientRepository);
@@ -26,6 +30,9 @@ public class Main {
         service.setDishRepository(dishRepository);
         service.setDrinkRepository(drinkRepository);
         service.setRestaurantRepository(restaurantRepository);
+        service.setDishFromRestaurantRepository(dishFromRestaurantRepository);
+        service.setDrinkFromRestaurantRepository(drinkFromRestaurantRepository);
+        service.setOrderRepository(orderRepository);
 
         // CLIENT
 
@@ -170,6 +177,96 @@ public class Main {
 
         service.deleteRestaurant(restaurant3);
         System.out.println(service.getRestaurants());*/
+
+
+        // DISH FROM RESTAURANT
+        Address address1 = new Address(1,"Bucharest", "Bd. Mihail Kogalniceanu", 14);
+        Address address2 = new Address(2,"Bucharest", "Nicolae Balcescu", 5);
+        Address address3 = new Address(3,"Bucharest", "Bd. Carol", 2);
+
+        service.addAddress(address1);
+        service.addAddress(address2);
+        service.addAddress(address3);
+
+        Restaurant restaurant1 = new Restaurant(1,"McDonald's", address1);
+        Restaurant restaurant2 = new Restaurant(2,"Michelle", address2);
+        Restaurant restaurant3 = new Restaurant(3,"Movo", address3);
+
+
+        service.addRestaurant(restaurant1);
+        service.addRestaurant(restaurant2);
+        service.addRestaurant(restaurant3);
+
+
+        Drink drink1 = new Drink(1,"Lemonade", true, 350, 18, "strawberries", false);
+        Drink drink2 = new Drink(2,"Caffee latte", false, 320, 14, "vanilla", false);
+        Drink drink3 = new Drink(3,"Cider", true, 500, 10, "pear", true);
+
+
+        service.addDrink(drink1);
+        service.addDrink(drink2);
+        service.addDrink(drink3);
+
+        Dish dish1 = new Dish(1,"Pizza Prosciutto", false, 450, 30, 780);
+        Dish dish2 = new Dish(2,"Chicken Burger", false, 320, 40, 550);
+        Dish dish3 = new Dish(3,"Pasta with vegetables", true, 330, 45, 420);
+
+        service.addDish(dish1);
+        service.addDish(dish2);
+        service.addDish(dish3);
+
+
+        DishFromRestaurant dishFromRestaurant1 = new DishFromRestaurant(1, 1, 1);
+        DishFromRestaurant dishFromRestaurant2 = new DishFromRestaurant(2, 2, 3);
+        DishFromRestaurant dishFromRestaurant3 = new DishFromRestaurant(3, 1, 3);
+
+        service.addDishToRestaurant(dishFromRestaurant1);
+        service.addDishToRestaurant(dishFromRestaurant2);
+        service.addDishToRestaurant(dishFromRestaurant3);
+
+        DrinkFromRestaurant drinkFromRestaurant1 = new DrinkFromRestaurant(1, 2, 3);
+        DrinkFromRestaurant drinkFromRestaurant2 = new DrinkFromRestaurant(2, 3, 1);
+        DrinkFromRestaurant drinkFromRestaurant3 = new DrinkFromRestaurant(3, 1, 3);
+
+        service.addDrinkToRestaurant(drinkFromRestaurant1);
+        service.addDrinkToRestaurant(drinkFromRestaurant2);
+        service.addDrinkToRestaurant(drinkFromRestaurant3);
+
+        Client client1 = new Client(1,"Raluca", "Rogoza", "0234567890", "ralucar@yahoo.com");
+        Client client2 = new Client(2, "Carina", "Nicola", "0254657698", "carinan@yahoo.com");
+        Client client3 = new Client(3, "Ioana", "Maria", "0234125476", "ioanam@yahoo.com");
+
+        service.addClient(client1);
+        service.addClient(client2);
+        service.addClient(client3);
+
+
+        DeliveryDriver deliveryDriver1 = new DeliveryDriver(1, "Bogdan", "Mihai", "0789437295", DeliveryMethod.BICYCLE, DeliveryDriverStatus.AVAILABLE);
+        DeliveryDriver deliveryDriver2 = new DeliveryDriver(2, "Andrei", "Popa", "0358659375", DeliveryMethod.ELECTRIC_SCOOTER, DeliveryDriverStatus.AVAILABLE);
+        DeliveryDriver deliveryDriver3 = new DeliveryDriver(3, "Calin", "Ionescu", "0732749585", DeliveryMethod.CAR, DeliveryDriverStatus.BUSY);
+
+        service.addDeliveryDriver(deliveryDriver1);
+        service.addDeliveryDriver(deliveryDriver2);
+        service.addDeliveryDriver(deliveryDriver3);
+
+        System.out.println(service.getDishesFromRestaurant());
+
+        System.out.println(service.getDrinksFromRestaurant());
+
+        Order order1 = new Order(client1, address1, deliveryDriver1, dishFromRestaurant1, drinkFromRestaurant2);
+        Order order2 = new Order(client2, address2, deliveryDriver2, dishFromRestaurant3, drinkFromRestaurant1);
+        Order order3 = new Order(client3, address3, deliveryDriver3, dishFromRestaurant1, drinkFromRestaurant3);
+
+        service.addOrder(order1);
+        service.addOrder(order2);
+        service.addOrder(order3);
+        System.out.println(service.getOrders());
+
+
+
+
+
+
 
 
         /*ClientReaderWriter clientReaderWriter = ClientReaderWriter.getInstance();

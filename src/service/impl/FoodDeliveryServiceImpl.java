@@ -23,9 +23,9 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
     private DrinkRepository drinkRepository;
     private DishRepository dishRepository;
 
-    private DrinkToRestaurantRepository drinkToRestaurantRepository = new DrinkToRestaurantRepository();
-    private DishToRestaurantRepository dishToRestaurantRepository = new DishToRestaurantRepository();
-    private List<Order> orders;
+    private DrinkFromRestaurantRepository drinkFromRestaurantRepository;
+    private DishFromRestaurantRepository dishFromRestaurantRepository;
+    private OrderRepository orderRepository;
 
     public void setClientRepository(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
@@ -51,73 +51,95 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         this.restaurantRepository = restaurantRepository;
     }
 
+    public void setDrinkFromRestaurantRepository(DrinkFromRestaurantRepository drinkFromRestaurantRepository) {
+        this.drinkFromRestaurantRepository = drinkFromRestaurantRepository;
+    }
+
+    public void setDishFromRestaurantRepository(DishFromRestaurantRepository dishFromRestaurantRepository) {
+        this.dishFromRestaurantRepository = dishFromRestaurantRepository;
+    }
+
+    public void setOrderRepository(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
+    }
+
     @Override
     public void addOrder(Order order){
-        if(orders == null){
-            orders = new ArrayList<>();
+        if(orderRepository == null){
+            orderRepository = new OrderRepository(orderRepository.getDatabaseConfiguration());
         }
-        orders.add(order);
+        orderRepository.addOrder(order);
         AuditService.getInstance().write("addOrder: Order " + order.getId() + " was added at ");
         System.out.println("Order added with success!");
     }
 
-    @Override
-    public void showOrders(){
-        if(orders.isEmpty())
-            System.out.println("There are no orders!");
-        else{
-            int i = 0;
-            for(Order order: orders){
-                i++;
-                System.out.print(Integer.toString(i));
-                System.out.print(". ");
-                System.out.println(order);
-            }
-        }
-    }
+
 
     @Override
     public List<Order> getOrders(){
         try{
-            if(orders == null)
+            if(orderRepository.getOrders() == null)
                 throw new NoOrderFoundException("There are no orders!");
         }
         catch(NoOrderFoundException orderFoundException){
             System.out.println(orderFoundException.getMessage());
         }
-        return orders;
+        return orderRepository.getOrders();
     }
 
     @Override
     public void deleteOrder(Order order){
-        if(orders.contains(order)){
-            orders.remove(order);
-            AuditService.getInstance().write("removeOrder: Order " + order.getId() + " was removed at ");
+        boolean found = false;
+        try{
+            for(Order o: getOrders()){
+                if(o.getId() == order.getId()){
+                    found = true;
+                }
+            }
+            if(!found){
+                throw new OrderNotFoundException("Order with id " + order.getId() + " doesn't exist!");
+            }
+            orderRepository.deleteOrder(order);
+            AuditService.getInstance().write("deleteOrder: Order " + order.getId() + " was removed at ");
             System.out.println("Order " + order.getId() + " removed with success!");
         }
-        else{
-            System.out.println("Doesn't exist this order!");
+        catch (OrderNotFoundException orderNotFoundException){
+            System.out.println(orderNotFoundException.getMessage());
         }
     }
 
     @Override
-    public void updateStatusForOrder(int indexOrder, OrderStatus orderStatus){
-        if(indexOrder - 1 > orders.size()){
-            System.out.println("Doesn't exist an order with this index!");
+    public void updateOrder(Order oldOrder, Order newOrder){
+        boolean found = false;
+        try{
+            for(Order o: getOrders()){
+                if(o.getId() == oldOrder.getId()){
+                    found = true;
+                }
+            }
+            if(!found){
+                throw new OrderNotFoundException("Order with id " + oldOrder.getId() + " doesn't exist!");
+            }
+            orderRepository.updateOrder(oldOrder, newOrder);
+            AuditService.getInstance().write("updateOrder: at ");
+            System.out.println("Order " + oldOrder.getId() + " updated with success!");
         }
-        else{
-            OrderStatus oldStatus = orders.get(indexOrder - 1).getOrderStatus();
-            orders.get(indexOrder - 1).setOrderStatus(orderStatus);
-            AuditService.getInstance().write("updateStatusForOrder: Order " + indexOrder + " was updated at ");
-            System.out.println("Order status for order number " + indexOrder + " was modified from " + oldStatus + " to " + orderStatus);
+        catch (OrderNotFoundException orderNotFoundException){
+            System.out.println(orderNotFoundException.getMessage());
         }
     }
 
     @Override
     public double priceOfOrder(Order order) {
         double price = 0;
-        price += order.getOrderedDish().getPrice();
-        price += order.getOrderedDrink().getPrice();
+        for(Dish dish: getDishes()){
+            if(dish.getId() == order.getOrderedDish().getIdDish())
+                price += dish.getPrice();
+        }
+        for(Drink drink: getDrinks()){
+            if(drink.getId() == order.getOrderedDrink().getIdDrink())
+                price += drink.getPrice();
+        }
         return price;
     }
 
@@ -617,70 +639,52 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
     }
 
 
-    public void addDrinkToRestaurant(Drink drink, Restaurant restaurant){
-        if(restaurantRepository.getRestaurants().contains(restaurant) && drinkRepository.getDrinks().contains(drink)){
-            DrinkFromRestaurant drinkToAdd = new DrinkFromRestaurant(restaurant.getId(), drink.getId());
-            drinkToRestaurantRepository.addDrinkToRestaurant(drinkToAdd);
-            AuditService.getInstance().write("addDrinkToRestaurant: Drink " + drink.getId() + " was added in the menu of restaurant " + restaurant.getId() + " at ");
-            System.out.println("Drink added with success to restaurant menu!");
-        }
-        else{
-            System.out.println("Can't find this restaurant or this drink!");
-        }
-    }
 
 
-
-    public void showDrinksFromRestaurant(Restaurant restaurant){
-        List<DrinkFromRestaurant> drinksR = drinkToRestaurantRepository.getDrinksFromRestaurants();
-        List<Optional<Drink>> drinks = new ArrayList<>();
-        for(DrinkFromRestaurant d: drinksR){
-            if(d.getIdRestaurant() == restaurant.getId()){
-                Optional<Drink> dr = getDrinkById(d.getIdDrink());
-                drinks.add(dr);
-            }
-        }
-        if(drinks.isEmpty())
-            System.out.println("Drink menu is empty!\n");
-        else{
-            for(Optional<Drink> drink: drinks){
-                System.out.println(drink);
-            }
-        }
-    }
-
-    public void addDishToRestaurant(Dish dish, Restaurant restaurant){
-        if(restaurantRepository.getRestaurants().contains(restaurant) && dishRepository.getDishes().contains(dish)){
-            DishFromRestaurant dishToAdd = new DishFromRestaurant(restaurant.getId(), dish.getId());
-            dishToRestaurantRepository.addDishToRestaurant(dishToAdd);
-            AuditService.getInstance().write("addDishToRestaurant: Dish " + dish.getId() + " was added in the menu of restaurant " + restaurant.getId() + " at ");
-            System.out.println("Dish added with success to restaurant menu!");
-        }
-        else{
-            System.out.println("Can't find this restaurant or this dish!");
-        }
+    @Override
+    public void addDrinkToRestaurant(DrinkFromRestaurant drinkFromRestaurant){
+        if(drinkFromRestaurantRepository == null)
+            drinkFromRestaurantRepository = new DrinkFromRestaurantRepository(drinkFromRestaurantRepository.getDatabaseConfiguration());
+        drinkFromRestaurantRepository.addDrinkToRestaurant(drinkFromRestaurant);
+        AuditService.getInstance().write("addDrinkToRestaurant: at ");
+        System.out.println("Drink added with success to restaurant menu!");
     }
 
 
 
 
 
-    public void showDishesFromRestaurant(Restaurant restaurant){
-        List<DishFromRestaurant> dishesR = dishToRestaurantRepository.getDishesFromRestaurants();
-        List<Optional<Dish>> dishes = new ArrayList<>();
-        for(DishFromRestaurant d: dishesR){
-            if(d.getIdRestaurant() == restaurant.getId()){
-                Optional<Dish> dr = getDishById(d.getIdDish());
-                dishes.add(dr);
-            }
+    public List<DrinkFromRestaurant> getDrinksFromRestaurant(){
+        try {
+            if(drinkFromRestaurantRepository.getDrinksFromRestaurants() == null)
+                throw new NoDrinkFromRestaurantFoundException("There are no menus for drinks!");
         }
-        if(dishes.isEmpty())
-            System.out.println("Dish menu is empty!\n");
-        else{
-            for(Optional<Dish> dish: dishes){
-                System.out.println(dish);
-            }
+        catch(NoDrinkFromRestaurantFoundException noDrinkFromRestaurantFoundException){
+            System.out.println(noDrinkFromRestaurantFoundException.getMessage());
         }
+        return drinkFromRestaurantRepository.getDrinksFromRestaurants();
+    }
+
+
+    public void addDishToRestaurant(DishFromRestaurant dishFromRestaurant){
+        if(dishFromRestaurantRepository == null){
+            dishFromRestaurantRepository = new DishFromRestaurantRepository(dishFromRestaurantRepository.getDatabaseConfiguration());
+        }
+        dishFromRestaurantRepository.addDishToRestaurant(dishFromRestaurant);
+        AuditService.getInstance().write("addDishToRestaurant: at ");
+        System.out.println("Dish added with success to restaurant menu!");
+    }
+
+
+    public List<DishFromRestaurant> getDishesFromRestaurant(){
+        try {
+            if(dishFromRestaurantRepository.getDishesFromRestaurants() == null)
+                throw new NoDishFromRestaurantFoundException("There are no menus for dishes!");
+        }
+        catch(NoDishFromRestaurantFoundException noDishFromRestaurantFoundException){
+            System.out.println(noDishFromRestaurantFoundException.getMessage());
+        }
+        return dishFromRestaurantRepository.getDishesFromRestaurants();
     }
 
     /*public void addDrinkToOrder(Drink drink, Order order){
@@ -783,7 +787,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
 
 
 
-
+    // CSV
 
 
     @Override

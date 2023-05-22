@@ -1,6 +1,8 @@
 package repositories;
 
 import config.DatabaseConfiguration;
+import exceptions.ClientNotFoundException;
+import exceptions.DeliveryDriverNotFoundException;
 import model.Client;
 import model.DeliveryDriver;
 import model.DeliveryDriverStatus;
@@ -23,6 +25,34 @@ public class DeliveryDriverRepository {
     }
     public DeliveryDriverRepository(DatabaseConfiguration databaseConfiguration){
         this.databaseConfiguration = databaseConfiguration;
+    }
+
+    public DeliveryDriver getDeliveryDriverById(int id){
+        DeliveryDriver deliveryDriver = null;
+        try{
+            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement("select * from delivery_driver where id = ?");
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                deliveryDriver = new DeliveryDriver(resultSet.getInt("id"),
+                        resultSet.getString("firstName"),
+                        resultSet.getString("lastName"),
+                        resultSet.getString("phoneNumber"),
+                        DeliveryMethod.valueOf(resultSet.getString("deliveryMethod")),
+                        DeliveryDriverStatus.valueOf(resultSet.getString("deliveryDriverStatus")));
+                System.out.println("DeliveryDriver found!");
+            }
+            else{
+                throw new DeliveryDriverNotFoundException("DeliveryDriver with id " + id + " doesn't exist!");
+            }
+        }
+        catch (DeliveryDriverNotFoundException deliveryDriverNotFoundException){
+            System.out.println(deliveryDriverNotFoundException.getMessage());
+        }
+        catch(SQLException exception){
+            System.out.println(exception.getMessage());
+        }
+        return deliveryDriver;
     }
 
     public List<DeliveryDriver> getDeliveryDrivers() {

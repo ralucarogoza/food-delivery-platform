@@ -49,6 +49,33 @@ public class ClientRepository {
         return Optional.ofNullable(client);
     }
 
+    public Client getClientById(int id){
+        Client client = null;
+        try{
+            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement("select * from client where id = ?");
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                client = new Client(resultSet.getInt("id"),
+                        resultSet.getString("firstName"),
+                        resultSet.getString("lastName"),
+                        resultSet.getString("phoneNumber"),
+                        resultSet.getString("email"));
+                System.out.println("Client found!");
+            }
+            else{
+                throw new ClientNotFoundException("Client with id " + id + " doesn't exist!");
+            }
+        }
+        catch (ClientNotFoundException clientNotFoundException){
+            System.out.println(clientNotFoundException.getMessage());
+        }
+        catch(SQLException exception){
+            System.out.println(exception.getMessage());
+        }
+        return client;
+    }
+
     public Map<String, Client> getClients(){
         Map<String, Client> clients = new TreeMap<>();
         try{

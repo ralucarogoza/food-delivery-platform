@@ -1,7 +1,7 @@
 package model;
 
 public class DrinkFromRestaurant {
-    private static int noDrinksFromRestaurant = 0;
+    private static int noDrinksFromRestaurant = 1;
     private int id;
     private int idRestaurant;
     private int idDrink;
@@ -11,6 +11,12 @@ public class DrinkFromRestaurant {
         this.idRestaurant = idRestaurant;
         this.idDrink = idDrink;
         noDrinksFromRestaurant++;
+    }
+
+    public DrinkFromRestaurant(int id, int idRestaurant, int idDrink) {
+        this.id = id;
+        this.idRestaurant = idRestaurant;
+        this.idDrink = idDrink;
     }
 
     public int getId() {

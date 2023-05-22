@@ -9,10 +9,9 @@ import java.util.Optional;
 
 public interface FoodDeliveryService {
     void addOrder(Order order);
-    void showOrders();
     List<Order> getOrders();
     void deleteOrder(Order order);
-    void updateStatusForOrder(int indexOrder, OrderStatus orderStatus);
+    void updateOrder(Order oldOrder, Order newOrder);
     double priceOfOrder(Order order);
     void addClient(Client client) throws SQLException;
     void removeClient(Client client) throws SQLException;
@@ -26,10 +25,10 @@ public interface FoodDeliveryService {
     List<Restaurant> getRestaurants();
     void deleteRestaurant(Restaurant restaurant);
     void updateRestaurant(Restaurant oldRestaurant, Restaurant newRestaurant);
-    void addDrinkToRestaurant(Drink drink, Restaurant restaurant);
-    void showDrinksFromRestaurant(Restaurant restaurant);
-    void addDishToRestaurant(Dish dish, Restaurant restaurant);
-    void showDishesFromRestaurant(Restaurant restaurant);
+    void addDrinkToRestaurant(DrinkFromRestaurant drinkFromRestaurant);
+    List<DrinkFromRestaurant> getDrinksFromRestaurant();
+    void addDishToRestaurant(DishFromRestaurant dishFromRestaurant);
+    List<DishFromRestaurant> getDishesFromRestaurant();
     //void addDishToOrder(Dish dish, Order order);
     //void showFoodsFromOrder(Order order);
     //void addDrinkToOrder(Drink drink, Order order);

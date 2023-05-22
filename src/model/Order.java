@@ -5,22 +5,22 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Order {
-    private static int noOrders = 0;
+    private static int noOrders = 1;
     private int id;
     private Client client;
     private Address clientAddress;
-    private Restaurant restaurant;
+    //private Restaurant restaurant;
     private DeliveryDriver deliveryDriver;
-    private Dish orderedDish;
-    private Drink orderedDrink;
+    private DishFromRestaurant orderedDish;
+    private DrinkFromRestaurant orderedDrink;
     private LocalDateTime orderDate;
     private OrderStatus orderStatus;
 
-    public Order(Client client, Address clientAddress, Restaurant restaurant, DeliveryDriver deliveryDriver, Dish orderedDish, Drink orderedDrink, OrderStatus orderStatus) {
+    public Order(Client client, Address clientAddress, DeliveryDriver deliveryDriver, DishFromRestaurant orderedDish, DrinkFromRestaurant orderedDrink, OrderStatus orderStatus) {
         this.id = noOrders;
         this.client = client;
         this.clientAddress = clientAddress;
-        this.restaurant = restaurant;
+        //this.restaurant = restaurant;
         this.deliveryDriver = deliveryDriver;
         this.orderedDish = orderedDish;
         this.orderedDrink = orderedDrink;
@@ -32,11 +32,26 @@ public class Order {
         noOrders++;
     }
 
-    public Order(Client client, Address clientAddress, Restaurant restaurant, DeliveryDriver deliveryDriver, Dish orderedDish, Drink orderedDrink) {
+    public Order(int id, Client client, Address clientAddress, DeliveryDriver deliveryDriver, DishFromRestaurant orderedDish, DrinkFromRestaurant orderedDrink, OrderStatus orderStatus) {
+        this.id = id;
+        this.client = client;
+        this.clientAddress = clientAddress;
+        //this.restaurant = restaurant;
+        this.deliveryDriver = deliveryDriver;
+        this.orderedDish = orderedDish;
+        this.orderedDrink = orderedDrink;
+        /*this.orderDate = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+        Calendar calendar = Calendar.getInstance();
+        this.orderDate = this.orderDate.format(calendar.getTime());*/
+        this.orderStatus = orderStatus;
+        this.orderDate = LocalDateTime.now();
+    }
+
+    public Order(Client client, Address clientAddress, DeliveryDriver deliveryDriver, DishFromRestaurant orderedDish, DrinkFromRestaurant orderedDrink) {
         this.id = noOrders;
         this.client = client;
         this.clientAddress = clientAddress;
-        this.restaurant = restaurant;
+        //this.restaurant = restaurant;
         this.deliveryDriver = deliveryDriver;
         this.orderedDish = orderedDish;
         this.orderedDrink = orderedDrink;
@@ -72,13 +87,13 @@ public class Order {
         this.clientAddress = clientAddress;
     }
 
-    public Restaurant getRestaurant() {
+/*    public Restaurant getRestaurant() {
         return restaurant;
     }
 
     public void setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
-    }
+    }*/
 
     public DeliveryDriver getDeliveryDriver() {
         return deliveryDriver;
@@ -88,19 +103,19 @@ public class Order {
         this.deliveryDriver = deliveryDriver;
     }
 
-    public Dish getOrderedDish() {
+    public DishFromRestaurant getOrderedDish() {
         return orderedDish;
     }
 
-    public void setOrderedDish(Dish orderedDish) {
+    public void setOrderedDish(DishFromRestaurant orderedDish) {
         this.orderedDish = orderedDish;
     }
 
-    public Drink getOrderedDrink() {
+    public DrinkFromRestaurant getOrderedDrink() {
         return orderedDrink;
     }
 
-    public void setOrderedDrink(Drink orderedDrink) {
+    public void setOrderedDrink(DrinkFromRestaurant orderedDrink) {
         this.orderedDrink = orderedDrink;
     }
 
@@ -130,7 +145,7 @@ public class Order {
                 "\nStatus: " + orderStatus +
                 "\nClient: \n" + client +
                 "\nClient's address: " + clientAddress +
-                "\nRestaurant: " + restaurant.getName() + "\nRestaurant's address: " + restaurant.getAddress() +
+                //"\nRestaurant: " + restaurant.getName() + "\nRestaurant's address: " + restaurant.getAddress() +
                 "\nOrdered Dish: " + orderedDish +
                 "\nOrdered Drink: " + orderedDrink + '\n';
         /*int i = 0;
