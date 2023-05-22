@@ -39,6 +39,14 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         this.deliveryDriverRepository = deliveryDriverRepository;
     }
 
+    public void setDrinkRepository(DrinkRepository drinkRepository) {
+        this.drinkRepository = drinkRepository;
+    }
+
+    public void setDishRepository(DishRepository dishRepository) {
+        this.dishRepository = dishRepository;
+    }
+
     public void addOrder(Order order){
         if(orders == null){
             orders = new ArrayList<>();
@@ -119,7 +127,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
 
     public List<Address> getAddresses(){
         try{
-            if(addressRepository == null)
+            if(addressRepository.getAddresses() == null)
                 throw new Exception("There are no addresses!");
         }
         catch(Exception exception){
@@ -220,8 +228,6 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         boolean found = false;
         try{
             for(Client c: getClients().values()) {
-                System.out.println(getClients().values());
-                System.out.println(c.getId() == client.getId());
                 if (c.getId() == client.getId()) {
                     found = true;
                 }
@@ -260,11 +266,6 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
             if(!found){
                 throw new ClientNotFoundException("Client with id " + oldClient.getId() + " doesn't exist!");
             }
-            if(found && valid_client) {
-                clientRepository.updateClient(oldClient, newClient);
-                AuditService.getInstance().write("updateClient: ");
-                System.out.println("Client updated with success!");
-            }
         }
         catch (InvalidPhoneNumberException phoneNumberException){
             valid_client = false;
@@ -273,10 +274,14 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         catch(ClientNotFoundException clientNotFoundException) {
             System.out.println(clientNotFoundException.getMessage());
         }
+        if(found && valid_client) {
+            clientRepository.updateClient(oldClient, newClient);
+            AuditService.getInstance().write("updateClient: ");
+            System.out.println("Client updated with success!");
+        }
     }
 
     // DELIVERY DRIVER
-
 
     public void addDeliveryDriver(DeliveryDriver deliveryDriver){
         boolean validDeliveryDriver = true;
@@ -301,7 +306,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
     public List<DeliveryDriver> getDeliveryDrivers(){
         try {
             if (deliveryDriverRepository.getDeliveryDrivers() == null)
-                throw new NoClientFoundException("There are no delivery drivers!");
+                throw new NoDeliveryDriverFoundException("There are no delivery drivers!");
         }
         catch(NoDeliveryDriverFoundException deliveryDriverFoundException){
             System.out.println(deliveryDriverFoundException.getMessage());
@@ -309,33 +314,64 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         return deliveryDriverRepository.getDeliveryDrivers();
     }
 
-    public void showDeliveryDrivers(){
-        if(deliveryDriverRepository.getDeliveryDrivers().isEmpty())
-            System.out.println("There are no delivery drivers!\n");
-        else{
-            int i = 0;
-            for(DeliveryDriver deliveryDriver: deliveryDriverRepository.getDeliveryDrivers()){
-                i++;
-                System.out.print(Integer.toString(i) + ". ");
-                System.out.println(deliveryDriver);
-            }
+    public List<DeliveryDriver> getAvailableDeliveryDrivers(){
+        try {
+            if (deliveryDriverRepository.getAvailableDeliveryDrivers() == null)
+                throw new NoAvailableDeliveryDriversException("There are no available delivery drivers!");
         }
+        catch(NoAvailableDeliveryDriversException noAvailableDeliveryDriversException){
+            System.out.println(noAvailableDeliveryDriversException.getMessage());
+        }
+        return deliveryDriverRepository.getAvailableDeliveryDrivers();
     }
 
-    public void fireDeliveryDriver(DeliveryDriver deliveryDriver){
-        if(deliveryDriverRepository.getDeliveryDrivers().contains(deliveryDriver)){
-            deliveryDriverRepository.removeDeliveryDriver(deliveryDriver);
-            AuditService.getInstance().write("fireDeliveryDriver: DeliveryDriver " + deliveryDriver.getId() + " was removed at ");
-            System.out.println("Delivery driver with index" + deliveryDriver.getId() + " was fired with success!");
+
+    public void deleteDeliveryDriver(DeliveryDriver deliveryDriver){
+        boolean found = false;
+        try{
+            for(DeliveryDriver d: getDeliveryDrivers()){
+                if(d.getId() == deliveryDriver.getId()){
+                    found = true;
+                }
+                if(!found){
+                    throw new DeliveryDriverNotFoundException("DeliveryDriver with id " + deliveryDriver.getId() + " doesn't exist!");
+                }
+                deliveryDriverRepository.deleteDeliveryDriver(deliveryDriver);
+                AuditService.getInstance().write("fireDeliveryDriver: DeliveryDriver " + deliveryDriver.getId() + " was removed at ");
+                System.out.println("Delivery driver with id " + deliveryDriver.getId() + " was fired with success!");
+            }
         }
-        else
-            System.out.println("Doesn't exist this delivery driver!");
+        catch (DeliveryDriverNotFoundException deliveryDriverNotFoundException){
+            System.out.println(deliveryDriverNotFoundException.getMessage());
+        }
     }
 
     public void updateDeliveryDriver(DeliveryDriver oldDeliveryDriver, DeliveryDriver newDeliveryDriver){
-        deliveryDriverRepository.updateDeliveryDriver(oldDeliveryDriver, newDeliveryDriver);
-        AuditService.getInstance().write("updateDeliveryDriver: ");
-        System.out.println("DeliveryDriver updated with success!");
+        boolean validDeliveryDriver = true;
+        boolean found = false;
+        try{
+            if(!validatePhoneNumber(newDeliveryDriver.getPhoneNumber()))
+                throw new InvalidPhoneNumberException("Invalid format for phone number!");
+            for(DeliveryDriver d: getDeliveryDrivers()) {
+                if (d.getId() == oldDeliveryDriver.getId()) {
+                    found = true;
+                }
+            }
+            if(!found){
+                throw new DeliveryDriverNotFoundException("DeliveryDriver with id " + oldDeliveryDriver.getId() + " doesn't exist!");
+            }
+        }
+        catch (InvalidPhoneNumberException phoneNumberException){
+            validDeliveryDriver = false;
+            System.out.println(phoneNumberException.getMessage());
+        }
+        catch(DeliveryDriverNotFoundException deliveryDriverNotFoundException) {
+            System.out.println(deliveryDriverNotFoundException.getMessage());
+        }
+        if(found && validDeliveryDriver) {
+            deliveryDriverRepository.updateDeliveryDriver(oldDeliveryDriver, newDeliveryDriver);
+            AuditService.getInstance().write("updateDeliveryDriver: ");
+            System.out.println("DeliveryDriver updated with success!");        }
     }
 
     public void addRestaurant(Restaurant restaurant){
@@ -562,14 +598,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
 
 
 
-    public List<DeliveryDriver> getAvailableDeliveryDrivers(){
-        List<DeliveryDriver> availableDeliveryDrivers = new ArrayList<>();
-        for(DeliveryDriver deliveryDriver: this.deliveryDriverRepository.getDeliveryDrivers()){
-            if(deliveryDriver.getDeliveryDriverStatus() == DeliveryDriverStatus.AVAILABLE)
-                availableDeliveryDrivers.add(deliveryDriver);
-        }
-        return availableDeliveryDrivers;
-    }
+
 
 
 

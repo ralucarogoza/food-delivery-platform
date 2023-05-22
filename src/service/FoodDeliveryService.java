@@ -19,9 +19,8 @@ public interface FoodDeliveryService {
     void updateClient(Client oldClient, Client newClient) throws SQLException;
     Map<String, Client> getClients();
     void addDeliveryDriver(DeliveryDriver deliveryDriver);
-    void showDeliveryDrivers();
     List<DeliveryDriver> getDeliveryDrivers();
-    void fireDeliveryDriver(DeliveryDriver deliveryDriver);
+    void deleteDeliveryDriver(DeliveryDriver deliveryDriver);
     void updateDeliveryDriver(DeliveryDriver oldDeliveryDriver, DeliveryDriver newDeliveryDriver);
     void addRestaurant(Restaurant restaurant);
     void showRestaurants();

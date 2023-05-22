@@ -1,7 +1,6 @@
 import config.DatabaseConfiguration;
 import model.*;
-import repositories.AddressRepository;
-import repositories.ClientRepository;
+import repositories.*;
 import service.impl.FoodDeliveryServiceImpl;
 import utils.ClientReaderWriter;
 
@@ -15,11 +14,15 @@ public class Main {
         DatabaseConfiguration databaseConfiguration = new DatabaseConfiguration();
         ClientRepository clientRepository = new ClientRepository(databaseConfiguration);
         AddressRepository addressRepository = new AddressRepository(databaseConfiguration);
+        DeliveryDriverRepository deliveryDriverRepository = new DeliveryDriverRepository(databaseConfiguration);
+        DishRepository dishRepository = new DishRepository(databaseConfiguration);
+        DrinkRepository drinkRepository = new DrinkRepository(databaseConfiguration);
         FoodDeliveryServiceImpl service = new FoodDeliveryServiceImpl();
         service.setClientRepository(clientRepository);
         service.setAddressRepository(addressRepository);
-        System.out.println(service.getClients());
-
+        service.setDeliveryDriverRepository(deliveryDriverRepository);
+        service.setDishRepository(dishRepository);
+        service.setDrinkRepository(drinkRepository);
 
         // CLIENT
 
@@ -66,6 +69,30 @@ public class Main {
 
         System.out.println("All addresses: ");
         System.out.println(service.getAddresses());*/
+
+
+
+        // DELIVERY DRIVER
+
+        /*DeliveryDriver deliveryDriver1 = new DeliveryDriver(1, "Bogdan", "Mihai", "0789437295", DeliveryMethod.BICYCLE, DeliveryDriverStatus.AVAILABLE);
+        DeliveryDriver deliveryDriver2 = new DeliveryDriver(2, "Andrei", "Popa", "0358659375", DeliveryMethod.ELECTRIC_SCOOTER, DeliveryDriverStatus.AVAILABLE);
+        DeliveryDriver deliveryDriver3 = new DeliveryDriver(3, "Calin", "Ionescu", "0732749585", DeliveryMethod.CAR, DeliveryDriverStatus.BUSY);
+
+
+        service.addDeliveryDriver(deliveryDriver1);
+        service.addDeliveryDriver(deliveryDriver2);
+        //service.addDeliveryDriver(deliveryDriver3);
+
+        System.out.println(service.getDeliveryDrivers());
+
+        service.updateDeliveryDriver(deliveryDriver1, deliveryDriver3);
+        System.out.println(service.getDeliveryDrivers());
+
+        service.deleteDeliveryDriver(deliveryDriver1);
+        System.out.println(service.getDeliveryDrivers());
+        System.out.println(service.getAvailableDeliveryDrivers());*/
+
+
 
 
 

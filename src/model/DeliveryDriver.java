@@ -14,6 +14,13 @@ public class DeliveryDriver extends Person implements Comparable<DeliveryDriver>
         noDeliveryDrivers++;
     }
 
+    public DeliveryDriver(int id, String firstName, String lastName, String phoneNumber, DeliveryMethod deliveryMethod, DeliveryDriverStatus deliveryDriverStatus) {
+        super(firstName, lastName, phoneNumber);
+        this.id = id;
+        this.deliveryMethod = deliveryMethod;
+        this.deliveryDriverStatus = deliveryDriverStatus;
+    }
+
     public int getId() {
         return id;
     }
