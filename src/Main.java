@@ -17,12 +17,15 @@ public class Main {
         DeliveryDriverRepository deliveryDriverRepository = new DeliveryDriverRepository(databaseConfiguration);
         DishRepository dishRepository = new DishRepository(databaseConfiguration);
         DrinkRepository drinkRepository = new DrinkRepository(databaseConfiguration);
+        RestaurantRepository restaurantRepository = new RestaurantRepository(databaseConfiguration);
+
         FoodDeliveryServiceImpl service = new FoodDeliveryServiceImpl();
         service.setClientRepository(clientRepository);
         service.setAddressRepository(addressRepository);
         service.setDeliveryDriverRepository(deliveryDriverRepository);
         service.setDishRepository(dishRepository);
         service.setDrinkRepository(drinkRepository);
+        service.setRestaurantRepository(restaurantRepository);
 
         // CLIENT
 
@@ -140,6 +143,33 @@ public class Main {
         System.out.println(service.getDrinks());*/
 
 
+
+
+        // RESTAURANT
+
+        /*Address address1 = new Address(1,"Bucharest", "Bd. Mihail Kogalniceanu", 14);
+        Address address2 = new Address(2,"Bucharest", "Nicolae Balcescu", 5);
+        Address address3 = new Address(3,"Bucharest", "Bd. Carol", 2);
+
+        service.addAddress(address1);
+        service.addAddress(address2);
+        service.addAddress(address3);
+
+        Restaurant restaurant1 = new Restaurant(1,"McDonald's", address1);
+        Restaurant restaurant2 = new Restaurant(2,"Michelle", address2);
+        Restaurant restaurant3 = new Restaurant(3,"Movo", address3);
+
+        service.addRestaurant(restaurant1);
+        service.addRestaurant(restaurant2);
+        //service.addRestaurant(restaurant3);
+
+        System.out.println(service.getRestaurants());
+
+        service.updateRestaurant(restaurant1, restaurant3);
+        System.out.println(service.getRestaurants());
+
+        service.deleteRestaurant(restaurant3);
+        System.out.println(service.getRestaurants());*/
 
 
         /*ClientReaderWriter clientReaderWriter = ClientReaderWriter.getInstance();

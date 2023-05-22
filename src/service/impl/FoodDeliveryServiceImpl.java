@@ -18,7 +18,7 @@ import static validation.PersonValidation.validatePhoneNumber;
 public class FoodDeliveryServiceImpl implements FoodDeliveryService {
     private ClientRepository clientRepository;
     private DeliveryDriverRepository deliveryDriverRepository;
-    private RestaurantRepository restaurantRepository = new RestaurantRepository();
+    private RestaurantRepository restaurantRepository;
     private AddressRepository addressRepository;
     private DrinkRepository drinkRepository;
     private DishRepository dishRepository;
@@ -47,6 +47,11 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         this.dishRepository = dishRepository;
     }
 
+    public void setRestaurantRepository(RestaurantRepository restaurantRepository) {
+        this.restaurantRepository = restaurantRepository;
+    }
+
+    @Override
     public void addOrder(Order order){
         if(orders == null){
             orders = new ArrayList<>();
@@ -56,6 +61,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         System.out.println("Order added with success!");
     }
 
+    @Override
     public void showOrders(){
         if(orders.isEmpty())
             System.out.println("There are no orders!");
@@ -70,6 +76,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         }
     }
 
+    @Override
     public List<Order> getOrders(){
         try{
             if(orders == null)
@@ -81,7 +88,8 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         return orders;
     }
 
-    public void removeOrder(Order order){
+    @Override
+    public void deleteOrder(Order order){
         if(orders.contains(order)){
             orders.remove(order);
             AuditService.getInstance().write("removeOrder: Order " + order.getId() + " was removed at ");
@@ -92,6 +100,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         }
     }
 
+    @Override
     public void updateStatusForOrder(int indexOrder, OrderStatus orderStatus){
         if(indexOrder - 1 > orders.size()){
             System.out.println("Doesn't exist an order with this index!");
@@ -115,7 +124,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
 
     // ADDRESS
 
-
+    @Override
     public void addAddress(Address address){
         if(addressRepository == null){
             addressRepository = new AddressRepository(addressRepository.getDatabaseConfiguration());
@@ -125,6 +134,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         System.out.println("Address added with success!");
     }
 
+    @Override
     public List<Address> getAddresses(){
         try{
             if(addressRepository.getAddresses() == null)
@@ -136,6 +146,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         return addressRepository.getAddresses();
     }
 
+    @Override
     public void deleteAddress(Address address){
         boolean found = false;
         try{
@@ -156,6 +167,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         }
     }
 
+    @Override
     public void updateAddress(Address oldAddress, Address newAddress){
         boolean found = false;
         try{
@@ -180,7 +192,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
 
     // CLIENT
 
-
+    @Override
     public void addClient(Client client) {
         boolean valid_client = true;
         try{
@@ -224,6 +236,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         return clientRepository.getClients();
     }
 
+    @Override
     public void removeClient(Client client){
         boolean found = false;
         try{
@@ -244,6 +257,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         }
     }
 
+    @Override
     public void updateClient(Client oldClient, Client newClient) throws SQLException {
         boolean valid_client = true;
         boolean found = false;
@@ -283,6 +297,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
 
     // DELIVERY DRIVER
 
+    @Override
     public void addDeliveryDriver(DeliveryDriver deliveryDriver){
         boolean validDeliveryDriver = true;
         try{
@@ -303,6 +318,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         }
     }
 
+    @Override
     public List<DeliveryDriver> getDeliveryDrivers(){
         try {
             if (deliveryDriverRepository.getDeliveryDrivers() == null)
@@ -314,6 +330,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         return deliveryDriverRepository.getDeliveryDrivers();
     }
 
+    @Override
     public List<DeliveryDriver> getAvailableDeliveryDrivers(){
         try {
             if (deliveryDriverRepository.getAvailableDeliveryDrivers() == null)
@@ -325,7 +342,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         return deliveryDriverRepository.getAvailableDeliveryDrivers();
     }
 
-
+    @Override
     public void deleteDeliveryDriver(DeliveryDriver deliveryDriver){
         boolean found = false;
         try{
@@ -346,6 +363,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         }
     }
 
+    @Override
     public void updateDeliveryDriver(DeliveryDriver oldDeliveryDriver, DeliveryDriver newDeliveryDriver){
         boolean validDeliveryDriver = true;
         boolean found = false;
@@ -383,6 +401,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         return drinkRepository.getDrinkById(id);
     }
 
+    @Override
     public List<Drink> getDrinks(){
         try{
             if(drinkRepository == null)
@@ -393,6 +412,8 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         }
         return drinkRepository.getDrinks();
     }
+
+    @Override
     public void addDrink(Drink drink){
         if(drinkRepository == null){
             drinkRepository = new DrinkRepository(dishRepository.getDatabaseConfiguration());
@@ -403,7 +424,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
     }
 
 
-
+    @Override
     public void deleteDrink(Drink drink){
         boolean found = false;
         try{
@@ -425,6 +446,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
     }
 
 
+    @Override
     public void updateDrink(Drink oldDrink, Drink newDrink){
         boolean found = false;
         try{
@@ -453,9 +475,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
 
 
     // DISH
-
-
-
+    @Override
     public void addDish(Dish dish){
         if(dishRepository == null){
             dishRepository = new DishRepository(dishRepository.getDatabaseConfiguration());
@@ -466,6 +486,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
     }
 
 
+    @Override
     public List<Dish> getDishes(){
         try{
             if(dishRepository == null)
@@ -482,8 +503,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         return dishRepository.getDishById(id);
     }
 
-
-
+    @Override
     public void deleteDish(Dish dish){
         boolean found = false;
         try{
@@ -493,7 +513,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
                 }
             }
             if(!found){
-                throw new DishIsNotInTheMenuException("Dish with id " + dish.getId() + " doesn't exist!");
+                throw new DishNotFoundException("Dish with id " + dish.getId() + " doesn't exist!");
             }
             dishRepository.removeDish(dish);
             AuditService.getInstance().write("removeDish: Dish " + dish.getId() + " was removed at ");
@@ -505,8 +525,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
     }
 
 
-
-
+    @Override
     public void updateDish(Dish oldDish, Dish newDish){
         boolean found = false;
         try{
@@ -534,27 +553,16 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
 
 
 
+    @Override
     public void addRestaurant(Restaurant restaurant){
         if(restaurantRepository.getRestaurants() == null)
-            restaurantRepository = new RestaurantRepository();
+            restaurantRepository = new RestaurantRepository(restaurantRepository.getDatabaseConfiguration());
         restaurantRepository.addRestaurant(restaurant);
         AuditService.getInstance().write("addRestaurant: Restaurant " + restaurant.getId() + ": " + restaurant.getName() + " was added at ");
         System.out.println("Restaurant added with success!");
     }
 
-    public void showRestaurants(){
-        if(restaurantRepository.getRestaurants().isEmpty())
-            System.out.println("There are no restaurants!\n");
-        else{
-            int i = 0;
-            for(Restaurant restaurant: restaurantRepository.getRestaurants()){
-                i++;
-                System.out.print(Integer.toString(i) + ". ");
-                System.out.println(restaurant);
-            }
-        }
-    }
-
+    @Override
     public List<Restaurant> getRestaurants(){
         try {
             if(restaurantRepository.getRestaurants() == null)
@@ -566,16 +574,48 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         return restaurantRepository.getRestaurants();
     }
 
-    public void removeRestaurant(Restaurant restaurant){
-        if(restaurantRepository.getRestaurants().contains(restaurant)){
-            restaurantRepository.removeRestaurant(restaurant);
+    @Override
+    public void deleteRestaurant(Restaurant restaurant){
+        boolean found = false;
+        try{
+            for(Restaurant r: getRestaurants()){
+                if(r.getId() == restaurant.getId()){
+                    found = true;
+                }
+            }
+            if(!found){
+                throw new RestaurantNotFoundException("Restaurant with id " + restaurant.getId() + " doesn't exist!");
+            }
+            restaurantRepository.deleteRestaurant(restaurant);
             AuditService.getInstance().write("removeRestaurant: Restaurant " + restaurant.getId() + " was removed at ");
             System.out.println("Restaurant " + restaurant.getId() + " removed with success!");
         }
-        else{
-            System.out.println("Doesn't exist this restaurant!");
+        catch (RestaurantNotFoundException restaurantNotFoundException){
+            System.out.println(restaurantNotFoundException.getMessage());
         }
     }
+
+    @Override
+    public void updateRestaurant(Restaurant oldRestaurant, Restaurant newRestaurant){
+        boolean found = false;
+        try{
+            for(Restaurant r: getRestaurants()) {
+                if (r.getId() == oldRestaurant.getId()) {
+                    found = true;
+                }
+            }
+            if(!found){
+                throw new RestaurantNotFoundException("Restaurant with id " + oldRestaurant.getId() + " doesn't exist!");
+            }
+            restaurantRepository.updateRestaurant(oldRestaurant, newRestaurant);
+            AuditService.getInstance().write("updateRestaurant: ");
+            System.out.println("Restaurant updated with success!");
+        }
+        catch (RestaurantNotFoundException restaurantNotFoundException){
+            System.out.println(restaurantNotFoundException.getMessage());
+        }
+    }
+
 
     public void addDrinkToRestaurant(Drink drink, Restaurant restaurant){
         if(restaurantRepository.getRestaurants().contains(restaurant) && drinkRepository.getDrinks().contains(drink)){

@@ -11,7 +11,7 @@ public interface FoodDeliveryService {
     void addOrder(Order order);
     void showOrders();
     List<Order> getOrders();
-    void removeOrder(Order order);
+    void deleteOrder(Order order);
     void updateStatusForOrder(int indexOrder, OrderStatus orderStatus);
     double priceOfOrder(Order order);
     void addClient(Client client) throws SQLException;
@@ -23,9 +23,9 @@ public interface FoodDeliveryService {
     void deleteDeliveryDriver(DeliveryDriver deliveryDriver);
     void updateDeliveryDriver(DeliveryDriver oldDeliveryDriver, DeliveryDriver newDeliveryDriver);
     void addRestaurant(Restaurant restaurant);
-    void showRestaurants();
     List<Restaurant> getRestaurants();
-    void removeRestaurant(Restaurant restaurant);
+    void deleteRestaurant(Restaurant restaurant);
+    void updateRestaurant(Restaurant oldRestaurant, Restaurant newRestaurant);
     void addDrinkToRestaurant(Drink drink, Restaurant restaurant);
     void showDrinksFromRestaurant(Restaurant restaurant);
     void addDishToRestaurant(Dish dish, Restaurant restaurant);
@@ -39,11 +39,19 @@ public interface FoodDeliveryService {
     Optional<Client> findClientByEmail(String email);
     List<DeliveryDriver> getAvailableDeliveryDrivers();
 
+    void addAddress(Address address);
+
     List<Address> getAddresses();
+
+    void addDish(Dish dish);
+
     List<Dish> getDishes();
     List<Drink> getDrinks();
 
     void deleteDish(Dish dish);
+
+    void addDrink(Drink drink);
+
     void deleteDrink(Drink drink);
     void deleteAddress(Address address);
     void updateAddress(Address oldAddress, Address newAddress);

@@ -3,7 +3,7 @@ package model;
 import java.util.List;
 
 public class Restaurant {
-    private static int noRestaurants;
+    private static int noRestaurants = 1;
     private int id;
     private String name;
     private Address address;
@@ -17,6 +17,14 @@ public class Restaurant {
         //this.dishes = dishes;
         //this.drinks = drinks;
         noRestaurants++;
+    }
+
+    public Restaurant(int id, String name, Address address) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        //this.dishes = dishes;
+        //this.drinks = drinks;
     }
 
     public int getId() {
@@ -59,6 +67,7 @@ public class Restaurant {
     public String toString() {
         String output = "";
         output += "\nRestaurant:" +
+                "\nId: " + id +
                 "\nName: " + name +
                 "\nAddress: " + address +
                 "\nDishes: \n";

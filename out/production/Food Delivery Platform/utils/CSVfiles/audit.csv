@@ -211,3 +211,15 @@ removeDrink: Drink 2 was removed at 2023-05-22 14:21:36
 removeDrink: Drink 2 was removed at 2023-05-22 14:21:36
 removeDish: Dish 3 was removed at 2023-05-22 14:28:11
 removeDrink: Drink 3 was removed at 2023-05-22 14:28:11
+addDish: Dish 1 was added at 2023-05-22 14:28:34
+addDish: Dish 2 was added at 2023-05-22 14:28:34
+updateDish: 2023-05-22 14:28:34
+removeDish: Dish 2 was removed at 2023-05-22 14:28:34
+addDrink: Drink 1 was added at 2023-05-22 14:28:34
+addDrink: Drink 2 was added at 2023-05-22 14:28:34
+updateDrink: 2023-05-22 14:28:34
+removeDrink: Drink 2 was removed at 2023-05-22 14:28:34
+addRestaurant: Restaurant 1: McDonald's was added at 2023-05-22 15:11:52
+addRestaurant: Restaurant 2: Michelle was added at 2023-05-22 15:11:52
+updateRestaurant: 2023-05-22 15:11:52
+removeRestaurant: Restaurant 3 was removed at 2023-05-22 15:11:52
