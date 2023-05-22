@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static constants.Constants.*;
+
 public class DrinkRepository {
     private final DatabaseConfiguration databaseConfiguration;
 
@@ -28,7 +30,7 @@ public class DrinkRepository {
     public Optional<Drink> getDrinkById(int id){
         Drink drink = null;
         try{
-            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement("select * from drink where id = ?");
+            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement(QUERY_GET_DRINK_BY_ID);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if(resultSet.next()){
@@ -59,7 +61,7 @@ public class DrinkRepository {
         List<Drink> drinks = new ArrayList<>();
         try{
             Statement statement = databaseConfiguration.getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from drink");
+            ResultSet resultSet = statement.executeQuery(QUERY_GET_ALL_DRINKS);
             while(resultSet.next()){
                 Drink drink = new Drink(resultSet.getInt("id"),
                         resultSet.getString("name"),
@@ -79,7 +81,7 @@ public class DrinkRepository {
 
     public void addDrink(Drink drink){
         try{
-            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement("insert into drink values (?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement(QUERY_ADD_DRINK);
             preparedStatement.setInt(1, drink.getId());
             preparedStatement.setString(2, drink.getName());
             preparedStatement.setBoolean(3, drink.isVegan());
@@ -96,7 +98,7 @@ public class DrinkRepository {
 
     public void deleteDrink(Drink drink){
         try{
-            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement("delete from drink where id = ?");
+            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement(QUERY_DELETE_DRINK);
             preparedStatement.setInt(1, drink.getId());
             preparedStatement.execute();
         }
@@ -107,7 +109,7 @@ public class DrinkRepository {
 
     public void updateDrink(Drink oldDrink, Drink newDrink){
         try{
-            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement("update drink set id = ?, name = ?, isVegan = ?, weight = ?, price = ?, flavour = ?, isAlcoholic = ? where id = ?");
+            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement(QUERY_UPDATE_DRINK);
             preparedStatement.setInt(1, newDrink.getId());
             preparedStatement.setString(2, newDrink.getName());
             preparedStatement.setBoolean(3, newDrink.isVegan());

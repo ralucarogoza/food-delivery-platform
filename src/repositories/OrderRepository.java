@@ -11,6 +11,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import static constants.Constants.*;
+
 public class OrderRepository {
     private final DatabaseConfiguration databaseConfiguration;
 
@@ -30,7 +32,7 @@ public class OrderRepository {
         DrinkFromRestaurantRepository drinkFromRestaurantRepository = new DrinkFromRestaurantRepository(databaseConfiguration);
         try{
             Statement statement = databaseConfiguration.getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from orders");
+            ResultSet resultSet = statement.executeQuery(QUERY_GET_ALL_ORDERS);
             while(resultSet.next()){
                 Order order = new Order(resultSet.getInt("id"),
                                         clientRepository.getClientById(resultSet.getInt("idClient")),
@@ -56,7 +58,7 @@ public class OrderRepository {
         DishFromRestaurantRepository dishFromRestaurantRepository = new DishFromRestaurantRepository(databaseConfiguration);
         DrinkFromRestaurantRepository drinkFromRestaurantRepository = new DrinkFromRestaurantRepository(databaseConfiguration);
         try{
-            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement("select * from orders where id = ?");
+            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement(QUERY_GET_ORDER_BY_ID);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if(resultSet.next()){
@@ -84,7 +86,7 @@ public class OrderRepository {
 
     public void addOrder(Order order){
         try{
-            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement("insert into orders values (?, ?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement(QUERY_ADD_ORDER);
             preparedStatement.setInt(1, order.getId());
             preparedStatement.setInt(2, order.getClient().getId());
             preparedStatement.setInt(3, order.getClientAddress().getId());
@@ -103,7 +105,7 @@ public class OrderRepository {
 
     public void deleteOrder(Order order){
         try{
-            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement("delete from orders where id = ?");
+            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement(QUERY_DELETE_ORDER);
             preparedStatement.setInt(1, order.getId());
             preparedStatement.execute();
         }
@@ -114,7 +116,7 @@ public class OrderRepository {
 
     public void updateOrder(Order oldOrder, Order newOrder){
         try{
-            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement("update orders set id = ?, idClient = ?, idAddress = ?, idDeliveryDriver = ?, idDish = ?, idDrink = ?, orderDate = ?, orderStatus = ? where id = ?");
+            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement(QUERY_UPDATE_ORDER);
             preparedStatement.setInt(1, newOrder.getId());
             preparedStatement.setInt(2, newOrder.getClient().getId());
             preparedStatement.setInt(3, newOrder.getClientAddress().getId());

@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import static constants.Constants.*;
+
 public class DeliveryDriverRepository {
     private final DatabaseConfiguration databaseConfiguration;
 
@@ -30,7 +32,7 @@ public class DeliveryDriverRepository {
     public DeliveryDriver getDeliveryDriverById(int id){
         DeliveryDriver deliveryDriver = null;
         try{
-            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement("select * from delivery_driver where id = ?");
+            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement(QUERY_GET_DELIVERY_DRIVER_BY_ID);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if(resultSet.next()){
@@ -59,7 +61,7 @@ public class DeliveryDriverRepository {
         List<DeliveryDriver> deliveryDrivers = new ArrayList<>();
         try{
             Statement statement = databaseConfiguration.getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from delivery_driver");
+            ResultSet resultSet = statement.executeQuery(QUERY_GET_ALL_DELIVERY_DRIVERS);
             while(resultSet.next()){
                 DeliveryDriver deliveryDriver = new DeliveryDriver(resultSet.getInt("id"),
                         resultSet.getString("firstName"),
@@ -80,7 +82,7 @@ public class DeliveryDriverRepository {
         List<DeliveryDriver> deliveryDrivers = new ArrayList<>();
         try{
             Statement statement = databaseConfiguration.getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from delivery_driver where deliveryDriverStatus = AVAILABLE");
+            ResultSet resultSet = statement.executeQuery(QUERY_GET_AVAILABLE_DELIVERY_DRIVERS);
             while(resultSet.next()){
                 DeliveryDriver deliveryDriver = new DeliveryDriver(resultSet.getInt("id"),
                         resultSet.getString("firstName"),
@@ -99,7 +101,7 @@ public class DeliveryDriverRepository {
 
     public void addDeliveryDriver(DeliveryDriver deliveryDriver){
         try{
-            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement("insert into delivery_driver values (?, ?, ?, ?, ?, ?)");
+            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement(QUERY_INSERT_DELIVERY_DRIVER);
             preparedStatement.setInt(1, deliveryDriver.getId());
             preparedStatement.setString(2, deliveryDriver.getFirstName());
             preparedStatement.setString(3, deliveryDriver.getLastName());
@@ -115,7 +117,7 @@ public class DeliveryDriverRepository {
 
     public void deleteDeliveryDriver(DeliveryDriver deliveryDriver){
         try{
-            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement("delete from delivery_driver where id = ?");
+            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement(QUERY_DELETE_DELIVERY_DRIVER);
             preparedStatement.setInt(1, deliveryDriver.getId());
             preparedStatement.execute();
         }
@@ -126,7 +128,7 @@ public class DeliveryDriverRepository {
 
     public void updateDeliveryDriver(DeliveryDriver oldDeliveryDriver, DeliveryDriver newDeliveryDriver){
         try{
-            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement("update delivery_driver set id = ?, firstName = ?, lastName = ?, phoneNumber = ?, deliveryMethod = ?, deliveryDriverStatus = ? where id = ?");
+            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement(QUERY_UPDATE_DELIVERY_DRIVER);
             preparedStatement.setInt(1, newDeliveryDriver.getId());
             preparedStatement.setString(2, newDeliveryDriver.getFirstName());
             preparedStatement.setString(3, newDeliveryDriver.getLastName());

@@ -11,6 +11,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import static constants.Constants.*;
+
 public class DishFromRestaurantRepository {
     private final DatabaseConfiguration databaseConfiguration;
 
@@ -24,13 +26,13 @@ public class DishFromRestaurantRepository {
     public DishFromRestaurant getDishFromRestaurantById(int id){
         DishFromRestaurant dishFromRestaurant = null;
         try{
-            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement("select * from dish_from_restaurant where id = ?");
+            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement(QUERY_GET_DISH_FROM_RESTAURANT_BY_ID);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if(resultSet.next()){
                 dishFromRestaurant = new DishFromRestaurant(resultSet.getInt("id"),
-                        resultSet.getInt("idRestaurant"),
-                        resultSet.getInt("idDish"));
+                        resultSet.getInt("idDish"),
+                        resultSet.getInt("idRestaurant"));
                 System.out.println("DishFromRestaurant found!");
             }
             else{
@@ -50,11 +52,11 @@ public class DishFromRestaurantRepository {
         List<DishFromRestaurant> dishes = new ArrayList<>();
         try{
             Statement statement = databaseConfiguration.getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from dish_from_restaurant");
+            ResultSet resultSet = statement.executeQuery(QUERY_GET_DISHES_FROM_RESTAURANTS);
             while(resultSet.next()){
                 DishFromRestaurant dish = new DishFromRestaurant(resultSet.getInt("id"),
-                        resultSet.getInt("idRestaurant"),
-                        resultSet.getInt("idDish"));
+                        resultSet.getInt("idDish"),
+                        resultSet.getInt("idRestaurant"));
                 dishes.add(dish);
             }
         }
@@ -66,10 +68,10 @@ public class DishFromRestaurantRepository {
 
     public void addDishToRestaurant(DishFromRestaurant dish){
         try{
-            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement("insert into dish_from_restaurant values (?, ?, ?)");
+            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement(QUERY_ADD_DISH_FROM_RESTAURANT);
             preparedStatement.setInt(1, dish.getId());
-            preparedStatement.setInt(2, dish.getIdRestaurant());
-            preparedStatement.setInt(3, dish.getIdDish());
+            preparedStatement.setInt(2, dish.getIdDish());
+            preparedStatement.setInt(3, dish.getIdRestaurant());
             preparedStatement.execute();
         }
         catch(SQLException exception){
@@ -79,7 +81,7 @@ public class DishFromRestaurantRepository {
 
     public void deleteDishFromRestaurant(DishFromRestaurant dish){
         try{
-            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement("delete from dish_from_restaurant where id = ?");
+            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement(QUERY_DELETE_DISH_FROM_RESTAURANT);
             preparedStatement.setInt(1, dish.getId());
             preparedStatement.execute();
         }
@@ -90,10 +92,10 @@ public class DishFromRestaurantRepository {
 
     public void updateDishFromRestaurant(DishFromRestaurant oldDish, DishFromRestaurant newDish){
         try{
-            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement("update dish_from_restaurant set id = ?, idRestaurant = ?, idDish = ? where id = ?");
+            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement(QUERY_UPDATE_DISH_FROM_RESTAURANT);
             preparedStatement.setInt(1, newDish.getId());
-            preparedStatement.setInt(2, newDish.getIdRestaurant());
-            preparedStatement.setInt(3, newDish.getIdDish());
+            preparedStatement.setInt(2, newDish.getIdDish());
+            preparedStatement.setInt(3, newDish.getIdRestaurant());
             preparedStatement.setInt(4, oldDish.getId());
             preparedStatement.execute();
         }

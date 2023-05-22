@@ -43,6 +43,7 @@ public class Dish extends Product{
     @Override
     public String toString() {
         return //"Dish: \n" +
+                "Id: " + id + '\n' +
                 super.toString() +
                 "\nCalories: " + calories;
     }

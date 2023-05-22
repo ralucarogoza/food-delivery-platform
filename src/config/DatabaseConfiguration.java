@@ -18,9 +18,6 @@ public class DatabaseConfiguration {
             String username = dbInfo[1];
             String pass = dbInfo[2];
             databaseConnection = DriverManager.getConnection(url, username, pass);
-            System.out.println(url);
-            System.out.println(username);
-            System.out.println(pass);
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (SQLException e) {

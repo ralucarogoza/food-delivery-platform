@@ -14,6 +14,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
 
+import static constants.Constants.*;
+
 public class AddressRepository {
     private final DatabaseConfiguration databaseConfiguration;
 
@@ -28,7 +30,7 @@ public class AddressRepository {
         List<Address> addresses2 = new ArrayList<>();
         try{
             Statement statement = databaseConfiguration.getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from address");
+            ResultSet resultSet = statement.executeQuery(QUERY_GET_ALL_ADDRESSES);
             while(resultSet.next()){
                 Address address = new Address(resultSet.getInt("id"),
                         resultSet.getString("city"),
@@ -46,7 +48,7 @@ public class AddressRepository {
     public Address getAddressById(int id){
         Address address = null;
         try{
-            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement("select * from address where id = ?");
+            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement(QUERY_GET_ADDRESS_BY_ID);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if(resultSet.next()){
@@ -71,7 +73,7 @@ public class AddressRepository {
 
     public void addAddress(Address address){
         try{
-            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement("insert into address values (?, ?, ?, ?)");
+            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement(QUERY_INSERT_ADDRESS);
             preparedStatement.setInt(1, address.getId());
             preparedStatement.setString(2, address.getCity());
             preparedStatement.setString(3, address.getStreet());
@@ -86,7 +88,7 @@ public class AddressRepository {
 
     public void deleteAddress(Address address){
         try{
-            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement("delete from address where id = ?");
+            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement(QUERY_DELETE_ADDRESS);
             preparedStatement.setInt(1, address.getId());
             preparedStatement.execute();
         }
@@ -97,7 +99,7 @@ public class AddressRepository {
 
     public void updateAddress(Address oldAddress, Address newAddress){
         try{
-            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement("update address set id = ?, city = ?, street = ?, number = ? where id = ?");
+            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement(QUERY_UPDATE_ADDRESS);
             preparedStatement.setInt(1, newAddress.getId());
             preparedStatement.setString(2, newAddress.getCity());
             preparedStatement.setString(3, newAddress.getStreet());

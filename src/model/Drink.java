@@ -44,6 +44,7 @@ public class Drink extends Product{
     @Override
     public String toString() {
         return //"Drink: \n" +
+                "Id: " + id + '\n' +
                 super.toString() +
                 "\nFlavour: " + flavour +
                 "\nIs alcoholic: " + isAlcoholic + "\n";

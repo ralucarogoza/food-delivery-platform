@@ -11,6 +11,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import static constants.Constants.*;
+
 public class RestaurantRepository {
     private final DatabaseConfiguration databaseConfiguration;
 
@@ -26,7 +28,7 @@ public class RestaurantRepository {
         AddressRepository addressRepository = new AddressRepository(getDatabaseConfiguration());
         try{
             Statement statement = databaseConfiguration.getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from restaurant");
+            ResultSet resultSet = statement.executeQuery(QUERY_GET_ALL_RESTAURANTS);
             while(resultSet.next()){
                 Restaurant restaurant = new Restaurant(resultSet.getInt("id"),
                         resultSet.getString("name"),
@@ -41,7 +43,7 @@ public class RestaurantRepository {
     }
     public void addRestaurant(Restaurant restaurant){
         try{
-            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement("insert into restaurant values (?, ?, ?)");
+            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement(QUERY_ADD_RESTAURANT);
             preparedStatement.setInt(1, restaurant.getId());
             preparedStatement.setString(2, restaurant.getName());
             preparedStatement.setInt(3, restaurant.getAddress().getId());
@@ -53,7 +55,7 @@ public class RestaurantRepository {
     }
     public void deleteRestaurant(Restaurant restaurant){
         try{
-            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement("delete from restaurant where id = ?");
+            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement(QUERY_DELETE_RESTAURANT);
             preparedStatement.setInt(1, restaurant.getId());
             preparedStatement.execute();
         }
@@ -64,7 +66,7 @@ public class RestaurantRepository {
 
     public void updateRestaurant(Restaurant oldRestaurant, Restaurant newRestaurant){
         try{
-            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement("update restaurant set id = ?, name = ?, idAddress = ? where id = ?");
+            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement(QUERY_UPDATE_RESTAURANT);
             preparedStatement.setInt(1, newRestaurant.getId());
             preparedStatement.setString(2, newRestaurant.getName());
             preparedStatement.setInt(3, newRestaurant.getAddress().getId());

@@ -140,7 +140,7 @@ public class Order {
         DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         String formattedDate = orderDate.format(myFormatObj);
         String output ="";
-        output += "Order: " +
+        output += "\n\nOrder: " +
                 "\nId: " + id +
                 "\nStatus: " + orderStatus +
                 "\nClient: \n" + client +

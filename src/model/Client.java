@@ -36,7 +36,7 @@ public class Client extends Person{
 
     @Override
     public String toString() {
-        return "\nId: " + this.id + "\n" +  super.toString() +
+        return "Id: " + this.id + "\n" +  super.toString() +
                 "\nEmail: " + email + "\n";
     }
 }

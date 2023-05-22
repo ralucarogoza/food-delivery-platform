@@ -254,3 +254,78 @@ addDrink: Drink 3 was added at 2023-05-22 17:48:07
 addDish: Dish 1 was added at 2023-05-22 17:48:07
 addDish: Dish 2 was added at 2023-05-22 17:48:07
 addDish: Dish 3 was added at 2023-05-22 17:48:07
+addAddress: Address 1 was added at 2023-05-22 17:54:10
+addAddress: Address 2 was added at 2023-05-22 17:54:10
+addAddress: Address 3 was added at 2023-05-22 17:54:10
+addRestaurant: Restaurant 1: McDonald's was added at 2023-05-22 17:54:10
+addRestaurant: Restaurant 2: Michelle was added at 2023-05-22 17:54:10
+addRestaurant: Restaurant 3: Movo was added at 2023-05-22 17:54:10
+addDrink: Drink 1 was added at 2023-05-22 17:54:10
+addDrink: Drink 2 was added at 2023-05-22 17:54:10
+addDrink: Drink 3 was added at 2023-05-22 17:54:10
+addDish: Dish 1 was added at 2023-05-22 17:54:10
+addDish: Dish 2 was added at 2023-05-22 17:54:10
+addDish: Dish 3 was added at 2023-05-22 17:54:10
+addDishToRestaurant: at 2023-05-22 17:54:10
+addDishToRestaurant: at 2023-05-22 17:54:10
+addDishToRestaurant: at 2023-05-22 17:54:10
+addDrinkToRestaurant: at 2023-05-22 17:54:10
+addDrinkToRestaurant: at 2023-05-22 17:54:10
+addDrinkToRestaurant: at 2023-05-22 17:54:10
+addClient: Client 1 was added at 2023-05-22 17:54:10
+addClient: Client 2 was added at 2023-05-22 17:54:10
+addClient: Client 3 was added at 2023-05-22 17:54:10
+addDeliveryDriver: DeliveryDriver 1 was added at 2023-05-22 17:54:10
+addDeliveryDriver: DeliveryDriver 2 was added at 2023-05-22 17:54:10
+addDeliveryDriver: DeliveryDriver 3 was added at 2023-05-22 17:54:10
+addOrder: Order 1 was added at 2023-05-22 17:54:10
+addOrder: Order 2 was added at 2023-05-22 17:54:10
+addOrder: Order 3 was added at 2023-05-22 17:54:10
+addAddress: Address 1 was added at 2023-05-22 21:12:58
+addAddress: Address 2 was added at 2023-05-22 21:12:58
+addAddress: Address 3 was added at 2023-05-22 21:12:58
+addRestaurant: Restaurant 1: McDonald's was added at 2023-05-22 21:12:58
+addRestaurant: Restaurant 2: Michelle was added at 2023-05-22 21:12:58
+addRestaurant: Restaurant 3: Movo was added at 2023-05-22 21:12:58
+addDrink: Drink 1 was added at 2023-05-22 21:12:58
+addDrink: Drink 2 was added at 2023-05-22 21:12:58
+addDrink: Drink 3 was added at 2023-05-22 21:12:58
+addDish: Dish 1 was added at 2023-05-22 21:12:58
+addDish: Dish 2 was added at 2023-05-22 21:12:58
+addDish: Dish 3 was added at 2023-05-22 21:12:58
+addDishToRestaurant: at 2023-05-22 21:12:58
+addDishToRestaurant: at 2023-05-22 21:12:58
+addDishToRestaurant: at 2023-05-22 21:12:58
+addDrinkToRestaurant: at 2023-05-22 21:12:58
+addDrinkToRestaurant: at 2023-05-22 21:12:58
+addDrinkToRestaurant: at 2023-05-22 21:12:58
+addClient: Client 1 was added at 2023-05-22 21:12:58
+addClient: Client 2 was added at 2023-05-22 21:12:59
+addClient: Client 3 was added at 2023-05-22 21:12:59
+addDeliveryDriver: DeliveryDriver 1 was added at 2023-05-22 21:12:59
+addDeliveryDriver: DeliveryDriver 2 was added at 2023-05-22 21:12:59
+addDeliveryDriver: DeliveryDriver 3 was added at 2023-05-22 21:12:59
+addOrder: Order 1 was added at 2023-05-22 21:12:59
+addOrder: Order 2 was added at 2023-05-22 21:12:59
+addOrder: Order 3 was added at 2023-05-22 21:12:59
+deleteOrder: Order 2 was removed at 2023-05-22 21:17:00
+updateOrder: at 2023-05-22 21:17:40
+addDishToRestaurant: at 2023-05-22 21:49:48
+addDishToRestaurant: at 2023-05-22 22:07:22
+addDishToRestaurant: at 2023-05-22 22:07:22
+addDishToRestaurant: at 2023-05-22 22:07:22
+addDrinkToRestaurant: at 2023-05-22 22:07:22
+addDrinkToRestaurant: at 2023-05-22 22:07:22
+addDrinkToRestaurant: at 2023-05-22 22:07:22
+addOrder: Order 1 was added at 2023-05-22 22:07:22
+addOrder: Order 2 was added at 2023-05-22 22:07:22
+addOrder: Order 3 was added at 2023-05-22 22:07:22
+addDishToRestaurant: at 2023-05-22 22:20:37
+addDishToRestaurant: at 2023-05-22 22:20:37
+addDishToRestaurant: at 2023-05-22 22:20:37
+addDrinkToRestaurant: at 2023-05-22 22:20:37
+addDrinkToRestaurant: at 2023-05-22 22:20:37
+addDrinkToRestaurant: at 2023-05-22 22:20:37
+addOrder: Order 1 was added at 2023-05-22 22:20:37
+addOrder: Order 2 was added at 2023-05-22 22:20:37
+addOrder: Order 3 was added at 2023-05-22 22:20:38

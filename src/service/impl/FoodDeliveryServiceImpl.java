@@ -132,6 +132,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
     @Override
     public double priceOfOrder(Order order) {
         double price = 0;
+
         for(Dish dish: getDishes()){
             if(dish.getId() == order.getOrderedDish().getIdDish())
                 price += dish.getPrice();

@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
 
+import static constants.Constants.*;
+
 public class ClientRepository {
     private final DatabaseConfiguration databaseConfiguration;
 
@@ -25,7 +27,7 @@ public class ClientRepository {
     public Optional<Client> findClientByEmail(String email){
         Client client = null;
         try{
-            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement("select * from client where email = ?");
+            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement(QUERY_GET_CLIENT_BY_EMAIL);
             preparedStatement.setString(1, email);
             ResultSet resultSet = preparedStatement.executeQuery();
             if(resultSet.next()){
@@ -52,7 +54,7 @@ public class ClientRepository {
     public Client getClientById(int id){
         Client client = null;
         try{
-            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement("select * from client where id = ?");
+            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement(QUERY_GET_CLIENT_BY_ID);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if(resultSet.next()){
@@ -80,7 +82,7 @@ public class ClientRepository {
         Map<String, Client> clients = new TreeMap<>();
         try{
             Statement statement = databaseConfiguration.getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from client");
+            ResultSet resultSet = statement.executeQuery(QUERY_GET_ALL_CLIENTS);
             while(resultSet.next()){
                 Client client = new Client(resultSet.getInt("id"),
                         resultSet.getString("firstName"),
@@ -98,7 +100,7 @@ public class ClientRepository {
 
     public void addClient(Client client){
         try{
-            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement("insert into client values (?, ?, ?, ?, ?)");
+            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement(QUERY_INSERT_CLIENT);
             preparedStatement.setInt(1, client.getId());
             preparedStatement.setString(2, client.getFirstName());
             preparedStatement.setString(3, client.getLastName());
@@ -113,7 +115,7 @@ public class ClientRepository {
 
     public void deleteClient(Client client){
         try{
-            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement("delete from client where id = ?");
+            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement(QUERY_DELETE_CLIENT);
             preparedStatement.setInt(1, client.getId());
             preparedStatement.execute();
         }
@@ -124,7 +126,7 @@ public class ClientRepository {
 
     public void updateClient(Client oldClient, Client newClient){
         try{
-            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement("update client set id = ?, firstName = ?, lastName = ?, phoneNumber = ?, email = ? where id = ?");
+            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement(QUERY_UPDATE_CLIENT);
             preparedStatement.setInt(1, newClient.getId());
             preparedStatement.setString(2, newClient.getFirstName());
             preparedStatement.setString(3, newClient.getLastName());

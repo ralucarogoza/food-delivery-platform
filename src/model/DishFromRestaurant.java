@@ -6,14 +6,14 @@ public class DishFromRestaurant {
     private int idRestaurant;
     private int idDish;
 
-    public DishFromRestaurant(int idRestaurant, int idDish) {
+    public DishFromRestaurant(int idDish, int idRestaurant) {
         this.id = noDishesFromRestaurant;
         this.idRestaurant = idRestaurant;
         this.idDish = idDish;
         noDishesFromRestaurant++;
     }
 
-    public DishFromRestaurant(int id, int idRestaurant, int idDish) {
+    public DishFromRestaurant(int id, int idDish, int idRestaurant) {
         this.id = id;
         this.idRestaurant = idRestaurant;
         this.idDish = idDish;
@@ -36,5 +36,13 @@ public class DishFromRestaurant {
 
     public void setIdDish(int idDish) {
         this.idDish = idDish;
+    }
+
+    @Override
+    public String toString() {
+        return "DishFromRestaurant: " +
+                "\nId:" + id +
+                "\nIdRestaurant: " + idRestaurant +
+                "\nIdDish: " + idDish;
     }
 }

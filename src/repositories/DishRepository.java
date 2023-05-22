@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
 
+import static constants.Constants.*;
+
 public class DishRepository {
     private final DatabaseConfiguration databaseConfiguration;
 
@@ -25,7 +27,7 @@ public class DishRepository {
     public Optional<Dish> getDishById(int id){
         Dish dish = null;
         try{
-            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement("select * from dish where id = ?");
+            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement(QUERY_GET_DISH_BY_ID);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if(resultSet.next()){
@@ -55,7 +57,7 @@ public class DishRepository {
         List<Dish> dishes = new ArrayList<>();
         try{
             Statement statement = databaseConfiguration.getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from dish");
+            ResultSet resultSet = statement.executeQuery(QUERY_GET_ALL_DISHES);
             while(resultSet.next()){
                 Dish dish = new Dish(resultSet.getInt("id"),
                                         resultSet.getString("name"),
@@ -74,7 +76,7 @@ public class DishRepository {
 
     public void addDish(Dish dish){
         try{
-            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement("insert into dish values (?, ?, ?, ?, ?, ?)");
+            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement(QUERY_ADD_DISH);
             preparedStatement.setInt(1, dish.getId());
             preparedStatement.setString(2, dish.getName());
             preparedStatement.setBoolean(3, dish.isVegan());
@@ -90,7 +92,7 @@ public class DishRepository {
 
     public void removeDish(Dish dish){
         try{
-            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement("delete from dish where id = ?");
+            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement(QUERY_DELETE_DISH);
             preparedStatement.setInt(1, dish.getId());
             preparedStatement.execute();
         }
@@ -101,7 +103,7 @@ public class DishRepository {
 
     public void updateDish(Dish oldDish, Dish newDish){
         try{
-            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement("update dish set id = ?, name = ?, isVegan = ?, weight = ?, price = ?, calories = ? where id = ?");
+            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement(QUERY_UPDATE_DISH);
             preparedStatement.setInt(1, newDish.getId());
             preparedStatement.setString(2, newDish.getName());
             preparedStatement.setBoolean(3, newDish.isVegan());
