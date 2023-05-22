@@ -1,7 +1,7 @@
 package model;
 
 public class Client extends Person{
-    private static int noClients = 0;
+    private static int noClients = 1;
     private int id;
     private String email;
     //private String password;

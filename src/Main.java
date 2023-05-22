@@ -20,24 +20,25 @@ public class Main {
         service.setAddressRepository(addressRepository);
         System.out.println(service.getClients());
 
-        Client client1 = new Client("Raluca", "Rogoza", "0234567890", "ralucar@yahoo.com");
-        /*Client client2 = new Client("Carina", "Nicola", "0254657698", "carinan@yahoo.com");
-        Client client3 = new Client("Ioana", "Maria", "0234125476", "ioanam@yahoo.com");
+
+        // CLIENT
+
+        /*Client client1 = new Client(1,"Raluca", "Rogoza", "0234567890", "ralucar@yahoo.com");
+        Client client2 = new Client(2, "Carina", "Nicola", "0254657698", "carinan@yahoo.com");
+        Client client3 = new Client(3, "Ioana", "Maria", "0234125476", "ioanam@yahoo.com");
         service.addClient(client1);
         service.addClient(client2);
         //service.addClient(client3);
-        System.out.println(client1.getId());
-        System.out.println(client2.getId());
-        System.out.println(client3.getId());
-        //System.out.println(client1.getId());
-        service.removeClient(client1);
-        System.out.println(service.getAllClients());
         System.out.println(service.getClients());
 
-        service.updateClient(client1, client3);*/
+        service.removeClient(client1);
+        System.out.println(service.getClients());
+
+
+        service.updateClient(client2, client3);
         System.out.println(service.getClients());
         service.findClientByEmail("carinan@yahoo.com");
-
+*/
 
         /* ADDRESS
 

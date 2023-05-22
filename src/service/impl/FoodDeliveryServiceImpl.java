@@ -104,7 +104,76 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         return price;
     }
 
-    public void addClient(Client client) throws SQLException {
+
+    // ADDRESS
+
+
+    public void addAddress(Address address){
+        if(addressRepository == null){
+            addressRepository = new AddressRepository(addressRepository.getDatabaseConfiguration());
+        }
+        addressRepository.addAddress(address);
+        AuditService.getInstance().write("addAddress: Address " + address.getId() + " was added at ");
+        System.out.println("Address added with success!");
+    }
+
+    public List<Address> getAddresses(){
+        try{
+            if(addressRepository == null)
+                throw new Exception("There are no addresses!");
+        }
+        catch(Exception exception){
+            System.out.println(exception.getMessage());
+        }
+        return addressRepository.getAddresses();
+    }
+
+    public void deleteAddress(Address address){
+        boolean found = false;
+        try{
+            for(Address a: getAddresses()){
+                if(a.getId() == address.getId()){
+                    found = true;
+                }
+                if(!found){
+                    throw new AddressNotFoundException("Address with id " + address.getId() + " doesn't exist!");
+                }
+                addressRepository.deleteAddress(address);
+                AuditService.getInstance().write("deleteAddress: Address " + address.getId() + " was removed at ");
+                System.out.println("Address " + address.getId() + " removed with success!");
+            }
+        }
+        catch (AddressNotFoundException addressNotFoundException){
+            System.out.println(addressNotFoundException.getMessage());
+        }
+    }
+
+    public void updateAddress(Address oldAddress, Address newAddress){
+        boolean found = false;
+        try{
+            for(Address a: getAddresses()) {
+                if (a.getId() == oldAddress.getId()) {
+                    found = true;
+                }
+            }
+            if(!found){
+                throw new AddressNotFoundException("Address with id " + oldAddress.getId() + " doesn't exist!");
+            }
+            addressRepository.updateAddress(oldAddress, newAddress);
+            AuditService.getInstance().write("updateAddress: ");
+            System.out.println("Address updated with success!");
+        }
+        catch (AddressNotFoundException addressNotFoundException){
+            System.out.println(addressNotFoundException.getMessage());
+        }
+    }
+
+
+
+    // CLIENT
+
+
+    public void addClient(Client client) {
         boolean valid_client = true;
         try{
             if(!validateEmail(client.getEmail()))
@@ -125,43 +194,53 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         if(valid_client){
             if(clientRepository.getClients() == null)
                 clientRepository = new ClientRepository(clientRepository.getDatabaseConfiguration());
-            //clientRe.put(client.getEmail(), client);
             clientRepository.addClient(client);
             AuditService.getInstance().write("addClient: Client " + client.getId() + " was added at ");
             System.out.println("Client added with success!");
         }
     }
 
+    public Optional<Client> findClientByEmail(String email){
+        return clientRepository.findClientByEmail(email);
+    }
+
     @Override
-    public Map<String, Client> getClients() throws SQLException {
+    public Map<String, Client> getClients() {
         try {
             if (clientRepository.getClients() == null)
                 throw new NoClientFoundException("There are no clients!");
         }
         catch(NoClientFoundException clientFoundException){
             System.out.println(clientFoundException.getMessage());
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
         return clientRepository.getClients();
     }
 
-
-    public void removeClient(Client client) throws SQLException {
-        String emailClient = client.getEmail();
-        if(clientRepository.getClients().containsKey(emailClient)){
-            //clients.remove(emailClient);
+    public void removeClient(Client client){
+        boolean found = false;
+        try{
+            for(Client c: getClients().values()) {
+                System.out.println(getClients().values());
+                System.out.println(c.getId() == client.getId());
+                if (c.getId() == client.getId()) {
+                    found = true;
+                }
+            }
+            if(!found){
+                throw new ClientNotFoundException("Client with id " + client.getId() + " doesn't exist!");
+            }
             clientRepository.deleteClient(client);
             AuditService.getInstance().write("removeClient: Client " + client.getId() + " was removed at ");
             System.out.println("Client " + client.getId() + " removed with success!");
         }
-        else{
-            System.out.println("Doesn't exist this client!");
+        catch(ClientNotFoundException clientNotFoundException){
+            System.out.println(clientNotFoundException.getMessage());
         }
     }
 
     public void updateClient(Client oldClient, Client newClient) throws SQLException {
         boolean valid_client = true;
+        boolean found = false;
         try{
             if(!validateEmail(newClient.getEmail()))
                 throw new InvalidEmailException("Invalid format for email!");
@@ -173,20 +252,30 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         try{
             if(!validatePhoneNumber(newClient.getPhoneNumber()))
                 throw new InvalidPhoneNumberException("Invalid format for phone number!");
+            for(Client c: getClients().values()) {
+                if (c.getId() == oldClient.getId()) {
+                    found = true;
+                }
+            }
+            if(!found){
+                throw new ClientNotFoundException("Client with id " + oldClient.getId() + " doesn't exist!");
+            }
+            if(found && valid_client) {
+                clientRepository.updateClient(oldClient, newClient);
+                AuditService.getInstance().write("updateClient: ");
+                System.out.println("Client updated with success!");
+            }
         }
         catch (InvalidPhoneNumberException phoneNumberException){
             valid_client = false;
             System.out.println(phoneNumberException.getMessage());
         }
-        if(valid_client){
-            if(clientRepository.getClients() == null)
-                clientRepository = new ClientRepository(clientRepository.getDatabaseConfiguration());
-            //clientRe.put(client.getEmail(), client);
-            clientRepository.updateClient(oldClient, newClient);
-            AuditService.getInstance().write("updateClient: ");
-            System.out.println("Client updated with success!");
+        catch(ClientNotFoundException clientNotFoundException) {
+            System.out.println(clientNotFoundException.getMessage());
         }
     }
+
+    // DELIVERY DRIVER
 
 
     public void addDeliveryDriver(DeliveryDriver deliveryDriver){
@@ -209,6 +298,17 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         }
     }
 
+    public List<DeliveryDriver> getDeliveryDrivers(){
+        try {
+            if (deliveryDriverRepository.getDeliveryDrivers() == null)
+                throw new NoClientFoundException("There are no delivery drivers!");
+        }
+        catch(NoDeliveryDriverFoundException deliveryDriverFoundException){
+            System.out.println(deliveryDriverFoundException.getMessage());
+        }
+        return deliveryDriverRepository.getDeliveryDrivers();
+    }
+
     public void showDeliveryDrivers(){
         if(deliveryDriverRepository.getDeliveryDrivers().isEmpty())
             System.out.println("There are no delivery drivers!\n");
@@ -220,17 +320,6 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
                 System.out.println(deliveryDriver);
             }
         }
-    }
-
-    public List<DeliveryDriver> getDeliveryDrivers(){
-        try {
-            if (deliveryDriverRepository.getDeliveryDrivers() == null)
-                throw new NoClientFoundException("There are no delivery drivers!");
-        }
-        catch(NoDeliveryDriverFoundException deliveryDriverFoundException){
-            System.out.println(deliveryDriverFoundException.getMessage());
-        }
-        return deliveryDriverRepository.getDeliveryDrivers();
     }
 
     public void fireDeliveryDriver(DeliveryDriver deliveryDriver){
@@ -471,9 +560,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
             System.out.println("This dish isn't in your order!");
     }*/
 
-    public Optional<Client> findClientByEmail(String email){
-        return clientRepository.findClientByEmail(email);
-    }
+
 
     public List<DeliveryDriver> getAvailableDeliveryDrivers(){
         List<DeliveryDriver> availableDeliveryDrivers = new ArrayList<>();
@@ -486,14 +573,8 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
 
 
 
-    public void addAddress(Address address){
-        if(addressRepository == null){
-            addressRepository = new AddressRepository(addressRepository.getDatabaseConfiguration());
-        }
-        addressRepository.addAddress(address);
-        AuditService.getInstance().write("addAddress: Address " + address.getId() + " was added at ");
-        System.out.println("Address added with success!");
-    }
+
+
 
     public void addDish(Dish dish){
         if(dishRepository == null){
@@ -515,16 +596,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
     }
 
 
-    public List<Address> getAddresses(){
-        try{
-            if(addressRepository == null)
-                throw new Exception("There are no addresses!");
-        }
-        catch(Exception exception){
-            System.out.println(exception.getMessage());
-        }
-        return addressRepository.getAddresses();
-    }
+
 
     public List<Dish> getDishes(){
         try{
@@ -572,47 +644,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
     }
 
 
-    public void deleteAddress(Address address){
-        boolean found = false;
-        try{
-            for(Address a: getAddresses()){
-                if(a.getId() == address.getId()){
-                    found = true;
-                }
-                if(!found){
-                    throw new AddressNotFoundException("Address with id " + address.getId() + " doesn't exist!");
-                }
-                System.out.println(address);
-                System.out.println(getAddresses());
-                addressRepository.deleteAddress(address);
-                AuditService.getInstance().write("removeAddress: Address " + address.getId() + " was removed at ");
-                System.out.println("Address " + address.getId() + " removed with success!");
-            }
-        }
-        catch (AddressNotFoundException addressNotFoundException){
-            System.out.println(addressNotFoundException.getMessage());
-        }
-    }
 
-    public void updateAddress(Address oldAddress, Address newAddress){
-        boolean found = false;
-        try{
-            for(Address a: getAddresses()) {
-                if (a.getId() == oldAddress.getId()) {
-                    found = true;
-                }
-            }
-            if(!found){
-                throw new AddressNotFoundException("Address with id " + oldAddress.getId() + " doesn't exist!");
-            }
-            addressRepository.updateAddress(oldAddress, newAddress);
-            AuditService.getInstance().write("updateAddress: ");
-            System.out.println("Address updated with success!");
-        }
-        catch (AddressNotFoundException addressNotFoundException){
-            System.out.println(addressNotFoundException.getMessage());
-        }
-    }
 
     public void updateDish(Dish oldDish, Dish newDish){
         dishRepository.updateDish(oldDish, newDish);
