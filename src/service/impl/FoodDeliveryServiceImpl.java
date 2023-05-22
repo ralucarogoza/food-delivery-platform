@@ -1,6 +1,5 @@
 package service.impl;
 
-import config.DatabaseConfiguration;
 import exceptions.*;
 import model.*;
 import repositories.*;
@@ -9,7 +8,6 @@ import service.FoodDeliveryService;
 import utils.*;
 
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -134,34 +132,10 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         }
     }
 
-    public void showClients(){
-        if(clientRepository.getClients().isEmpty())
-            System.out.println("There are no clients!\n");
-        else{
-            int i = 0;
-            for(Map.Entry<String, Client> client:clientRepository.getClients().entrySet()){
-                i ++;
-                System.out.print(Integer.toString(i) + ". ");
-                System.out.println(client.getValue());
-            }
-        }
-    }
-
-
-    public Map<String, Client> getClients(){
+    @Override
+    public Map<String, Client> getClients() throws SQLException {
         try {
             if (clientRepository.getClients() == null)
-                throw new NoClientFoundException("There are no clients!");
-        }
-        catch(NoClientFoundException clientFoundException){
-            System.out.println(clientFoundException.getMessage());
-        }
-        return clientRepository.getClients();
-    }
-    @Override
-    public Map<String, Client> getAllClients() throws SQLException {
-        try {
-            if (clientRepository.getAllClients() == null)
                 throw new NoClientFoundException("There are no clients!");
         }
         catch(NoClientFoundException clientFoundException){
@@ -169,7 +143,7 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return clientRepository.getAllClients();
+        return clientRepository.getClients();
     }
 
 
@@ -497,14 +471,8 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
             System.out.println("This dish isn't in your order!");
     }*/
 
-    public Client findClient(String email){
-        Client clientWanted = null;
-        for(Map.Entry<String, Client> client: clientRepository.getClients().entrySet()){
-            if(client.getKey() == email){
-                clientWanted = client.getValue();
-            }
-        }
-        return clientWanted;
+    public Optional<Client> findClientByEmail(String email){
+        return clientRepository.findClientByEmail(email);
     }
 
     public List<DeliveryDriver> getAvailableDeliveryDrivers(){

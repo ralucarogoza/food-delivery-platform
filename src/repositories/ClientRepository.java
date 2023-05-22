@@ -1,19 +1,17 @@
 package repositories;
 
 import config.DatabaseConfiguration;
+import exceptions.ClientNotFoundException;
 import model.Client;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class ClientRepository {
-    private Map<String, Client> clients;
+    //private Map<String, Client> clients;
     private final DatabaseConfiguration databaseConfiguration;
 
     public DatabaseConfiguration getDatabaseConfiguration() {
@@ -21,27 +19,45 @@ public class ClientRepository {
     }
 
     public ClientRepository(DatabaseConfiguration databaseConfiguration) {
-        this.clients = new TreeMap<>();
+        //this.clients = new TreeMap<>();
         this.databaseConfiguration = databaseConfiguration;
     }
 
 
-
-    public Map<String, Client> getClients() {
-        return this.clients;
+    public Optional<Client> findClientByEmail(String email){
+        Client client = null;
+        try{
+            PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement("select * from client where email = ?");
+            preparedStatement.setString(1, email);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                client = new Client(resultSet.getInt("id"),
+                        resultSet.getString("firstName"),
+                        resultSet.getString("lastName"),
+                        resultSet.getString("phoneNumber"),
+                        resultSet.getString("email"));
+                System.out.println("Client found!");
+            }
+            else{
+                throw new ClientNotFoundException("Client with email " + email + " doesn't exist!");
+            }
+        }
+        catch (ClientNotFoundException clientNotFoundException){
+            System.out.println(clientNotFoundException.getMessage());
+        }
+        catch(SQLException exception){
+            System.out.println(exception.getMessage());
+        }
+        return Optional.ofNullable(client);
     }
-    public void removeClient(Client client){
-        clients.remove(client.getEmail());
-    }
 
-
-
-    public Map<String, Client> getAllClients() throws SQLException {
+    public Map<String, Client> getClients() throws SQLException {
         Statement statement = databaseConfiguration.getConnection().createStatement();
         Map<String, Client> clients = new TreeMap<>();
-        ResultSet resultSet = statement.executeQuery("select * from schema.client");
+        ResultSet resultSet = statement.executeQuery("select * from client");
         while(resultSet.next()){
-            Client client = new Client(resultSet.getString("firstName"),
+            Client client = new Client(resultSet.getInt("id"),
+                                        resultSet.getString("firstName"),
                                         resultSet.getString("lastName"),
                                         resultSet.getString("phoneNumber"),
                                         resultSet.getString("email"));
@@ -58,14 +74,14 @@ public class ClientRepository {
         preparedStatement.setString(4, client.getPhoneNumber());
         preparedStatement.setString(5, client.getEmail());
         preparedStatement.execute();
-        clients.put(client.getEmail(), client);
+        //clients.put(client.getEmail(), client);
     }
 
     public void deleteClient(Client client) throws SQLException {
         PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement("delete from client where id = ?");
         preparedStatement.setInt(1, client.getId());
         preparedStatement.execute();
-        clients.remove(client.getEmail());
+        //clients.remove(client.getEmail());
     }
 
     public void updateClient(Client oldClient, Client newClient) throws SQLException {
@@ -77,7 +93,7 @@ public class ClientRepository {
         preparedStatement.setString(5, newClient.getEmail());
         preparedStatement.setInt(6, oldClient.getId());
         preparedStatement.execute();
-        clients.remove(oldClient.getEmail());
-        clients.put(newClient.getEmail(), newClient);
+        //clients.remove(oldClient.getEmail());
+        //clients.put(newClient.getEmail(), newClient);
     }
 }

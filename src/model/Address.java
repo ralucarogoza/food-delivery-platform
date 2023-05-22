@@ -20,7 +20,6 @@ public class Address {
         this.city = city;
         this.street = street;
         this.number = number;
-        //noAddresses++;
     }
 
     public static int getNoAddresses() {

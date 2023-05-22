@@ -15,14 +15,12 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class AddressRepository {
-    private List<Address> addresses;
     private final DatabaseConfiguration databaseConfiguration;
 
     public DatabaseConfiguration getDatabaseConfiguration() {
         return databaseConfiguration;
     }
     public AddressRepository(DatabaseConfiguration databaseConfiguration){
-        this.addresses = new ArrayList<>();
         this.databaseConfiguration = databaseConfiguration;
     }
 
@@ -30,23 +28,18 @@ public class AddressRepository {
         List<Address> addresses2 = new ArrayList<>();
         try{
             Statement statement = databaseConfiguration.getConnection().createStatement();
-            //List<Address> addresses2 = new ArrayList<>();
             ResultSet resultSet = statement.executeQuery("select * from address");
             while(resultSet.next()){
                 Address address = new Address(resultSet.getInt("id"),
                         resultSet.getString("city"),
                         resultSet.getString("street"),
                         resultSet.getInt("number"));
-                System.out.println(address.getId());
-                System.out.println(Address.getNoAddresses());
                 addresses2.add(address);
             }
         }
         catch(Exception exception){
             System.out.println(exception.getMessage());
         }
-
-        //this.addresses = addresses2;
         return addresses2;
     }
 
@@ -59,12 +52,10 @@ public class AddressRepository {
             preparedStatement.setString(3, address.getStreet());
             preparedStatement.setInt(4, address.getNumber());
             preparedStatement.execute();
-            addresses.add(address);
         }
         catch(SQLException exception){
             System.out.println(exception.getMessage());
         }
-        addresses.add(address);
     }
 
 
@@ -72,16 +63,11 @@ public class AddressRepository {
         try{
             PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement("delete from address where id = ?");
             preparedStatement.setInt(1, address.getId());
-            System.out.println("in delete");
-            System.out.println(address);
-            System.out.println("am term in delete");
             preparedStatement.execute();
-            addresses.remove(address);
         }
         catch(SQLException exception){
             System.out.println(exception.getMessage());
         }
-        //addresses.remove(address);
     }
 
     public void updateAddress(Address oldAddress, Address newAddress){
@@ -95,10 +81,6 @@ public class AddressRepository {
             preparedStatement.execute();
             System.out.println(oldAddress);
             System.out.println(preparedStatement);
-            addresses.remove(oldAddress);
-            addresses.add(newAddress);
-            //int oldIndex = addresses.indexOf(oldAddress);
-            //addresses.set(oldIndex, newAddress);
         }
         catch(SQLException exception){
             System.out.println(exception.getMessage());

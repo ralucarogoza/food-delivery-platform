@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
+import java.util.Optional;
 
 public interface FoodDeliveryService {
     void addOrder(Order order);
@@ -15,11 +15,9 @@ public interface FoodDeliveryService {
     void updateStatusForOrder(int indexOrder, OrderStatus orderStatus);
     double priceOfOrder(Order order);
     void addClient(Client client) throws SQLException;
-    void showClients();
     void removeClient(Client client) throws SQLException;
     void updateClient(Client oldClient, Client newClient) throws SQLException;
-    Map<String, Client> getClients();
-    Map<String, Client> getAllClients() throws SQLException;
+    Map<String, Client> getClients() throws SQLException;
     void addDeliveryDriver(DeliveryDriver deliveryDriver);
     void showDeliveryDrivers();
     List<DeliveryDriver> getDeliveryDrivers();
@@ -39,7 +37,7 @@ public interface FoodDeliveryService {
     //void showDrinksFromOrder(Order order);
     //void removeDrinkFromOrder(Order order, String drinkName);
     //void removeDishFromOrder(Order order, String dishName);
-    Client findClient(String email);
+    Optional<Client> findClientByEmail(String email);
     List<DeliveryDriver> getAvailableDeliveryDrivers();
 
     List<Address> getAddresses();

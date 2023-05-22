@@ -6,6 +6,12 @@ public class Client extends Person{
     private String email;
     //private String password;
 
+    public Client(int id, String firstName, String lastName, String phoneNumber, String email) {
+        super(firstName, lastName, phoneNumber);
+        this.id = id;
+        this.email = email;
+        noClients++;
+    }
     public Client(String firstName, String lastName, String phoneNumber, String email) {
         super(firstName, lastName, phoneNumber);
         this.id = noClients;

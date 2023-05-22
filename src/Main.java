@@ -18,10 +18,10 @@ public class Main {
         FoodDeliveryServiceImpl service = new FoodDeliveryServiceImpl();
         service.setClientRepository(clientRepository);
         service.setAddressRepository(addressRepository);
-        System.out.println(service.getAllClients());
+        System.out.println(service.getClients());
 
-/*        Client client1 = new Client("Raluca", "Rogoza", "0234567890", "ralucar@yahoo.com");
-        Client client2 = new Client("Carina", "Nicola", "0254657698", "carinan@yahoo.com");
+        Client client1 = new Client("Raluca", "Rogoza", "0234567890", "ralucar@yahoo.com");
+        /*Client client2 = new Client("Carina", "Nicola", "0254657698", "carinan@yahoo.com");
         Client client3 = new Client("Ioana", "Maria", "0234125476", "ioanam@yahoo.com");
         service.addClient(client1);
         service.addClient(client2);
@@ -34,53 +34,37 @@ public class Main {
         System.out.println(service.getAllClients());
         System.out.println(service.getClients());
 
-        service.updateClient(client1, client3);
-        System.out.println(service.getAllClients());*/
+        service.updateClient(client1, client3);*/
+        System.out.println(service.getClients());
+        service.findClientByEmail("carinan@yahoo.com");
+
+
+        /* ADDRESS
 
         Address address1 = new Address(1,"Bucharest", "Bd. Mihail Kogalniceanu", 14);
         Address address2 = new Address(2,"Bucharest", "Nicolae Balcescu", 5);
         Address address3 = new Address(3,"Bucharest", "Bd. Carol", 2);
         Address address4 = new Address(4,"Bucharest", "Dimitrie Cantemir", 33);
-        //Address address5 = new Address("Bucharest", "Mihai Bravu", 4, true);
-        //Address address6 = new Address("Bucharest", "Obor", 12, true);
+        Address address5 = new Address(5, "Bucharest", "Mihai Bravu", 4);
+        Address address6 = new Address(6,"Bucharest", "Obor", 12);
 
-        /*System.out.println("id uri pt primele 4 addresse");
-        System.out.println(address1.getId());
-        System.out.println(address2.getId());
-        System.out.println(address3.getId());
-        System.out.println(address4.getId());
-
-        System.out.println("adaug adresse");
+        System.out.println("Adding addresses: ");
         service.addAddress(address1);
         service.addAddress(address2);
         service.addAddress(address3);
         service.addAddress(address4);
-        System.out.println("am adaugat adresele");
-        System.out.println("id uri pt primele 4 addresse");
-        System.out.println(address1.getId());
-        System.out.println(address2.getId());
-        System.out.println(address3.getId());
-        System.out.println(address4.getId());*/
 
         service.addAddress(address2);
 
-
-        System.out.println("afisez toate adresele");
+        System.out.println("All addresses: ");
         System.out.println(service.getAddresses());
 
-        System.out.println("incep stergere");
+        service.deleteAddress(address3);
+        service.deleteAddress(address2);
+        service.updateAddress(address2, address4);
 
-
-        //service.deleteAddress(address3);
-        //service.deleteAddress(address2);
-        service.updateAddress(address4, address3);
-
-        //System.out.println("id adresa 3");
-        //System.out.println(address3.getId());
-        //System.out.println(address4.getId());
-        //service.updateAddress(address1, address4);
-        System.out.println("afisez toate adresele");
-        System.out.println(service.getAddresses());
+        System.out.println("All addresses: ");
+        System.out.println(service.getAddresses());*/
 
 
 
