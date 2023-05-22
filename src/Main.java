@@ -37,24 +37,49 @@ public class Main {
         service.updateClient(client1, client3);
         System.out.println(service.getAllClients());*/
 
-        Address address1 = new Address("Bucharest", "Bd. Mihail Kogalniceanu", 14, true);
-        Address address2 = new Address("Bucharest", "Nicolae Balcescu", 5, true);
-        Address address3 = new Address("Bucharest", "Bd. Carol", 2, true);
-        Address address4 = new Address("Bucharest", "Dimitrie Cantemir", 33, true);
-        Address address5 = new Address("Bucharest", "Mihai Bravu", 4, true);
-        Address address6 = new Address("Bucharest", "Obor", 12, true);
+        Address address1 = new Address(1,"Bucharest", "Bd. Mihail Kogalniceanu", 14);
+        Address address2 = new Address(2,"Bucharest", "Nicolae Balcescu", 5);
+        Address address3 = new Address(3,"Bucharest", "Bd. Carol", 2);
+        Address address4 = new Address(4,"Bucharest", "Dimitrie Cantemir", 33);
+        //Address address5 = new Address("Bucharest", "Mihai Bravu", 4, true);
+        //Address address6 = new Address("Bucharest", "Obor", 12, true);
 
+        /*System.out.println("id uri pt primele 4 addresse");
+        System.out.println(address1.getId());
+        System.out.println(address2.getId());
+        System.out.println(address3.getId());
+        System.out.println(address4.getId());
+
+        System.out.println("adaug adresse");
         service.addAddress(address1);
         service.addAddress(address2);
         service.addAddress(address3);
-
-
-        /*service.deleteAddress(address1);
-        service.deleteAddress(address2);*/
-
+        service.addAddress(address4);
+        System.out.println("am adaugat adresele");
+        System.out.println("id uri pt primele 4 addresse");
         System.out.println(address1.getId());
-        System.out.println(address4.getId());
-        service.updateAddress(address1, address4);
+        System.out.println(address2.getId());
+        System.out.println(address3.getId());
+        System.out.println(address4.getId());*/
+
+        service.addAddress(address2);
+
+
+        System.out.println("afisez toate adresele");
+        System.out.println(service.getAddresses());
+
+        System.out.println("incep stergere");
+
+
+        //service.deleteAddress(address3);
+        //service.deleteAddress(address2);
+        service.updateAddress(address4, address3);
+
+        //System.out.println("id adresa 3");
+        //System.out.println(address3.getId());
+        //System.out.println(address4.getId());
+        //service.updateAddress(address1, address4);
+        System.out.println("afisez toate adresele");
         System.out.println(service.getAddresses());
 
 

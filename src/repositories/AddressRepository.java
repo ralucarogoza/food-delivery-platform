@@ -33,9 +33,12 @@ public class AddressRepository {
             //List<Address> addresses2 = new ArrayList<>();
             ResultSet resultSet = statement.executeQuery("select * from address");
             while(resultSet.next()){
-                Address address = new Address(resultSet.getString("city"),
+                Address address = new Address(resultSet.getInt("id"),
+                        resultSet.getString("city"),
                         resultSet.getString("street"),
-                        resultSet.getInt("number"), false);
+                        resultSet.getInt("number"));
+                System.out.println(address.getId());
+                System.out.println(Address.getNoAddresses());
                 addresses2.add(address);
             }
         }
@@ -69,6 +72,9 @@ public class AddressRepository {
         try{
             PreparedStatement preparedStatement = databaseConfiguration.getConnection().prepareStatement("delete from address where id = ?");
             preparedStatement.setInt(1, address.getId());
+            System.out.println("in delete");
+            System.out.println(address);
+            System.out.println("am term in delete");
             preparedStatement.execute();
             addresses.remove(address);
         }

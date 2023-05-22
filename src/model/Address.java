@@ -1,19 +1,26 @@
 package model;
 
 public class Address {
-    private static int noAddresses = 0;
+    private static int noAddresses = 1;
     private int id = 0;
     private String city;
     private String street;
     private int number;
 
-    public Address(String city, String street, int number, boolean newAddress) {
+    public Address(String city, String street, int number) {
         this.id = noAddresses;
         this.city = city;
         this.street = street;
         this.number = number;
-        if(newAddress)
-            noAddresses++;
+        noAddresses++;
+    }
+
+    public Address(int id, String city, String street, int number) {
+        this.id = id;
+        this.city = city;
+        this.street = street;
+        this.number = number;
+        //noAddresses++;
     }
 
     public static int getNoAddresses() {

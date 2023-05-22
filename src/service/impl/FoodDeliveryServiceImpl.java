@@ -605,22 +605,45 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
 
 
     public void deleteAddress(Address address){
-        System.out.println(address);
-        System.out.println(getAddresses());
-        if(addressRepository.getAddresses().contains(address)){
-            addressRepository.deleteAddress(address);
-            AuditService.getInstance().write("removeAddress: Address " + address.getId() + " was removed at ");
-            System.out.println("Address " + address.getId() + " removed with success!");
+        boolean found = false;
+        try{
+            for(Address a: getAddresses()){
+                if(a.getId() == address.getId()){
+                    found = true;
+                }
+                if(!found){
+                    throw new AddressNotFoundException("Address with id " + address.getId() + " doesn't exist!");
+                }
+                System.out.println(address);
+                System.out.println(getAddresses());
+                addressRepository.deleteAddress(address);
+                AuditService.getInstance().write("removeAddress: Address " + address.getId() + " was removed at ");
+                System.out.println("Address " + address.getId() + " removed with success!");
+            }
         }
-        else{
-            System.out.println("Doesn't exist this address!");
+        catch (AddressNotFoundException addressNotFoundException){
+            System.out.println(addressNotFoundException.getMessage());
         }
     }
 
     public void updateAddress(Address oldAddress, Address newAddress){
-        addressRepository.updateAddress(oldAddress, newAddress);
-        AuditService.getInstance().write("updateAddress: ");
-        System.out.println("Address updated with success!");
+        boolean found = false;
+        try{
+            for(Address a: getAddresses()) {
+                if (a.getId() == oldAddress.getId()) {
+                    found = true;
+                }
+            }
+            if(!found){
+                throw new AddressNotFoundException("Address with id " + oldAddress.getId() + " doesn't exist!");
+            }
+            addressRepository.updateAddress(oldAddress, newAddress);
+            AuditService.getInstance().write("updateAddress: ");
+            System.out.println("Address updated with success!");
+        }
+        catch (AddressNotFoundException addressNotFoundException){
+            System.out.println(addressNotFoundException.getMessage());
+        }
     }
 
     public void updateDish(Dish oldDish, Dish newDish){

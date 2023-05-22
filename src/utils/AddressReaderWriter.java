@@ -17,7 +17,7 @@ public class AddressReaderWriter implements FileReaderWriterService<Address>{
     @Override
     public Address objectFromCSVLine(String line) {
         String[] addressData = line.split(",");
-        return new Address(addressData[0], addressData[1], Integer.parseInt(addressData[2]), true);
+        return new Address(addressData[0], addressData[1], Integer.parseInt(addressData[2]));
     }
 
     @Override
