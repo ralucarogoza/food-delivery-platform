@@ -95,6 +95,50 @@ public class Main {
 
 
 
+       //  DISH
+
+
+        /*Dish dish1 = new Dish(1,"Pizza Prosciutto", false, 450, 30, 780);
+        Dish dish2 = new Dish(2,"Chicken Burger", false, 320, 40, 550);
+        Dish dish3 = new Dish(3,"Pasta with vegetables", true, 330, 45, 420);
+
+
+        service.addDish(dish1);
+        service.addDish(dish2);
+        //service.addDish(dish3);
+
+        System.out.println(service.getDishes());
+
+        service.updateDish(dish1, dish3);
+        System.out.println(service.getDishes());
+
+        service.deleteDish(dish2);
+        service.deleteDish(dish1);
+        System.out.println(service.getDishes());*/
+
+
+
+
+        // DRINK
+
+        /*Drink drink1 = new Drink(1,"Lemonade", true, 350, 18, "strawberries", false);
+        Drink drink2 = new Drink(2,"Caffee latte", false, 320, 14, "vanilla", false);
+        Drink drink3 = new Drink(3,"Cider", true, 500, 10, "pear", true);
+
+
+        service.addDrink(drink1);
+        service.addDrink(drink2);
+        //service.addDrink(drink3);
+
+        System.out.println(service.getDrinks());
+
+        service.updateDrink(drink1, drink3);
+        System.out.println(service.getDrinks());
+
+        service.deleteDrink(drink2);
+        service.deleteDrink(drink1);
+        System.out.println(service.getDrinks());*/
+
 
 
 

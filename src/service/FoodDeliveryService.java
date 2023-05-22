@@ -43,8 +43,8 @@ public interface FoodDeliveryService {
     List<Dish> getDishes();
     List<Drink> getDrinks();
 
-    void removeDish(Dish dish);
-    void removeDrink(Drink drink);
+    void deleteDish(Dish dish);
+    void deleteDrink(Drink drink);
     void deleteAddress(Address address);
     void updateAddress(Address oldAddress, Address newAddress);
     void updateDish(Dish oldDish, Dish newDish);

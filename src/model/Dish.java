@@ -3,7 +3,7 @@ package model;
 import java.util.List;
 
 public class Dish extends Product{
-    private static int noDishes = 0;
+    private static int noDishes = 1;
     private int id;
     private int calories;
     //private List<String> ingredients;
@@ -13,6 +13,12 @@ public class Dish extends Product{
         this.id = noDishes;
         this.calories = calories;
         noDishes++;
+    }
+
+    public Dish(int id, String name, boolean isVegan, double weight, double price, int calories) {
+        super(name, isVegan, weight, price);
+        this.id = id;
+        this.calories = calories;
     }
 
     public int getId() {

@@ -185,3 +185,29 @@ updateClient: 2023-05-22 12:44:54
 addDeliveryDriver: DeliveryDriver 1 was added at 2023-05-22 13:16:33
 addDeliveryDriver: DeliveryDriver 2 was added at 2023-05-22 13:16:33
 updateDeliveryDriver: 2023-05-22 13:16:33
+fireDeliveryDriver: DeliveryDriver 2 was removed at 2023-05-22 13:17:53
+fireDeliveryDriver: DeliveryDriver 2 was removed at 2023-05-22 13:17:53
+addDish: Dish 0 was added at 2023-05-22 14:11:19
+addDish: Dish 1 was added at 2023-05-22 14:11:19
+addDrink: Drink 0 was added at 2023-05-22 14:11:19
+addDrink: Drink 1 was added at 2023-05-22 14:11:19
+addDish: Dish 1 was added at 2023-05-22 14:13:11
+addDish: Dish 2 was added at 2023-05-22 14:13:11
+addDrink: Drink 1 was added at 2023-05-22 14:13:11
+addDrink: Drink 2 was added at 2023-05-22 14:13:11
+addDish: Dish 1 was added at 2023-05-22 14:14:09
+addDish: Dish 2 was added at 2023-05-22 14:14:09
+addDrink: Drink 1 was added at 2023-05-22 14:14:09
+addDrink: Drink 2 was added at 2023-05-22 14:14:09
+addDish: Dish 1 was added at 2023-05-22 14:21:36
+addDish: Dish 2 was added at 2023-05-22 14:21:36
+updateDish: 2023-05-22 14:21:36
+removeDish: Dish 2 was removed at 2023-05-22 14:21:36
+removeDish: Dish 2 was removed at 2023-05-22 14:21:36
+addDrink: Drink 1 was added at 2023-05-22 14:21:36
+addDrink: Drink 2 was added at 2023-05-22 14:21:36
+updateDrink: 2023-05-22 14:21:36
+removeDrink: Drink 2 was removed at 2023-05-22 14:21:36
+removeDrink: Drink 2 was removed at 2023-05-22 14:21:36
+removeDish: Dish 3 was removed at 2023-05-22 14:28:11
+removeDrink: Drink 3 was removed at 2023-05-22 14:28:11

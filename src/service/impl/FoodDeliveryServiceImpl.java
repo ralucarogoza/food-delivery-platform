@@ -143,13 +143,13 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
                 if(a.getId() == address.getId()){
                     found = true;
                 }
-                if(!found){
-                    throw new AddressNotFoundException("Address with id " + address.getId() + " doesn't exist!");
-                }
-                addressRepository.deleteAddress(address);
-                AuditService.getInstance().write("deleteAddress: Address " + address.getId() + " was removed at ");
-                System.out.println("Address " + address.getId() + " removed with success!");
             }
+            if(!found){
+                throw new AddressNotFoundException("Address with id " + address.getId() + " doesn't exist!");
+            }
+            addressRepository.deleteAddress(address);
+            AuditService.getInstance().write("deleteAddress: Address " + address.getId() + " was removed at ");
+            System.out.println("Address " + address.getId() + " removed with success!");
         }
         catch (AddressNotFoundException addressNotFoundException){
             System.out.println(addressNotFoundException.getMessage());
@@ -374,6 +374,166 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
             System.out.println("DeliveryDriver updated with success!");        }
     }
 
+
+
+    // DRINK
+
+
+    public Optional<Drink> getDrinkById(int id){
+        return drinkRepository.getDrinkById(id);
+    }
+
+    public List<Drink> getDrinks(){
+        try{
+            if(drinkRepository == null)
+                throw new NoDrinkFoundException("There are no drinks!");
+        }
+        catch(NoDrinkFoundException noDrinkFoundException){
+            System.out.println(noDrinkFoundException.getMessage());
+        }
+        return drinkRepository.getDrinks();
+    }
+    public void addDrink(Drink drink){
+        if(drinkRepository == null){
+            drinkRepository = new DrinkRepository(dishRepository.getDatabaseConfiguration());
+        }
+        drinkRepository.addDrink(drink);
+        AuditService.getInstance().write("addDrink: Drink " + drink.getId() + " was added at ");
+        System.out.println("Drink added with success!");
+    }
+
+
+
+    public void deleteDrink(Drink drink){
+        boolean found = false;
+        try{
+            for(Drink d: getDrinks()){
+                if(d.getId() == drink.getId()){
+                    found = true;
+                }
+            }
+            if(!found){
+                throw new DrinkNotFoundException("Drink with id " + drink.getId() + " doesn't exist!");
+            }
+            drinkRepository.deleteDrink(drink);
+            AuditService.getInstance().write("removeDrink: Drink " + drink.getId() + " was removed at ");
+            System.out.println("Drink " + drink.getId() + " removed with success!");
+        }
+        catch (DrinkNotFoundException drinkNotFoundException){
+            System.out.println(drinkNotFoundException.getMessage());
+        }
+    }
+
+
+    public void updateDrink(Drink oldDrink, Drink newDrink){
+        boolean found = false;
+        try{
+            for(Drink d: getDrinks()) {
+                if (d.getId() == oldDrink.getId()) {
+                    found = true;
+                }
+            }
+            if(!found){
+                throw new DrinkNotFoundException("Drink with id " + oldDrink.getId() + " doesn't exist!");
+            }
+            drinkRepository.updateDrink(oldDrink, newDrink);
+            AuditService.getInstance().write("updateDrink: ");
+            System.out.println("Drink updated with success!");
+        }
+        catch (DrinkNotFoundException drinkNotFoundException){
+            System.out.println(drinkNotFoundException.getMessage());
+        }
+    }
+
+
+
+
+
+
+
+
+    // DISH
+
+
+
+    public void addDish(Dish dish){
+        if(dishRepository == null){
+            dishRepository = new DishRepository(dishRepository.getDatabaseConfiguration());
+        }
+        dishRepository.addDish(dish);
+        AuditService.getInstance().write("addDish: Dish " + dish.getId() + " was added at ");
+        System.out.println("Dish added with success!");
+    }
+
+
+    public List<Dish> getDishes(){
+        try{
+            if(dishRepository == null)
+                throw new NoDishFoundException("There are no dishes!");
+        }
+        catch(NoDishFoundException noDishFoundException){
+            System.out.println(noDishFoundException.getMessage());
+        }
+        return dishRepository.getDishes();
+    }
+
+
+    public Optional<Dish> getDishById(int id){
+        return dishRepository.getDishById(id);
+    }
+
+
+
+    public void deleteDish(Dish dish){
+        boolean found = false;
+        try{
+            for(Dish d: getDishes()){
+                if(d.getId() == dish.getId()){
+                    found = true;
+                }
+            }
+            if(!found){
+                throw new DishIsNotInTheMenuException("Dish with id " + dish.getId() + " doesn't exist!");
+            }
+            dishRepository.removeDish(dish);
+            AuditService.getInstance().write("removeDish: Dish " + dish.getId() + " was removed at ");
+            System.out.println("Dish " + dish.getId() + " removed with success!");
+        }
+        catch (DishNotFoundException dishNotFoundException){
+            System.out.println(dishNotFoundException.getMessage());
+        }
+    }
+
+
+
+
+    public void updateDish(Dish oldDish, Dish newDish){
+        boolean found = false;
+        try{
+            for(Dish d: getDishes()) {
+                if (d.getId() == oldDish.getId()) {
+                    found = true;
+                }
+            }
+            if(!found){
+                throw new DishNotFoundException("Dish with id " + oldDish.getId() + " doesn't exist!");
+            }
+            dishRepository.updateDish(oldDish, newDish);
+            AuditService.getInstance().write("updateDish: ");
+            System.out.println("Dish updated with success!");
+        }
+        catch (DishNotFoundException dishNotFoundException){
+            System.out.println(dishNotFoundException.getMessage());
+        }
+    }
+
+
+
+
+    // RESTAURANT
+
+
+
     public void addRestaurant(Restaurant restaurant){
         if(restaurantRepository.getRestaurants() == null)
             restaurantRepository = new RestaurantRepository();
@@ -429,34 +589,21 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         }
     }
 
-    public Drink getDrinkById(int id){
-        boolean found = false;
-        Drink dr = null;
-        for(Drink d: drinkRepository.getDrinks()){
-            if(d.getId() == id){
-                found = true;
-                dr = d;
-            }
-        }
-        if(!found){
-            System.out.println("This drink doesn't exist!");
-        }
-        return dr;
-    }
+
 
     public void showDrinksFromRestaurant(Restaurant restaurant){
         List<DrinkFromRestaurant> drinksR = drinkToRestaurantRepository.getDrinksFromRestaurants();
-        List<Drink> drinks = new ArrayList<>();
+        List<Optional<Drink>> drinks = new ArrayList<>();
         for(DrinkFromRestaurant d: drinksR){
             if(d.getIdRestaurant() == restaurant.getId()){
-                Drink dr = getDrinkById(d.getIdDrink());
+                Optional<Drink> dr = getDrinkById(d.getIdDrink());
                 drinks.add(dr);
             }
         }
         if(drinks.isEmpty())
             System.out.println("Drink menu is empty!\n");
         else{
-            for(Drink drink: drinks){
+            for(Optional<Drink> drink: drinks){
                 System.out.println(drink);
             }
         }
@@ -474,36 +621,23 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
         }
     }
 
-    public Dish getDishById(int id){
-        boolean found = false;
-        Dish di = null;
-        for(Dish d: dishRepository.getDishes()){
-            if(d.getId() == id){
-                found = true;
-                di = d;
-            }
-        }
-        if(!found){
-            System.out.println("This dish doesn't exist!");
-        }
-        return di;
-    }
+
 
 
 
     public void showDishesFromRestaurant(Restaurant restaurant){
         List<DishFromRestaurant> dishesR = dishToRestaurantRepository.getDishesFromRestaurants();
-        List<Dish> dishes = new ArrayList<>();
+        List<Optional<Dish>> dishes = new ArrayList<>();
         for(DishFromRestaurant d: dishesR){
             if(d.getIdRestaurant() == restaurant.getId()){
-                Dish dr = getDishById(d.getIdDish());
+                Optional<Dish> dr = getDishById(d.getIdDish());
                 dishes.add(dr);
             }
         }
         if(dishes.isEmpty())
             System.out.println("Dish menu is empty!\n");
         else{
-            for(Dish dish: dishes){
+            for(Optional<Dish> dish: dishes){
                 System.out.println(dish);
             }
         }
@@ -605,87 +739,12 @@ public class FoodDeliveryServiceImpl implements FoodDeliveryService {
 
 
 
-    public void addDish(Dish dish){
-        if(dishRepository == null){
-            dishRepository = new DishRepository(dishRepository.getDatabaseConfiguration());
-        }
-        dishRepository.addDish(dish);
-        AuditService.getInstance().write("addDish: Dish " + dish.getId() + " was added at ");
-        System.out.println("Dish added with success!");
-    }
-
-
-    public void addDrink(Drink drink){
-        if(drinkRepository == null){
-            drinkRepository = new DrinkRepository(dishRepository.getDatabaseConfiguration());
-        }
-        drinkRepository.addDrink(drink);
-        AuditService.getInstance().write("addDrink: Drink " + drink.getId() + " was added at ");
-        System.out.println("Drink added with success!");
-    }
 
 
 
 
-    public List<Dish> getDishes(){
-        try{
-            if(dishRepository == null)
-                throw new Exception("There are no dishes!");
-        }
-        catch(Exception exception){
-            System.out.println(exception.getMessage());
-        }
-        return dishRepository.getDishes();
-    }
-
-    public List<Drink> getDrinks(){
-        try{
-            if(drinkRepository == null)
-                throw new Exception("There are no drinks!");
-        }
-        catch(Exception exception){
-            System.out.println(exception.getMessage());
-        }
-        return drinkRepository.getDrinks();
-    }
 
 
-    public void removeDish(Dish dish){
-        if(dishRepository.getDishes().contains(dish)){
-            dishRepository.removeDish(dish);
-            AuditService.getInstance().write("removeDish: Dish " + dish.getId() + " was removed at ");
-            System.out.println("Dish " + dish.getId() + " removed with success!");
-        }
-        else{
-            System.out.println("Doesn't exist this dish!");
-        }
-    }
-
-    public void removeDrink(Drink drink){
-        if(drinkRepository.getDrinks().contains(drink)){
-            drinkRepository.removeDrink(drink);
-            AuditService.getInstance().write("removeDrink: Drink " + drink.getId() + " was removed at ");
-            System.out.println("Drink " + drink.getId() + " removed with success!");
-        }
-        else{
-            System.out.println("Doesn't exist this drink!");
-        }
-    }
-
-
-
-
-    public void updateDish(Dish oldDish, Dish newDish){
-        dishRepository.updateDish(oldDish, newDish);
-        AuditService.getInstance().write("updateDish: ");
-        System.out.println("Dish updated with success!");
-    }
-
-    public void updateDrink(Drink oldDrink, Drink newDrink){
-        drinkRepository.updateDrink(oldDrink, newDrink);
-        AuditService.getInstance().write("updateDrink: ");
-        System.out.println("Drink updated with success!");
-    }
 
     @Override
     public void addClientsFromCSVFile(String path) throws IOException, SQLException {

@@ -1,7 +1,7 @@
 package model;
 
 public class Drink extends Product{
-    private static int noDrinks = 0;
+    private static int noDrinks = 1;
     private int id;
     private String flavour;
     private boolean isAlcoholic;
@@ -12,6 +12,13 @@ public class Drink extends Product{
         this.flavour = flavour;
         this.isAlcoholic = isAlcoholic;
         noDrinks++;
+    }
+
+    public Drink(int id, String name, boolean isVegan, double weight, double price, String flavour, boolean isAlcoholic) {
+        super(name, isVegan, weight, price);
+        this.id = id;
+        this.flavour = flavour;
+        this.isAlcoholic = isAlcoholic;
     }
 
     public int getId() {
