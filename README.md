@@ -1,5 +1,7 @@
 # Food Delivery Platform
 
+I built a Java backend system for a food delivery platform, incorporating CRUD operations and database management functionalities. 
+
 ## Classes <br/>
 * **Person** - abstract class <br/>
 * **Client** - inherits Person <br/>
